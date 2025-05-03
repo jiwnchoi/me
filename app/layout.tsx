@@ -1,10 +1,17 @@
 import type { Metadata } from "next";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 
 import { Footer, Layout, Navbar, ThemeSwitch } from "nextra-theme-blog";
 import "nextra-theme-blog/style.css";
 import { Banner, Head, Search } from "nextra/components";
 import { getPageMap } from "nextra/page-map";
+
+// Initialize Open Sans font
+const openSans = Open_Sans({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -27,7 +34,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   );
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={openSans.className}>
       <Head backgroundColor={{ dark: "#0f172a", light: "#fefce8" }} />
       <body>
         <Layout banner={banner}>
