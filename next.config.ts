@@ -1,7 +1,11 @@
 import type { NextConfig } from "next";
+import nextra from "nextra";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const withNextra = nextra({
+  contentDirBasePath: "/content",
+  latex: true,
+});
 
-export default nextConfig;
+const nextConfig: NextConfig = {};
+
+export default withNextra(nextConfig);
