@@ -4,13 +4,15 @@ import "./globals.css";
 
 import { Footer, Layout, Navbar, ThemeSwitch } from "nextra-theme-blog";
 import "nextra-theme-blog/style.css";
-import { Banner, Head, Search } from "nextra/components";
+import { Head, Search } from "nextra/components";
 import { getPageMap } from "nextra/page-map";
 
-// Initialize Open Sans font
+// Initialize Open Sans font with italic weight
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
+  style: ["normal", "italic"],
+  variable: "--font-open-sans",
 });
 
 export const metadata: Metadata = {
@@ -19,42 +21,28 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const banner = (
-    <Banner storageKey="4.0-release">
-      🎉 Nextra 4.0 is released.{" "}
-      <a
-        href="#"
-        style={{
-          textDecoration: "underline",
-          textUnderlinePosition: "from-font",
-        }}>
-        Read more →
-      </a>
-    </Banner>
-  );
-
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <Head backgroundColor={{ dark: "#0f172a", light: "#fefce8" }} />
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Head>
       <body>
-        <Layout banner={banner}>
+        <Layout>
           <Navbar pageMap={await getPageMap()}>
             <Search />
-            <ThemeSwitch />
           </Navbar>
 
           {children}
 
           <Footer>
-            <abbr
-              title="This site and all its content are licensed under a Creative Commons Attribution-NonCommercial 4.0 International License."
-              style={{ cursor: "help" }}>
-              CC BY-NC 4.0
-            </abbr>{" "}
-            {new Date().getFullYear()} © Dimitri POSTOLOV.
-            <a href="/feed.xml" style={{ float: "right" }}>
-              RSS
-            </a>
+            <footer className="footer footer-horizontal flex w-full items-center justify-between">
+              <ThemeSwitch />
+              <span
+                // style={{ fontFamily: "var(--font-open-sans), sans-serif" }}
+                className="font-sans italic">
+                freedom Copyright © 2025 Jiwon Jason Choi
+              </span>{" "}
+            </footer>
           </Footer>
         </Layout>
       </body>
