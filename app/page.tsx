@@ -1,7 +1,14 @@
+import { data } from "@/data";
+
 export default function Page() {
+  const authors = data.authors();
+  authors.authors.map((author) => {
+    console.log(author.name);
+  });
   return (
     <div className="">
-      <h1>Test</h1>
+      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+      {JSON.stringify(authors)}
     </div>
   );
 }

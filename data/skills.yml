@@ -1,0 +1,35 @@
+skills:
+  - type: Frontend
+    items:
+      - React
+      - TypeScript
+      - State Management (Zustand, React-Query)
+      - Visualization (D3, visx, Vega, vis.gl, ...)
+
+  - type: Backend
+    items:
+      - Python
+      - FastAPI
+      - Docker
+      - PostgreSQL
+      - Celery
+      - Cloud Infrastructure (AWS)
+
+  - type: AI/ML
+    items:
+      - PyTorch
+      - HuggingFace
+      - NLP
+
+  - type: Design
+    items:
+      - Figma
+      - Adobe Illustrator
+      - Adobe Photoshop
+      - Prototyping
+      - User Research
+
+  - type: Language
+    items:
+      - Korean (Native)
+      - English (Fluent)
