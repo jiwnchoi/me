@@ -26,15 +26,13 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      </Head>
+      <Head>{/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */}</Head>
       <body>
         <ThemeProvider attribute="class">
           <main className="drawer lg:drawer-open mx-auto max-w-[100rem] gap-16 py-8">
             <input id="drawer" type="checkbox" className="drawer-toggle lg:hidden" />
             <aside className="drawer-side w-sm gap-8 p-4">
-              <section className="flex w-full flex-col items-center gap-4">
+              <section className="flex w-full flex-col items-center">
                 <Image
                   src={profilepic}
                   alt="Profile Picture"
@@ -42,7 +40,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   width={200}
                   height={200}
                 />
-                <span>Jiwon (Jason) Choi</span>
+                <span className="text-lg font-bold">Jiwon (Jason) Choi</span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">Research Scientist</span>
+
+                <div className="divider my-4 w-full" />
               </section>
               <Search />
               123213
