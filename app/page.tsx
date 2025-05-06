@@ -4,8 +4,8 @@ export default function Page() {
   const authors = data.authors();
 
   return (
-    <div className="">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
+    <div>
+      <h1 className="text-3xl font-bold italic">Hello world!</h1>
       {JSON.stringify(authors)}
     </div>
   );
