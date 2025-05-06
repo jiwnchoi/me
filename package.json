@@ -4,8 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "pnpm datagen && concurrently \"next dev --turbopack\" \"pnpm datagen --watch\"",
-    "build": "next build --turbopack",
+    "build": "pnpm datagen && next build --turbopack",
     "start": "next start",
+    "prestart": "pnpm datagen",
     "lint": "next lint",
     "format": "prettier --write .",
     "postbuild": "pagefind --site .next/server/app --output-path public/_pagefind",
