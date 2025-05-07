@@ -1,7 +1,7 @@
 "use client";
 
 import { type Section } from "@/data";
-import { Link } from "next-view-transitions";
+import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -9,11 +9,11 @@ export default function Navigation({ sections }: { sections: Section[] }) {
   const pathname = usePathname();
   const router = useRouter();
 
-  const [activated, setActivated] = useState<string>(
-    pathname === "/" ? "" : pathname.split("/")[0].slice(1),
-  );
+  const [activated, setActivated] = useState<string>("");
 
-  console.log(pathname, pathname.split("/")[0].slice(1));
+  useEffect(() => {
+    setActivated(pathname === "/" ? sections[0].key : pathname.slice(1));
+  }, [pathname, sections]);
 
   useEffect(() => {
     if (pathname !== "/") return;
@@ -40,7 +40,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     if (pathname === "/") {
       const element = document.getElementById(sectionKey);
       if (element) {
-        window.scrollTo({ top: element.offsetTop - 10, behavior: "smooth" });
+        window.scrollTo({ top: element.offsetTop - 20, behavior: "smooth" });
         router.replace(`/#${sectionKey}`, { scroll: false });
       }
     } else {

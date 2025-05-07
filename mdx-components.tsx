@@ -97,7 +97,14 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
     wrapper({ children, metadata }) {
       return (
         <>
-          {(metadata.title && metadata.title !== "Index") ?? <h1>{metadata.title}</h1>}
+          {metadata.filePath.split("/").at(-1) !== "index.mdx" ? (
+            <>
+              <h1>{metadata.title}</h1>
+              <p className="my-0 text-sm">{metadata.description}</p>
+              <div className="divider" />
+            </>
+          ) : null}
+
           {children}
         </>
       );

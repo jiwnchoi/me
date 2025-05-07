@@ -1,5 +1,4 @@
 import "katex/dist/katex.min.css";
-import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -20,11 +19,6 @@ const openSans = Open_Sans({
   style: ["normal", "italic"],
   variable: "--font-open-sans",
 });
-
-export const metadata: Metadata = {
-  title: "Jiwon Jason Choi",
-  description: "Hello, I'm Jiwon Choi.",
-};
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const sections = data.sections().sections;
