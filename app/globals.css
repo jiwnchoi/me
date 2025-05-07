@@ -1,9 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-html {
-  @apply bg-gray-100 dark:bg-zinc-950;
-}
 @plugin "daisyui" {
   themes:
     light --default,
@@ -20,4 +17,8 @@ html {
   .me-card {
     @apply mb-4 flex w-full flex-col items-center gap-4 rounded-4xl bg-white p-4 dark:bg-zinc-900;
   }
+}
+
+html {
+  @apply bg-gray-100 dark:bg-zinc-950;
 }

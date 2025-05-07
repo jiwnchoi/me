@@ -25,11 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
       <body>
-        <ThemeProvider
-          attribute="data-theme"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange>
+        <ThemeProvider attribute={["data-theme", "class"]} defaultTheme="system" enableSystem>
           <main className="mx-auto flex max-w-7xl gap-4 py-8">
             <div className="block max-w-2xs min-w-2xs" />
             <aside className="fixed max-w-2xs min-w-2xs">
