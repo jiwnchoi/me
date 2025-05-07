@@ -1,12 +1,13 @@
 import { data } from "@/data";
+import { compileMdx } from "nextra/compile";
+import { MDXRemote } from "nextra/mdx-remote";
 
-export default function Page() {
-  const authors = data.authors();
+export default async function Page() {
+  const meta = data.meta();
 
   return (
     <div>
-      <h1 className="text-3xl font-bold italic">Hello world!</h1>
-      {JSON.stringify(authors)}
+      <MDXRemote compiledSource={await compileMdx(meta.bio)} />
     </div>
   );
 }

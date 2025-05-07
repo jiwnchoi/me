@@ -10,3 +10,9 @@
   --font-display: var(--font-open-sans), sans-serif;
   --font-sans: var(--font-open-sans), sans-serif;
 }
+
+@layer components {
+  .me-card {
+    @apply mb-4 flex w-full flex-col items-center gap-4 rounded-4xl bg-white p-4 py-8 dark:bg-zinc-900;
+  }
+}

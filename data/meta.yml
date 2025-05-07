@@ -3,15 +3,19 @@ middlename: Jason
 lastname: Choi
 
 # Contact Information
-email: jiwnchoi@gmail.com
-github: jiwnchoi
-linkedin: jiwnchoi
-twitter: jiwnchoi
-website: jiwnchoi.me
-scholar: E54I6OkAAAAJ
+contacts:
+  email: jiwnchoi@gmail.com
+  github: jiwnchoi
+  linkedin: jiwnchoi
+  twitter: jiwnchoi
+  website: jiwnchoi.me
+  scholar: E54I6OkAAAAJ
+  instagram: jiwnchoi
 
 # Biography
 bio: |
+  # Hello World!
+
   My research aims to automate data analysis and presentation to lower the barrier
   of data analysis tasks. This includes: 1) Mixed-initiative systems that **_connect
   data visualization and natural language captions_** for data presentation; 2) **_Automatic

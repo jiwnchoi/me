@@ -1,0 +1,65 @@
+import { data } from "@/data";
+import {
+  Github01Icon,
+  InstagramIcon,
+  Linkedin01Icon,
+  Mail01Icon,
+  Mortarboard01Icon,
+  TwitterIcon,
+} from "@hugeicons/core-free-icons";
+import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
+
+function ContactButton({
+  href,
+  Icon,
+  label,
+}: {
+  href: string;
+  Icon: IconSvgElement;
+  label: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="btn btn-square btn-ghost btn-xs font-color"
+      aria-label={label}>
+      <HugeiconsIcon icon={Icon} size={18} />
+    </a>
+  );
+}
+
+const ICON_MAP: Record<string, IconSvgElement> = {
+  github: Github01Icon,
+  twitter: TwitterIcon,
+  linkedin: Linkedin01Icon,
+  email: Mail01Icon,
+  scholar: Mortarboard01Icon,
+  instagram: InstagramIcon,
+};
+
+const HREF_MAP: Record<string, (valye: string) => string> = {
+  github: (username: string) => `https://github.com/${username}`,
+  twitter: (username: string) => `https://x.com/${username}`,
+  linkedin: (username: string) => `https://www.linkedin.com/in/${username}`,
+  email: (email: string) => `mailto:${email}`,
+  website: (href: string) => href,
+  scholar: (username: string) => `https://scholar.google.com/citations?user=${username}`,
+  instagram: (username: string) => `https://www.instagram.com/${username}`,
+};
+
+export default function ContactButtons() {
+  const contacts = data.meta().contacts ?? {};
+  return (
+    <div className="flex w-full justify-center gap-2 px-4">
+      {Object.entries(contacts).map(([key, value]) => {
+        const Icon = ICON_MAP[key];
+        if (Icon) {
+          return <ContactButton key={key} href={HREF_MAP[key](value)} Icon={Icon} label={key} />;
+        }
+        return null;
+      })}
+    </div>
+  );
+}

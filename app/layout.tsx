@@ -10,6 +10,7 @@ import Image from "next/image";
 import "nextra-theme-blog/style.css";
 import { Head, Search } from "nextra/components";
 
+import ContactButtons from "@/components/ContactButtons";
 import profilepic from "@/data/profilepic.png";
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -26,31 +27,40 @@ export const metadata: Metadata = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <Head>{/* <meta name="viewport" content="width=device-width, initial-scale=1.0" /> */}</Head>
+      <Head
+        backgroundColor={{
+          dark: "#09090B",
+          light: "#FAFAFA",
+        }}></Head>
       <body>
         <ThemeProvider attribute="class">
-          <main className="drawer lg:drawer-open mx-auto max-w-[100rem] gap-16 py-8">
-            <input id="drawer" type="checkbox" className="drawer-toggle lg:hidden" />
-            <aside className="drawer-side w-sm gap-8 p-4">
-              <section className="flex w-full flex-col items-center">
+          <main className="mx-auto flex max-w-[100rem] gap-4 py-8">
+            <div className="block max-w-2xs min-w-2xs" />
+            <aside className="fixed max-w-2xs min-w-2xs">
+              <section className="me-card">
                 <Image
                   src={profilepic}
                   alt="Profile Picture"
                   className="mx-auto rounded-full"
-                  width={200}
-                  height={200}
+                  width={150}
+                  height={150}
                 />
-                <span className="text-lg font-bold">Jiwon (Jason) Choi</span>
-                <span className="text-sm text-gray-500 dark:text-gray-400">Research Scientist</span>
-
-                <div className="divider my-4 w-full" />
+                <div className="flex flex-col items-center">
+                  <p className="mb-2 text-lg font-semibold">Jiwon (Jason) Choi</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">Research Scientist</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400">
+                    Visualization, HCI, and ML
+                  </p>
+                </div>
+                <ContactButtons />
               </section>
-              <Search />
-              123213
+              <section className="me-card">
+                <Search />
+              </section>
             </aside>
             <ViewTransitions>
               <article
-                className="drawer-content prose prose-base prose-img:rounded-lg dark:prose-invert w-full max-w-none"
+                className="drawer-content prose prose-base prose-img:rounded-lg dark:prose-invert me-card min-h-[120vh] max-w-none px-16"
                 dir="ltr"
                 data-pagefind-body>
                 {children}
