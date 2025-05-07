@@ -10,7 +10,9 @@ import Image from "next/image";
 import "nextra-theme-blog/style.css";
 import { Head, Search } from "nextra/components";
 
+import { Navigation } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
+import { data } from "@/data";
 import profilepic from "@/data/profilepic.png";
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -25,6 +27,7 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const sections = data.sections().sections;
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
       <Head
@@ -55,6 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <ContactButtons />
               </section>
               <section className="me-card">
+                <Navigation sections={sections} />
                 <Search />
               </section>
             </aside>

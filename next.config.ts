@@ -6,6 +6,13 @@ const withNextra = nextra({
   latex: true,
 });
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  pageExtensions: ["ts", "tsx", "mdx"],
+  experimental: {
+    mdxRs: true,
+  },
+};
 
-export default withNextra(nextConfig);
+const config = withNextra(nextConfig);
+
+export default config;

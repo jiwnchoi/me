@@ -1,0 +1,36 @@
+sections:
+  - key: news
+    title: News
+    type: main
+
+  - key: careers
+    title: Careers
+    type: main
+
+  - key: educations
+    title: Educations
+    type: main
+
+  - key: publications
+    title: Publications
+    type: main
+
+  - key: skills
+    title: Skills
+    type: main
+
+  - key: services
+    title: Services
+    type: main
+
+  - key: honors
+    title: Honors
+    type: main
+
+  - key: projects
+    title: Gallery
+    type: page
+
+  - key: blog
+    title: Blog
+    type: page
