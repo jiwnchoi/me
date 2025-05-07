@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         }}></Head>
       <body>
         <ThemeProvider attribute="class">
-          <main className="mx-auto flex max-w-[100rem] gap-4 py-8">
+          <main className="mx-auto flex max-w-7xl gap-4 py-8">
             <div className="block max-w-2xs min-w-2xs" />
             <aside className="fixed max-w-2xs min-w-2xs">
               <section className="me-card">
@@ -72,7 +72,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </ViewTransitions>
           </main>
 
-          <Footer className="container mx-auto my-8 max-w-[100rem]">
+          <Footer className="container mx-auto my-8 max-w-7xl">
             Copyright © 2025 Jiwon Jason Choi
           </Footer>
         </ThemeProvider>

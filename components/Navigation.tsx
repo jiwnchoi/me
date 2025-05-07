@@ -1,65 +1,81 @@
 "use client";
 
 import { type Section } from "@/data";
+import { Link } from "next-view-transitions";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Navigation({ sections }: { sections: Section[] }) {
-  const mains = sections.filter((section) => section.type === "main");
-  const pages = sections.filter((section) => section.type === "page");
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const [activated, setActivated] = useState<string>(mains[0]?.key ?? "");
+  const [activated, setActivated] = useState<string>(
+    pathname === "/" ? "" : pathname.split("/")[0].slice(1),
+  );
+
+  console.log(pathname, pathname.split("/")[0].slice(1));
 
   useEffect(() => {
-    const sectionElements = mains
-      .map((section) => document.getElementById(section.key))
+    if (pathname !== "/") return;
+    const mainSectionElements = sections
+      .filter((s) => s.type === "main")
+      .map((s) => document.getElementById(s.key))
       .filter((el): el is HTMLElement => !!el);
 
     const observer = new IntersectionObserver(
       (entries) => {
-        const visible = entries.filter((e) => e.isIntersecting);
-        if (visible.length > 0) {
-          visible.sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
-          const topId = visible[0].target.id;
-          setActivated(topId);
-        }
+        const topVisibleEntry = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
+        if (topVisibleEntry) setActivated(topVisibleEntry.target.id);
       },
       { threshold: 1.0 },
     );
-    sectionElements.forEach((el) => observer.observe(el));
+    mainSectionElements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, [mains]);
+  }, [pathname, sections]);
+
+  const handleMainSectionClick = (sectionKey: string) => {
+    setActivated(sectionKey);
+    if (pathname === "/") {
+      const element = document.getElementById(sectionKey);
+      if (element) {
+        window.scrollTo({ top: element.offsetTop - 10, behavior: "smooth" });
+        router.replace(`/#${sectionKey}`, { scroll: false });
+      }
+    } else {
+      router.push(`/#${sectionKey}`);
+    }
+  };
 
   return (
     <div className="w-full">
       <ul className="menu flex w-full flex-col">
-        {mains.map((section) => (
-          <li key={section.key} className="menu-item rounded-2xl">
-            <button
-              className={activated === section.key ? "menu-active" : ""}
-              onClick={() => {
-                const element = document.getElementById(section.key);
-                if (element) {
-                  console.log("scrolling to", section.key);
-                  window.scrollTo({
-                    top: element.offsetTop - 10,
-                    behavior: "smooth",
-                  });
-                }
-              }}>
-              {section.title}
-            </button>
-          </li>
-        ))}
+        {sections
+          .filter((s) => s.type === "main")
+          .map((section) => (
+            <li key={section.key} className="menu-item rounded-2xl">
+              <button
+                className={activated === section.key ? "menu-active" : ""}
+                onClick={() => handleMainSectionClick(section.key)}>
+                {section.title}
+              </button>
+            </li>
+          ))}
       </ul>
       <div className="divider my-0" />
       <ul className="menu flex w-full flex-col">
-        {pages.map((section) => (
-          <li key={section.key} className="menu-item rounded-2xl">
-            <a href={`/${section.key}`} className={activated === section.key ? "menu-active" : ""}>
-              {section.title}
-            </a>
-          </li>
-        ))}
+        {sections
+          .filter((s) => s.type === "page")
+          .map((section) => (
+            <li key={section.key} className="menu-item rounded-2xl">
+              <Link
+                href={`/${section.key}`}
+                className={activated === section.key ? "menu-active" : ""}>
+                {section.title}
+              </Link>
+            </li>
+          ))}
       </ul>
     </div>
   );

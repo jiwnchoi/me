@@ -15,10 +15,6 @@ sections:
     title: Publications
     type: main
 
-  - key: skills
-    title: Skills
-    type: main
-
   - key: services
     title: Services
     type: main
@@ -27,8 +23,12 @@ sections:
     title: Honors
     type: main
 
+  - key: skills
+    title: Skills
+    type: main
+
   - key: projects
-    title: Gallery
+    title: Project Gallery
     type: page
 
   - key: blog

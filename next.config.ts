@@ -6,12 +6,7 @@ const withNextra = nextra({
   latex: true,
 });
 
-const nextConfig: NextConfig = {
-  pageExtensions: ["ts", "tsx", "mdx"],
-  experimental: {
-    mdxRs: true,
-  },
-};
+const nextConfig: NextConfig = {};
 
 const config = withNextra(nextConfig);
 
