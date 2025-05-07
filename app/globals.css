@@ -1,11 +1,16 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+
+html {
+  @apply bg-gray-100 dark:bg-zinc-950;
+}
 @plugin "daisyui" {
   themes:
     light --default,
-    dark --prefersdark;
+    dark --prefersdark,
+    cupcake;
 }
-
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @theme {
   --font-display: var(--font-open-sans), sans-serif;
   --font-sans: var(--font-open-sans), sans-serif;

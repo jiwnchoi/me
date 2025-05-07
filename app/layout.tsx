@@ -7,7 +7,7 @@ import { ThemeProvider } from "next-themes";
 import { ViewTransitions } from "next-view-transitions";
 import Image from "next/image";
 import "nextra-theme-blog/style.css";
-import { Head, Search } from "nextra/components";
+import { Search } from "nextra/components";
 
 import { Navigation } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
@@ -24,13 +24,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const sections = data.sections().sections;
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <Head
-        backgroundColor={{
-          dark: "#09090B",
-          light: "#FAFAFA",
-        }}></Head>
       <body>
-        <ThemeProvider attribute="class">
+        <ThemeProvider
+          attribute="data-theme"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange>
           <main className="mx-auto flex max-w-7xl gap-4 py-8">
             <div className="block max-w-2xs min-w-2xs" />
             <aside className="fixed max-w-2xs min-w-2xs">
