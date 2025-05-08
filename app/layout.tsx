@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 
 import { Footer } from "@/components/layout";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "next-themes";
 import { ViewTransitions } from "next-view-transitions";
 import Image from "next/image";
@@ -66,6 +67,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </Footer>
         </ThemeProvider>
       </body>
+      <GoogleAnalytics gaId="G-XVX4B96FPG" />
     </html>
   );
 }
