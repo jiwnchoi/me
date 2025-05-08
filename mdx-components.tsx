@@ -15,6 +15,7 @@ import {
 import type { MDXComponents } from "nextra/mdx-components";
 import { useMDXComponents as getNextraMDXComponents } from "nextra/mdx-components";
 import type { ComponentProps, FC } from "react";
+import { Giscus } from "./components";
 
 export type UseMDXComponents<
   /**
@@ -97,7 +98,7 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
     wrapper({ children, metadata }) {
       return (
         <>
-          {metadata.filePath.split("/").at(-1) !== "index.mdx" ? (
+          {metadata.type === "post" ? (
             <>
               <h1>{metadata.title}</h1>
               <p className="my-0 text-sm">{metadata.description}</p>
@@ -106,6 +107,13 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
           ) : null}
 
           {children}
+
+          {metadata.type === "post" && (
+            <div>
+              <div className="divider mt-16" />
+              <Giscus />
+            </div>
+          )}
         </>
       );
     },

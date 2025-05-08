@@ -54,7 +54,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </aside>
             <ViewTransitions>
               <article
-                className="drawer-content prose prose-base prose-img:rounded-lg dark:prose-invert me-card min-h-[120vh] max-w-none px-16"
+                className="drawer-content prose prose-base prose-img:rounded-lg dark:prose-invert me-card min-h-[80vh] max-w-none px-16"
                 dir="ltr"
                 data-pagefind-body>
                 {children}

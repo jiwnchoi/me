@@ -54,9 +54,11 @@ export default function Navigation({ sections }: { sections: Section[] }) {
         {sections
           .filter((s) => s.type === "main")
           .map((section) => (
-            <li key={section.key} className="menu-item rounded-2xl">
+            <li key={section.key}>
               <button
-                className={activated === section.key ? "menu-active" : ""}
+                className={
+                  activated === section.key ? "menu-active rounded-lg font-bold" : "rounded-lg"
+                }
                 onClick={() => handleMainSectionClick(section.key)}>
                 {section.title}
               </button>
@@ -71,7 +73,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
             <li key={section.key} className="menu-item rounded-2xl">
               <Link
                 href={`/${section.key}`}
-                className={activated === section.key ? "menu-active" : ""}>
+                className={activated === section.key ? "menu-active bg-primary" : ""}>
                 {section.title}
               </Link>
             </li>

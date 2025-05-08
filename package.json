@@ -14,6 +14,7 @@
     "datagen": "node generate-data.js -i ./data -o ./data -a data-accessor.ts -x"
   },
   "dependencies": {
+    "@giscus/react": "^3.1.0",
     "@hugeicons/core-free-icons": "^1.0.14",
     "@hugeicons/react": "^1.0.5",
     "@next/third-parties": "^15.3.2",

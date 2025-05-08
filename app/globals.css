@@ -19,6 +19,16 @@
   }
 }
 
+.menu {
+  --menu-active-bg: var(--color-primary);
+  --menu-active-text: var(--color-primary-content);
+}
+
 html {
   @apply bg-gray-100 dark:bg-zinc-950;
+  /* scrollbar-gutter: stable; */
+  overflow-y: scroll;
+
+  /* transparent scrollbar bg*/
+  scrollbar-color: var(--color-primary) var(--color-zinc-950);
 }
