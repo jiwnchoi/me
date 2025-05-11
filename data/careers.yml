@@ -1,37 +1,47 @@
 careers:
   - id: navercloud
     name: NAVER Cloud
-    title: Research Engineer Intern
+    title: Research Engineer Intern @ [Vision Understanding, HyperCLOVA](https://clova.ai/en)
     from: 2025.02.03
-    to: 2025.05.02
+    # to: 2025.05.02
     location: Seongnam, Korea
     description: >
       **DataLab**: Progressive Exploratory Data Analysis System for VLM Data Filtering and Curation
+
       - Conducted expert interviews to identify pain points in data filtering workflows
+
       - Designed and implemented an interactive interface for efficiently exploring large-scale visual instruction datasets
+
       - Developed visualization tools to evaluate filtering algorithm effectiveness and support iterative refinement
+
       - Built full-stack system with React frontend and FastAPI backend to process large-scale vision-language datasets interactively
 
   - id: skku
     name: Sungkyunkwan University
-    title: Research Assistant
+    title: Research Assistant @ [Interactive Data Computing Lab (IDCLab)](https://idclab.skku.edu)
     from: 2021.05.01
     to: 2025.01.31
     location: Suwon, Korea
     description: >
       - Machine learning-based automated data analysis and visual analytics systems (Machine Learning for Visualization)
+
       - Visualization techniques for understanding complex data and models (Visualization for Machine Learning)
 
   - id: naver
     name: NAVER
-    title: Software Engineer Intern
+    title: Software Engineer Intern @ [nBilly, Smart Studio, ETECH](https://smartstudio.tech/homebuilder/)
     from: 2024.01.02
     to: 2024.02.26
     location: Seongnam, Korea
     description: >
       **BoBAI**: Color Design Recommendation and Assignment System Leveraging In-browser ML Inference
+
       - Conducted formative research through expert interviews and thematic analysis to define user needs
+
       - Designed novel workflow combining expert knowledge with automation algorithms for color designing of landing page
+
       - Developed color recommendation and assignment algorithms optimized for landing page design
+
       - Implemented browser-based machine learning pipeline with text encoder, vector database, and MCTS modules
+
       - Created React component library for the interactive color design interface

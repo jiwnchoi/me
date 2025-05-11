@@ -14,6 +14,7 @@ import { Navigation } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
 import { data } from "@/data";
 import profilepic from "@/data/profilepic.png";
+import { twMerge } from "tailwind-merge";
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
@@ -54,7 +55,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </aside>
             <ViewTransitions>
               <article
-                className="drawer-content prose prose-base prose-img:rounded-lg dark:prose-invert me-card min-h-[80vh] max-w-none px-16"
+                className={twMerge(
+                  "drawer-content min-h-[80vh] max-w-none px-16",
+                  "prose prose-base prose-img:rounded-lg dark:prose-invert prose-ul:m-0 prose-li:m-0 prose-li:mb-1",
+                  "me-card",
+                )}
                 dir="ltr"
                 data-pagefind-body>
                 {children}
