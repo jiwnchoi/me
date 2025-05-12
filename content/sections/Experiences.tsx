@@ -1,12 +1,12 @@
 import { FullItem } from "@/components/items";
 import { data } from "@/data";
 
-const careers = data.careers().careers;
+const experiences = data.experiences().experiences;
 
-export default async function Careers() {
+export default async function Experiences() {
   return (
     <ol className="me-list gap-4">
-      {careers.map((item) => {
+      {experiences.map((item) => {
         return (
           <FullItem
             key={`career-item-${item.id}`}

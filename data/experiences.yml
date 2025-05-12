@@ -1,9 +1,10 @@
-careers:
+experiences:
   - id: navercloud
-    name: NAVER Cloud
+    name: >
+      [NAVER Cloud](https://navercloudcorp.com/en)
     title: Research Engineer Intern @ [Vision Understanding, HyperCLOVA](https://clova.ai/en)
     from: 2025.02.03
-    to: Present
+    to: 2025.05.02
     location: Seongnam, Korea
     description: >
       **DataLab**: Progressive Exploratory Data Analysis System for VLM Data Filtering and Curation
@@ -17,7 +18,8 @@ careers:
       - Built full-stack system with React frontend and FastAPI backend to process large-scale vision-language datasets interactively
 
   - id: skku
-    name: Sungkyunkwan University
+    name: >
+      [Sungkyunkwan University](https://www.skku.edu)
     title: Research Assistant @ [Interactive Data Computing Lab (IDCLab)](https://idclab.skku.edu)
     from: 2021.05.01
     to: 2025.01.31
@@ -28,7 +30,8 @@ careers:
       - Visualization techniques for understanding complex data and models (Visualization for Machine Learning)
 
   - id: naver
-    name: NAVER
+    name: >
+      [NAVER](https://www.navercorp.com/en)
     title: Software Engineer Intern @ [nBilly, Smart Studio, ETECH](https://smartstudio.tech/homebuilder/)
     from: 2024.01.02
     to: 2024.02.26

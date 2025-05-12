@@ -8,9 +8,8 @@ import { ThemeProvider } from "next-themes";
 import { ViewTransitions } from "next-view-transitions";
 import Image from "next/image";
 import "nextra-theme-blog/style.css";
-import { Search } from "nextra/components";
 
-import { Navigation } from "@/components";
+import { Navigation, Responsive } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
 import { data } from "@/data";
 import profilepic from "@/data/profilepic.png";
@@ -23,38 +22,51 @@ const openSans = Open_Sans({
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const sections = data.sections().sections;
+  const meta = data.meta();
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <body>
+      <body className="mx-auto flex h-fit max-w-7xl flex-col gap-4 p-4 md:flex-row md:px-8 md:py-8">
         <ThemeProvider attribute={["data-theme", "class"]} defaultTheme="system" enableSystem>
-          <main className="mx-auto flex max-w-7xl gap-4 py-8">
-            <div className="block max-w-2xs min-w-2xs" />
-            <aside className="fixed max-w-2xs min-w-2xs">
-              <section className="me-card py-8">
-                <Image
-                  src={profilepic}
-                  alt="Profile Picture"
-                  className="mx-auto rounded-full"
-                  width={150}
-                  height={150}
-                />
-                <div className="flex flex-col items-center">
-                  <p className="mb-2 text-lg font-semibold">Jiwon (Jason) Choi</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">Research Scientist</p>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    Visualization, HCI, and ML
-                  </p>
-                </div>
-                <ContactButtons />
-              </section>
-              <section className="me-card p-4">
+          <div className="min-h-2xs max-h-2xs hidden max-w-2xs min-w-2xs md:block" />
+          <aside className="sticky top-[-140px] -mb-4 flex w-full flex-col gap-4 md:fixed md:top-8 md:h-screen md:max-w-2xs md:min-w-2xs">
+            <section className="me-card after-bottom-0 after-right-0 after-h-20 relative top-0 z-10 w-full flex-row items-center gap-8 p-4 md:flex-col md:gap-4 md:p-8">
+              <Image
+                src={profilepic}
+                alt="Profile Picture"
+                className="mx-auto h-[108px] w-[108px] rounded-2xl md:h-[150px] md:w-[150px]"
+                width={150}
+                height={150}
+              />
+              <div className="flex w-full flex-col overflow-x-hidden md:items-center">
+                <p className="mb-2 truncate text-lg font-semibold">{meta.name}</p>
+                <p className="mb-1 truncate text-xs text-gray-500 dark:text-gray-400">
+                  {meta.position}
+                </p>
+                <p className="truncate text-xs text-gray-500 dark:text-gray-400">
+                  {meta.affiliation}
+                </p>
+                <ContactButtons className={"mt-4 flex w-full gap-2 md:justify-center"} />
+              </div>
+            </section>
+            <div className="me-nav-header">
+              <section className="me-card sticky top-0 z-10 w-full flex-col p-2 md:block md:p-4">
                 <Navigation sections={sections} />
-                <Search />
+                {/* <Search /> */}
               </section>
-            </aside>
+            </div>
+            <Responsive
+              base={null}
+              md={
+                <Footer className="flex w-full flex-col-reverse items-center justify-start gap-2">
+                  Copyright © 2025 Jiwon Jason Choi
+                </Footer>
+              }
+            />
+          </aside>
+          <main className="w-full grow md:-mr-4">
             <ViewTransitions>
               <article
-                className="me-prose me-card drawer-content min-h-[80vh] w-full px-16 pt-0 pb-16"
+                className="me-prose me-card drawer-content min-h-[80vh] w-full flex-col p-16"
                 dir="ltr"
                 data-pagefind-body>
                 {children}
@@ -62,9 +74,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </ViewTransitions>
           </main>
 
-          <Footer className="container mx-auto my-8 max-w-7xl">
-            Copyright © 2025 Jiwon Jason Choi
-          </Footer>
+          <Responsive
+            base={<Footer className="w-full p-8 pt-0">Copyright © 2025 Jiwon Jason Choi</Footer>}
+            md={null}
+          />
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="G-XVX4B96FPG" />

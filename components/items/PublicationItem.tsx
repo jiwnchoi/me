@@ -83,7 +83,7 @@ export default async function PublicationItem(props: Publication) {
         <AuthorNames authorList={authors} />
         <p className="not-prose text-sm text-gray-500 dark:text-gray-400">{venue}</p>
 
-        <div className="mt-2 flex flex-wrap gap-1">
+        <div className="mt-2 flex flex-wrap gap-2">
           {Object.entries(url).map(
             ([key, value]) =>
               value && (

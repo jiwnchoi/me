@@ -1,9 +1,11 @@
 "use client";
 
 import { type Section } from "@/data";
+import clsx from "clsx";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import Responsive from "./Responsive";
 
 export default function Navigation({ sections }: { sections: Section[] }) {
   const pathname = usePathname();
@@ -35,13 +37,6 @@ export default function Navigation({ sections }: { sections: Section[] }) {
       .filter((s) => s.type === "main")
       .map((s) => document.getElementById(s.key))
       .filter((el): el is HTMLElement => !!el);
-
-    if (pathname === "/" && hash && sections.some((s) => s.key === hash && s.type === "main")) {
-      const element = document.getElementById(hash);
-      if (element) {
-        setTimeout(() => window.scrollTo({ top: element.offsetTop - 20, behavior: "auto" }), 100);
-      }
-    }
   }, [pathname, sections]);
 
   useEffect(() => {
@@ -91,9 +86,21 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     isProgrammaticScrollRef.current = true;
 
     if (pathname === "/") {
+      if (sectionKey === "main") {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
+        router.replace("/", { scroll: false });
+      }
+
       const element = document.getElementById(sectionKey);
       if (element) {
-        window.scrollTo({ top: element.offsetTop - 20, behavior: "smooth" });
+        const isMd = window.matchMedia("(min-width: 768px)").matches;
+        window.scrollTo({
+          top: element.offsetTop - (isMd ? 20 : 120),
+          behavior: "smooth",
+        });
         router.replace(`/#${sectionKey}`, { scroll: false });
       }
     } else {
@@ -105,37 +112,40 @@ export default function Navigation({ sections }: { sections: Section[] }) {
   };
 
   return (
-    <div className="w-full">
-      <ul className="menu flex w-full flex-col">
+    <div className="not-prose flex w-full md:flex-col">
+      <ul className="menu flex w-full flex-row flex-nowrap justify-between gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col [&::-webkit-scrollbar]:hidden">
         {sections
           .filter((s) => s.type === "main")
           .map((section) => (
-            <li key={section.key}>
-              <button
-                className={
-                  activated === section.key ? "menu-active rounded-lg font-bold" : "rounded-lg"
-                }
-                onClick={() => handleMainSectionClick(section.key)}>
-                {section.title}
-              </button>
+            <li key={section.key} className="menu-item flex-shrink-0">
+              <Responsive
+                component="button"
+                base={section.shortTitle}
+                md={section.title}
+                onClick={() => handleMainSectionClick(section.key)}
+                className={clsx(
+                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
+                  activated === section.key ? "me-highlight font-bold" : "",
+                )}
+              />
             </li>
           ))}
-      </ul>
-      <div className="divider my-0" />
-      <ul className="menu flex w-full flex-col">
+
+        <div className="divider divider-horizontal md:divider-vertical divider-primary mx-1 flex-shrink-0" />
         {sections
           .filter((s) => s.type === "page")
           .map((section) => (
-            <li key={section.key} className="menu-item">
-              <Link
+            <li key={section.key} className="menu-item flex-shrink-0">
+              <Responsive
+                component={Link}
                 href={`/${section.key}`}
-                className={
-                  activated === section.key
-                    ? "menu-active bg-primary rounded-lg font-bold"
-                    : "rounded-lg"
-                }>
-                {section.title}
-              </Link>
+                base={section.shortTitle}
+                md={section.title}
+                className={clsx(
+                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
+                  activated === section.key ? "me-highlight font-bold" : "",
+                )}
+              />
             </li>
           ))}
       </ul>

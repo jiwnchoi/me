@@ -49,10 +49,10 @@ const HREF_MAP: Record<string, (valye: string) => string> = {
   instagram: (username: string) => `https://www.instagram.com/${username}`,
 };
 
-export default async function ContactButtons() {
+export default async function ContactButtons(props: React.HTMLProps<HTMLDivElement>) {
   const contacts = data.meta().contacts ?? {};
   return (
-    <div className="flex w-full justify-center gap-2 px-4">
+    <div {...props}>
       {Object.entries(contacts).map(([key, value]) => {
         const Icon = ICON_MAP[key];
         if (Icon) {

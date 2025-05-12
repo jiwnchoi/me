@@ -11,7 +11,7 @@ interface SimpleItemProps extends React.HTMLAttributes<HTMLLIElement> {
 export default async function SimpleItem(props: SimpleItemProps) {
   const { left, right, leftProps, rightProps, ...rest } = props;
   return (
-    <li className="m-0 my-0 mt-0 mb-0 flex gap-4 p-0" {...rest}>
+    <li className="m-0 my-0 mt-0 mb-0 flex gap-4 pl-0" {...rest}>
       <div
         {...leftProps}
         className="w-[72px] min-w-[72px] text-base font-semibold text-gray-500 dark:text-gray-400">

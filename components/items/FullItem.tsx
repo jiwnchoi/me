@@ -24,7 +24,7 @@ export default async function FullItem(props: FullItemProps) {
             subheading
           )}
         </div>
-        <div className="flex flex-col items-end gap-1">
+        <div className="flex flex-col items-end">
           <Date from={dateFrom} to={dateTo} />
           {location && (
             <p className="not-prose text-sm text-gray-500 italic dark:text-gray-400">{location}</p>

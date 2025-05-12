@@ -1,7 +1,7 @@
 skills:
   - type: Frontend
     description: >
-      **React**, **TypeScript**, State Management (Zustand, React-Query), Visualization (**D3**, visx, Vega, vis.gl, ...)
+      **React**, **TypeScript**, Visualization (**D3**, visx, Vega, vis.gl, ...)
 
   - type: Backend
     description: >

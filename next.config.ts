@@ -6,7 +6,13 @@ const withNextra = nextra({
   latex: true,
 });
 
-const nextConfig: NextConfig = {};
+const nextConfig: NextConfig = {
+  turbopack: {
+    resolveAlias: {
+      "next-mdx-import-source-file": "/mdx-components.tsx",
+    },
+  },
+};
 
 const config = withNextra(nextConfig);
 

@@ -6,7 +6,7 @@ const news = data.news().news;
 
 export default async function News() {
   return (
-    <ol className="me-list">
+    <ol className="me-list gap-0.5">
       {news.map((item, i) => {
         return (
           <SimpleItem

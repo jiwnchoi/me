@@ -1,28 +1,35 @@
 sections:
-  - key: news
-    title: News
+  - key: about
+    title: About
+    shortTitle: About
     type: main
 
-  - key: careers
-    title: Careers
+  - key: experiences
+    title: Experiences
+    shortTitle: Exps
     type: main
 
   - key: educations
     title: Educations
+    shortTitle: Edus
     type: main
 
   - key: publications
     title: Publications
+    shortTitle: Pubs
     type: main
 
   - key: misc
     title: Miscellaneous
+    shortTitle: Misc
     type: main
 
   - key: projects
     title: Project Gallery
+    shortTitle: Prjs
     type: page
 
   - key: blog
     title: Blog
+    shortTitle: Blog
     type: page

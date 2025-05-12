@@ -18,7 +18,8 @@ export default function ThemeSwitch({ className }: { className?: string }) {
       aria-label="Toggle Dark Mode"
       onClick={() => setTheme(isDark ? "light" : "dark")}>
       <HugeiconsIcon icon={IconToUse} size={12} />
-      <span>{isDark ? "Dark" : "Light"}</span>
+      <span className="dark:hidden">Light</span>
+      <span className="hidden dark:inline">Dark</span>
     </button>
   );
 }

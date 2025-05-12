@@ -1,5 +1,6 @@
 import { ThemeSwitch } from "@/components";
 import type { FC, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 export const Footer: FC<{
   children: ReactNode;
@@ -7,7 +8,10 @@ export const Footer: FC<{
 }> = ({ className, children }) => {
   return (
     <footer
-      className={`${"footer footer-horizontal flex items-center justify-between"} ${className}`}>
+      className={twMerge([
+        "footer footer-horizontal flex items-center justify-between",
+        className,
+      ])}>
       <ThemeSwitch className={"btn btn-ghost btn-xs flex items-center gap-2"} />
       <small data-pagefind-ignore="all">{children}</small>
     </footer>
