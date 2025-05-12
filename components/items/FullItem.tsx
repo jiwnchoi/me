@@ -31,7 +31,7 @@ export default async function FullItem(props: FullItemProps) {
           <Date from={dateFrom} to={dateTo} />
         </div>
       </div>
-      <div className="border-primary border-opacity-50 mt-2 border-l-2 pl-4 text-sm">
+      <div className="border-primary border-opacity-50 mt-2 ml-0.5 border-l-2 pl-4 text-sm">
         {description && <MDXContent mdxSource={description} />}
       </div>
     </li>

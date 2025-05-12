@@ -7,6 +7,21 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Responsive from "./Responsive";
 
+const getActiveKeyFromUrl = (pathname: string, sections: Section[]): string => {
+  const isClient = typeof window !== "undefined";
+  const hash = isClient ? window.location.hash.substring(1) : "";
+
+  if (pathname === "/") {
+    const sectionFromHash = sections.find((s) => s.type === "main" && s.key === hash);
+    if (sectionFromHash) {
+      return sectionFromHash.key;
+    }
+    return sections.find((s) => s.type === "main")?.key || "";
+  } else {
+    return pathname.slice(1); // Remove leading '/'
+  }
+};
+
 export default function Navigation({ sections }: { sections: Section[] }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -17,22 +32,13 @@ export default function Navigation({ sections }: { sections: Section[] }) {
 
   const [visibleSections, setVisibleSections] =
     useState<Record<string, boolean>>(initialVisibleSections);
-  const [activated, setActivated] = useState<string>("");
+  const [activated, setActivated] = useState<string>(getActiveKeyFromUrl(pathname, sections));
 
   const mainSectionElements = useRef<HTMLElement[]>([]);
   const isProgrammaticScrollRef = useRef(false);
   const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
-    const hash = window.location.hash.substring(1);
-    setActivated(
-      pathname === "/"
-        ? sections.find((s) => s.type === "main" && s.key === hash)?.key ||
-            sections.find((s) => s.type === "main")?.key ||
-            ""
-        : pathname.slice(1),
-    );
-
     mainSectionElements.current = sections
       .filter((s) => s.type === "main")
       .map((s) => document.getElementById(s.key))
@@ -119,7 +125,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
               <Responsive
-                component="button"
+                component="a"
                 base={section.shortTitle}
                 md={section.title}
                 onClick={() => handleMainSectionClick(section.key)}
@@ -151,7 +157,9 @@ export default function Navigation({ sections }: { sections: Section[] }) {
             <li key={section.key} className="menu-item flex-shrink-0">
               <Responsive
                 component={Link}
+                onClick={() => setActivated(section.key)}
                 href={`/${section.key}`}
+                target="_self"
                 base={section.shortTitle}
                 md={section.title}
                 className={clsx(
