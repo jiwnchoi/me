@@ -15,6 +15,7 @@ import {
 import type { MDXComponents } from "nextra/mdx-components";
 import { useMDXComponents as getNextraMDXComponents } from "nextra/mdx-components";
 import type { ComponentProps, FC } from "react";
+import { twMerge } from "tailwind-merge";
 import { Giscus } from "./components";
 
 export type UseMDXComponents<
@@ -41,7 +42,11 @@ const createHeading = (Tag: `h${2 | 3 | 4 | 5 | 6}`): FC<ComponentProps<typeof T
       <Tag
         id={id}
         // can be added by footnotes
-        className={className === "sr-only" ? "x:sr-only" : ""}
+        className={
+          className === "sr-only"
+            ? "x:sr-only text-primary dark:text-primary"
+            : "text-primary dark:text-primary"
+        }
         {...props}>
         {children}
         {id && (
@@ -70,6 +75,7 @@ type BlogMDXComponents = MDXComponents & {
 };
 
 const DEFAULT_COMPONENTS = getNextraMDXComponents({
+  a: (props) => <a {...props} className={twMerge(props.className, "me-hover")} />,
   blockquote: Blockquote,
   code: Code,
   details: Details,

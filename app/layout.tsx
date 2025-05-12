@@ -14,7 +14,6 @@ import { Navigation } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
 import { data } from "@/data";
 import profilepic from "@/data/profilepic.png";
-import { twMerge } from "tailwind-merge";
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
@@ -31,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main className="mx-auto flex max-w-7xl gap-4 py-8">
             <div className="block max-w-2xs min-w-2xs" />
             <aside className="fixed max-w-2xs min-w-2xs">
-              <section className="me-card">
+              <section className="me-card py-8">
                 <Image
                   src={profilepic}
                   alt="Profile Picture"
@@ -48,18 +47,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 </div>
                 <ContactButtons />
               </section>
-              <section className="me-card">
+              <section className="me-card p-4">
                 <Navigation sections={sections} />
                 <Search />
               </section>
             </aside>
             <ViewTransitions>
               <article
-                className={twMerge(
-                  "drawer-content min-h-[80vh] max-w-none px-16",
-                  "prose prose-base prose-img:rounded-lg dark:prose-invert prose-ul:m-0 prose-li:m-0 prose-li:mb-1",
-                  "me-card",
-                )}
+                className="me-prose me-card drawer-content min-h-[80vh] w-full px-16 pt-0 pb-16"
                 dir="ltr"
                 data-pagefind-body>
                 {children}

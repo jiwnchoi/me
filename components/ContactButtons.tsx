@@ -9,7 +9,7 @@ import {
 } from "@hugeicons/core-free-icons";
 import { HugeiconsIcon, type IconSvgElement } from "@hugeicons/react";
 
-function ContactButton({
+async function ContactButton({
   href,
   Icon,
   label,
@@ -23,7 +23,7 @@ function ContactButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="btn btn-square btn-ghost btn-xs font-color"
+      className="btn btn-square btn-ghost btn-xs font-color me-hover"
       aria-label={label}>
       <HugeiconsIcon icon={Icon} size={18} />
     </a>
@@ -49,7 +49,7 @@ const HREF_MAP: Record<string, (valye: string) => string> = {
   instagram: (username: string) => `https://www.instagram.com/${username}`,
 };
 
-export default function ContactButtons() {
+export default async function ContactButtons() {
   const contacts = data.meta().contacts ?? {};
   return (
     <div className="flex w-full justify-center gap-2 px-4">

@@ -15,16 +15,8 @@ sections:
     title: Publications
     type: main
 
-  - key: services
-    title: Services
-    type: main
-
-  - key: honors
-    title: Honors
-    type: main
-
-  - key: skills
-    title: Skills
+  - key: misc
+    title: Miscellaneous
     type: main
 
   - key: projects

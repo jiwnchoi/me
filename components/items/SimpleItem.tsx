@@ -14,10 +14,10 @@ export default async function SimpleItem(props: SimpleItemProps) {
     <li className="m-0 my-0 mt-0 mb-0 flex gap-4 p-0" {...rest}>
       <div
         {...leftProps}
-        className="w-[72px] min-w-[72px] text-sm font-semibold text-gray-500 dark:text-gray-400">
+        className="w-[72px] min-w-[72px] text-base font-semibold text-gray-500 dark:text-gray-400">
         {typeof left === "string" ? <MDXContent mdxSource={left} /> : left}
       </div>
-      <div {...rightProps} className="text-sm text-gray-700 dark:text-gray-300">
+      <div {...rightProps} className="text-base text-gray-700 dark:text-gray-300">
         {typeof right === "string" ? <MDXContent mdxSource={right} /> : right}
       </div>
     </li>

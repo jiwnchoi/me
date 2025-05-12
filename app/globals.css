@@ -13,10 +13,19 @@
   --font-sans: var(--font-open-sans), sans-serif;
 }
 
-@layer components {
-  .me-card {
-    @apply mb-4 flex w-full flex-col items-center gap-4 rounded-4xl bg-white p-4 dark:bg-zinc-900;
-  }
+.me-card {
+  @apply m-0 mb-4 flex w-full flex-col rounded-4xl bg-white dark:bg-zinc-900;
+}
+
+.me-hover {
+  @apply hover:bg-primary-content hover:text-primary rounded-sm px-0.5 py-0 transition-all duration-100 ease-in-out;
+}
+.me-prose {
+  @apply prose prose-base prose-img:rounded-lg dark:prose-invert prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2 prose-headings:mb-4 prose-h2:mt-12 prose-headings:text-primary max-w-none p-0 px-16 pt-8 pb-16;
+}
+
+.me-list {
+  @apply m-0 mb-0 flex flex-col px-0 pl-0;
 }
 
 .menu {
@@ -31,4 +40,7 @@ html {
 
   /* transparent scrollbar bg*/
   scrollbar-color: var(--color-primary) var(--color-zinc-950);
+
+  /* no overscroll */
+  overscroll-behavior: none;
 }

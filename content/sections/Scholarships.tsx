@@ -2,15 +2,15 @@ import { Date } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
-const honors = data.misc().honors;
+const scholarships = data.misc().scholarships;
 
-export default async function Honors() {
+export default async function Scholarships() {
   return (
     <ol className="me-list">
-      {honors.map((item) => {
+      {scholarships.map((item) => {
         return (
           <SimpleItem
-            key={`honors-item-${item.id}`}
+            key={`scholarships-item-${item.id}`}
             left={<Date from={item.date} />}
             right={
               <div className="flex flex-col gap-1">

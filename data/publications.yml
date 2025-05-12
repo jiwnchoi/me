@@ -1,6 +1,7 @@
 publications:
   - id: swipytics
     title: "Swipytics: Leveraging Short-form Video Stream Metaphor in Exploratory Data Analysis"
+    venue: Preprint
     authors:
       - Jiwon Choi
       - Sehi L'Yi
@@ -8,9 +9,8 @@ publications:
       - Jaemin Jo
     type: preprint
     url:
-      - pdf: null
-      - git: https://github.com/jiwnchoi/Swipytics
-      - video: https://youtube.com/shorts/MrYS-1VKtUM
+      git: https://github.com/jiwnchoi/Swipytics
+      video: https://youtube.com/shorts/MrYS-1VKtUM
 
   - id: waltzboard
     title: "Waltzboard: Multi-Criteria Automated Dashboard Design for Exploratory Analysis"
@@ -20,9 +20,8 @@ publications:
     type: conference
     venue: "Proceedings of 2025 IEEE Pacific Visualization Conference (IEEE PacificVis), Taipei, Taiwan, 2025."
     url:
-      - pdf: null
-      - git: https://github.com/jiwnchoi/Waltzboard
-      - video: https://youtu.be/fOweAPS-lz4
+      git: https://github.com/jiwnchoi/Waltzboard
+      video: https://youtu.be/fOweAPS-lz4
 
   - id: bavisitter
     title: "Bavisitter: Integrating Design Guidelines into Large Language Models for Visualization Authoring"
@@ -33,9 +32,9 @@ publications:
     type: conference
     venue: "Proceedings of Conference on 2024 IEEE Visualization and Visual Analytics (IEEE VIS), Tampa Bay, USA, 2024."
     url:
-      - pdf: https://github.com/jiwnchoi/Bavisitter/blob/main/assets/bavisitter.pdf
-      - git: https://github.com/jiwnchoi/Bavisitter
-      - video: https://youtu.be/AuRkGbia3yQ
+      pdf: https://github.com/jiwnchoi/Bavisitter/blob/main/assets/bavisitter.pdf
+      git: https://github.com/jiwnchoi/Bavisitter
+      video: https://youtu.be/AuRkGbia3yQ
 
   - id: projectionensemble
     title: "Projection Ensemble: Visualizing the Robust Structures of Multidimensional Projections"
@@ -46,9 +45,8 @@ publications:
     type: conference
     venue: "Proceedings of Conference on 2023 IEEE Visualization and Visual Analytics (IEEE VIS), Melbourne, Australia, 2023."
     url:
-      - pdf: https://ieeexplore.ieee.org/abstract/document/10360924/
-      - git: https://github.com/jjmmwon/ProjectionEnsemble
-      - video: null
+      pdf: https://ieeexplore.ieee.org/abstract/document/10360924/
+      git: https://github.com/jjmmwon/ProjectionEnsemble
 
   - id: intentable
     title: "Intentable: A Mixed-Initiative System for Intent-Based Chart Captioning"
@@ -58,9 +56,8 @@ publications:
     type: conference
     venue: "Proceedings of Conference on 2022 IEEE Visualization and Visual Analytics (IEEE VIS), Oklahoma City, USA, 2022."
     url:
-      - pdf: https://github.com/jiwnchoi/Intentable/files/9109841/Intentable_A.Mixed-Initiative.System.for.Intent-Based.Chart.Captioning.pdf
-      - git: https://github.com/jiwnchoi/Intentable
-      - video: null
+      pdf: https://github.com/jiwnchoi/Intentable/files/9109841/Intentable_A.Mixed-Initiative.System.for.Intent-Based.Chart.Captioning.pdf
+      git: https://github.com/jiwnchoi/Intentable
 
   - id: vanas
     title: "VANAS: A Visual Analytics System for Neural Architecture Search"
@@ -71,6 +68,6 @@ publications:
     type: conference
     venue: "Proceedings of HCI Korea 2022, Seoul, Korea, 2022."
     url:
-      - pdf: https://github.com/jason-choi-SKKU/VANAS/files/7750682/VANAS.pdf
-      - git: https://github.com/jiwnchoi/VANAS
-      - video: null
+      web: https://jiwnchoi.github.io/VANAS/
+      pdf: https://github.com/jason-choi-SKKU/VANAS/files/7750682/VANAS.pdf
+      git: https://github.com/jiwnchoi/VANAS

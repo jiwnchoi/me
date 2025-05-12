@@ -15,7 +15,6 @@ export default async function MDXContent({ mdxSource, className, ...props }: MDX
       compiledSource={compiledSource}
       components={{
         ...props.components,
-        a: (props) => <a className={"underline"} {...props} />,
         span: (props) => <span className={`not-prose ${className ?? ""}`} {...props} />,
         h3: (props) => (
           <h3 className={`not-prose text-lg font-bold ${className ?? ""}`} {...props} />
