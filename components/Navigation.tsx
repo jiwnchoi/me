@@ -130,7 +130,20 @@ export default function Navigation({ sections }: { sections: Section[] }) {
               />
             </li>
           ))}
-
+        {/* <li className="menu-item flex-shrink-0">
+          <button
+            className="me-highlight block w-[64px] rounded-lg text-center text-xs font-bold md:hidden md:w-full md:text-start md:text-base"
+            base="About"
+            md="About">
+            About
+          </button>
+          <button
+            className="me-highlight hidden w-[64px] rounded-lg text-center text-xs font-bold md:block md:w-full md:text-start md:text-base"
+            base="About"
+            md="About">
+            About
+          </button>
+        </li> */}
         <div className="divider divider-horizontal md:divider-vertical divider-primary mx-1 flex-shrink-0" />
         {sections
           .filter((s) => s.type === "page")
