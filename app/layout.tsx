@@ -5,7 +5,6 @@ import "./globals.css";
 import { Footer } from "@/components/layout";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ThemeProvider } from "next-themes";
-import { ViewTransitions } from "next-view-transitions";
 import Image from "next/image";
 import "nextra-theme-blog/style.css";
 
@@ -64,18 +63,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             />
           </aside>
           <main className="w-full grow md:-mr-4">
-            <ViewTransitions>
-              <article
-                className="me-prose me-card drawer-content min-h-[80vh] w-full flex-col p-16"
-                dir="ltr"
-                data-pagefind-body>
-                {children}
-              </article>
-            </ViewTransitions>
+            <article
+              className="me-prose me-card drawer-content min-h-[100vh] w-full flex-col p-16"
+              dir="ltr"
+              data-pagefind-body>
+              {children}
+            </article>
           </main>
 
           <Responsive
-            base={<Footer className="w-full p-8 pt-0">Copyright © 2025 Jiwon Jason Choi</Footer>}
+            base={
+              <Footer className="w-full p-2 pt-0 text-gray-500 dark:text-gray-400">
+                Copyright © 2025 Jiwon Jason Choi
+              </Footer>
+            }
             md={null}
           />
         </ThemeProvider>

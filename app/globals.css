@@ -157,10 +157,11 @@
 
 html {
   @apply bg-gray-100 dark:bg-zinc-950;
-  scrollbar-gutter: auto;
+  scrollbar-gutter: stable;
   scrollbar-width: none;
 
   scrollbar-color: var(--color-primary) var(--bg);
+  scroll-behavior: smooth !important;
 
   /* no overscroll */
   overscroll-behavior: none;

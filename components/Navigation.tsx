@@ -3,7 +3,7 @@
 import { type Section } from "@/data";
 import clsx from "clsx";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import Responsive from "./Responsive";
 
@@ -23,7 +23,7 @@ const getActiveKeyFromUrl = (pathname: string, sections: Section[]): string => {
 };
 
 export default function Navigation({ sections }: { sections: Section[] }) {
-  const pathname = usePathname();
+  // const pathname = usePathname();
   const router = useRouter();
 
   const initialVisibleSections = Object.fromEntries(
@@ -32,20 +32,23 @@ export default function Navigation({ sections }: { sections: Section[] }) {
 
   const [visibleSections, setVisibleSections] =
     useState<Record<string, boolean>>(initialVisibleSections);
-  const [activated, setActivated] = useState<string>(getActiveKeyFromUrl(pathname, sections));
+  const [activated, setActivated] = useState<string>("");
 
   const mainSectionElements = useRef<HTMLElement[]>([]);
-  const isProgrammaticScrollRef = useRef(false);
+  const isProgrammaticScroll = useRef(false);
+  const isScrolling = useRef(false);
   const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
+    const pathname = window.location.pathname;
+
+    const initialKey = getActiveKeyFromUrl(pathname, sections);
+    setActivated(initialKey);
+
     mainSectionElements.current = sections
       .filter((s) => s.type === "main")
       .map((s) => document.getElementById(s.key))
       .filter((el): el is HTMLElement => !!el);
-  }, [pathname, sections]);
-
-  useEffect(() => {
     if (!mainSectionElements.current.length) return;
 
     const observer = new IntersectionObserver(
@@ -66,7 +69,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           return changed ? newVisible : prev;
         });
       },
-      { threshold: 0.1, root: null, rootMargin: "0px 0px -40% 0px" },
+      { threshold: 1.0, root: null, rootMargin: "0px 0px -40% 0px" },
     );
 
     mainSectionElements.current.forEach((el) => el && observer.observe(el));
@@ -76,20 +79,22 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     };
   }, [sections]);
 
+  // Scroll Change Effect
   useEffect(() => {
-    if (isProgrammaticScrollRef.current || pathname !== "/") return;
+    if (isProgrammaticScroll.current) return;
     const firstVisibleKey = mainSectionElements.current.find(
       (el) => el && visibleSections[el.id],
     )?.id;
     if (firstVisibleKey && activated !== firstVisibleKey) {
       setActivated(firstVisibleKey);
     }
-  }, [visibleSections, pathname, sections, activated]);
+  }, [visibleSections, sections, activated]);
 
   const handleMainSectionClick = (sectionKey: string) => {
+    const pathname = window.location.pathname;
     setActivated(sectionKey);
     if (programmaticScrollTimeoutRef.current) clearTimeout(programmaticScrollTimeoutRef.current);
-    isProgrammaticScrollRef.current = true;
+    isProgrammaticScroll.current = true;
 
     if (pathname === "/") {
       if (sectionKey === "about") {
@@ -113,9 +118,50 @@ export default function Navigation({ sections }: { sections: Section[] }) {
       router.push(`/#${sectionKey}`);
     }
     programmaticScrollTimeoutRef.current = setTimeout(() => {
-      isProgrammaticScrollRef.current = false;
+      isProgrammaticScroll.current = false;
     }, 500);
   };
+
+  const handlePageSectionClick = (sectionKey: string) => {
+    setActivated(sectionKey);
+    const rAFCallback = () => {
+      if (isScrolling.current) {
+        rAFCallback();
+      } else {
+        router.push(`/${sectionKey}`);
+      }
+    };
+
+    window.scrollTo({
+      top: 160,
+      behavior: "smooth",
+    });
+    rAFCallback();
+  };
+
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // const handleWindowScroll = useCallback(
+  //   throttle(() => {
+  //     console.log("scrolling");
+  //     isScrolling.current = true;
+  //   }, 10),
+  //   [],
+  // );
+
+  // const handleScrollEnd = useCallback(() => {
+  //   console.log("scroll end");
+  //   handleWindowScroll.cancel();
+  //   isScrolling.current = false;
+  // }, [handleWindowScroll]);
+
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleWindowScroll);
+  //   window.addEventListener("scrollend", handleScrollEnd);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleWindowScroll);
+  //     window.removeEventListener("scrollend", handleScrollEnd);
+  //   };
+  // }, [handleScrollEnd, handleWindowScroll]);
 
   return (
     <div className="not-prose flex w-full md:flex-col">
@@ -155,9 +201,12 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .filter((s) => s.type === "page")
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
-              <Responsive
+              <Responsive<typeof Link>
                 component={Link}
-                onClick={() => setActivated(section.key)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageSectionClick(section.key);
+                }}
                 href={`/${section.key}`}
                 target="_self"
                 base={section.shortTitle}

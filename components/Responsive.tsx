@@ -1,13 +1,18 @@
-import React from "react";
+import React, { type ComponentProps, type ElementType, type ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 
+// Define the specific breakpoints supported
 type Breakpoint = "base" | "sm" | "md" | "lg" | "xl" | "2xl";
 
-type ResponsiveProps = Partial<Record<Breakpoint, React.ReactNode>> & {
-  component?: React.ElementType;
+type ResponsiveSpecificProps = Partial<Record<Breakpoint, ReactNode>> & {
+  component?: ElementType; // Use ElementType for flexibility
   className?: string;
-} & Omit<React.HTMLProps<HTMLElement>, "children" | "className">;
+};
 
+type ResponsiveProps<T extends ElementType> = ResponsiveSpecificProps &
+  Omit<ComponentProps<T>, keyof ResponsiveSpecificProps | "children">;
+
+// Map breakpoints to their Tailwind prefixes
 const prefixes: Record<Breakpoint, string> = {
   base: "",
   sm: "sm:",
@@ -17,36 +22,56 @@ const prefixes: Record<Breakpoint, string> = {
   "2xl": "2xl:",
 };
 
-export default function Responsive({
+const getDisplayClass = (bp: Breakpoint, isActive: boolean): string => {
+  const prefix = prefixes[bp];
+  return isActive ? `${prefix}block` : `${prefix}hidden`;
+};
+
+export default function Responsive<T extends ElementType = "div">({
   component: Component = "div",
   className,
-  ...props
-}: ResponsiveProps): React.ReactElement {
-  const entries = Object.entries({
-    base: props.base,
-    sm: props.sm,
-    md: props.md,
-    lg: props.lg,
-    xl: props.xl,
-    "2xl": props["2xl"],
-  }).filter(([, node]) => node !== undefined) as [Breakpoint, React.ReactNode][];
+  base,
+  sm,
+  md,
+  lg,
+  xl,
+  "2xl": xxl, // Use a valid variable name for '2xl' key
+  // Capture the rest of the props to pass down
+  ...restProps
+}: ResponsiveProps<T>): React.ReactElement | null {
+  const breakpointContent: Partial<Record<Breakpoint, ReactNode>> = {
+    base,
+    sm,
+    md,
+    lg,
+    xl,
+    "2xl": xxl,
+  };
+
+  const definedEntries = (Object.entries(breakpointContent) as [Breakpoint, ReactNode][]).filter(
+    ([, node]) => node !== undefined,
+  );
+
+  if (definedEntries.length === 0) {
+    return null;
+  }
 
   return (
     <>
-      {entries.map(([bp, node]) => (
-        <Component
-          key={bp}
-          className={twMerge(
-            [
-              `${prefixes[bp]}block`,
-              ...entries.filter(([b]) => b !== bp).map(([b]) => `${prefixes[b]}hidden`),
-            ].join(" "),
-            className,
-          )}
-          {...props}>
-          {node}
-        </Component>
-      ))}
+      {definedEntries.map(([currentBp, node]) => {
+        const visibilityClasses = definedEntries
+          .map(([bp]) => getDisplayClass(bp, bp === currentBp))
+          .join(" ");
+
+        return (
+          <Component
+            key={currentBp}
+            className={twMerge(visibilityClasses, className)}
+            {...restProps}>
+            {node}
+          </Component>
+        );
+      })}
     </>
   );
 }
