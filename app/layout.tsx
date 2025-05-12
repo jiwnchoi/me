@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="mx-auto flex h-fit max-w-7xl flex-col gap-4 p-4 md:flex-row md:px-8 md:py-8">
         <ThemeProvider attribute={["data-theme", "class"]} defaultTheme="system" enableSystem>
           <div className="min-h-2xs max-h-2xs hidden max-w-2xs min-w-2xs md:block" />
-          <aside className="sticky top-[-140px] -mb-4 flex w-full flex-col gap-4 md:fixed md:top-8 md:h-screen md:max-w-2xs md:min-w-2xs">
+          <aside className="sticky top-[-144px] -mb-4 flex w-full flex-col gap-4 md:fixed md:top-8 md:h-screen md:max-w-2xs md:min-w-2xs">
             <section className="me-card after-bottom-0 after-right-0 after-h-20 relative top-0 z-10 w-full flex-row items-center gap-8 p-4 md:flex-col md:gap-4 md:p-8">
               <Image
                 src={profilepic}
