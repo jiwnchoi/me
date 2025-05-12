@@ -15,8 +15,8 @@ export default async function FullItem(props: FullItemProps) {
 
   return (
     <li className="m-0 my-0 mt-0 mb-0 flex flex-col gap-1 p-0" {...rest}>
-      <div className="flex justify-between">
-        <div className="flex flex-col">
+      <div className="flex flex-col justify-between gap-1 md:flex-row">
+        <div className="flex w-full grow flex-col">
           {typeof heading === "string" ? <MDXContent mdxSource={`### ${heading}`} /> : heading}
           {typeof subheading === "string" ? (
             <MDXContent mdxSource={subheading} className="italic" />
@@ -24,11 +24,11 @@ export default async function FullItem(props: FullItemProps) {
             subheading
           )}
         </div>
-        <div className="flex flex-col items-end">
-          <Date from={dateFrom} to={dateTo} />
+        <div className="flex w-full flex-row items-end gap-2 text-xs md:w-fit md:min-w-[150px] md:flex-col md:gap-0 md:text-sm">
           {location && (
-            <p className="not-prose text-sm text-gray-500 italic dark:text-gray-400">{location}</p>
+            <p className="not-prose text-gray-500 italic dark:text-gray-400">{location}</p>
           )}
+          <Date from={dateFrom} to={dateTo} />
         </div>
       </div>
       <div className="border-primary border-opacity-50 mt-2 border-l-2 pl-4 text-sm">

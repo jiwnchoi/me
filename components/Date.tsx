@@ -7,9 +7,7 @@ import { formatDate } from "@/utils";
 
 export default function Date({ from, to, className, ...rest }: DateProps) {
   return (
-    <p
-      className={`not-prose text-xs text-gray-500 italic md:text-base dark:text-gray-400 ${className}`}
-      {...rest}>
+    <p className={`not-prose text-gray-500 italic dark:text-gray-400 ${className}`} {...rest}>
       {from && <span>{formatDate(from)}</span>}
       {to && <span> ─ </span>}
       {to === "Present" ? (
