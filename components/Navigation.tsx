@@ -86,7 +86,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     isProgrammaticScrollRef.current = true;
 
     if (pathname === "/") {
-      if (sectionKey === "main") {
+      if (sectionKey === "about") {
         window.scrollTo({
           top: 0,
           behavior: "smooth",
