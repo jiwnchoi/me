@@ -1,10 +1,10 @@
 "use client";
-
 import { type Section } from "@/data";
 import clsx from "clsx";
+import { throttle } from "es-toolkit";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Responsive from "./Responsive";
 
 const getActiveKeyFromUrl = (pathname: string, sections: Section[]): string => {
@@ -69,7 +69,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           return changed ? newVisible : prev;
         });
       },
-      { threshold: 1.0, root: null, rootMargin: "0px 0px -40% 0px" },
+      { threshold: 0.1, root: null, rootMargin: "0px 0px -40% 0px" },
     );
 
     mainSectionElements.current.forEach((el) => el && observer.observe(el));
@@ -126,42 +126,42 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     setActivated(sectionKey);
     const rAFCallback = () => {
       if (isScrolling.current) {
-        rAFCallback();
+        requestAnimationFrame(rAFCallback);
       } else {
         router.push(`/${sectionKey}`);
       }
     };
 
     window.scrollTo({
-      top: 160,
+      top: 0,
       behavior: "smooth",
     });
-    rAFCallback();
+    setTimeout(() => {
+      requestAnimationFrame(rAFCallback);
+    }, 30);
   };
 
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // const handleWindowScroll = useCallback(
-  //   throttle(() => {
-  //     console.log("scrolling");
-  //     isScrolling.current = true;
-  //   }, 10),
-  //   [],
-  // );
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleWindowScroll = useCallback(
+    throttle(() => {
+      isScrolling.current = true;
+    }, 10),
+    [],
+  );
 
-  // const handleScrollEnd = useCallback(() => {
-  //   console.log("scroll end");
-  //   handleWindowScroll.cancel();
-  //   isScrolling.current = false;
-  // }, [handleWindowScroll]);
+  const handleScrollEnd = useCallback(() => {
+    handleWindowScroll.cancel();
+    isScrolling.current = false;
+  }, [handleWindowScroll]);
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleWindowScroll);
-  //   window.addEventListener("scrollend", handleScrollEnd);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleWindowScroll);
-  //     window.removeEventListener("scrollend", handleScrollEnd);
-  //   };
-  // }, [handleScrollEnd, handleWindowScroll]);
+  useEffect(() => {
+    window.addEventListener("scroll", handleWindowScroll);
+    window.addEventListener("scrollend", handleScrollEnd);
+    return () => {
+      window.removeEventListener("scroll", handleWindowScroll);
+      window.removeEventListener("scrollend", handleScrollEnd);
+    };
+  }, [handleScrollEnd, handleWindowScroll]);
 
   return (
     <div className="not-prose flex w-full md:flex-col">
