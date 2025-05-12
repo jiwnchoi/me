@@ -92,16 +92,16 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           behavior: "smooth",
         });
         router.replace("/", { scroll: false });
-      }
-
-      const element = document.getElementById(sectionKey);
-      if (element) {
-        const isMd = window.matchMedia("(min-width: 768px)").matches;
-        window.scrollTo({
-          top: element.offsetTop - (isMd ? 20 : 120),
-          behavior: "smooth",
-        });
-        router.replace(`/#${sectionKey}`, { scroll: false });
+      } else {
+        const element = document.getElementById(sectionKey);
+        if (element) {
+          const isMd = window.matchMedia("(min-width: 768px)").matches;
+          window.scrollTo({
+            top: element.offsetTop - (isMd ? 20 : 120),
+            behavior: "smooth",
+          });
+          router.replace(`/#${sectionKey}`, { scroll: false });
+        }
       }
     } else {
       router.push(`/#${sectionKey}`);
