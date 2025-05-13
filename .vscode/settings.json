@@ -1,9 +1,4 @@
 {
-  "github.copilot.chat.codeGeneration.instructions": [
-    {
-      "file": "./.vscode/daisyui.md"
-    }
-  ],
   "files.associations": {
     "*.css": "tailwindcss",
     "*.scss": "tailwindcss"

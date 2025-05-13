@@ -156,20 +156,13 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .filter((s) => s.type === "page")
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
-              <Responsive<"a">
+              <Responsive<typeof Link>
                 component={Link}
                 href={`/${section.key}`}
                 target="_self"
                 base={section.shortTitle}
                 md={section.title}
-                onClick={(e) => {
-                  e.preventDefault();
-                  window.scrollTo({
-                    top: window.matchMedia("(min-width: 768px)").matches ? 0 : 160,
-                    behavior: "instant",
-                  });
-                  router.push(`/${section.key}`);
-                }}
+                prefetch={true}
                 className={clsx(
                   "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
