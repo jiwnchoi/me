@@ -171,3 +171,8 @@ h2,
 h3 {
   @apply scroll-mt-[100px] md:scroll-mt-4;
 }
+
+body {
+  margin-left: auto;
+  margin-right: auto;
+}

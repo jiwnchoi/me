@@ -11,10 +11,12 @@ import { ThemeProvider } from "next-themes";
 import Image from "next/image";
 import "nextra-theme-blog/style.css";
 
+import type { LayoutProps } from "@/.next/types/app/layout";
 import { Navigation, Responsive } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
 import { data } from "@/data";
 import profilepic from "@/data/profilepic.png";
+import Head from "next/head";
 const openSans = Open_Sans({
   subsets: ["latin"],
   display: "swap",
@@ -22,12 +24,19 @@ const openSans = Open_Sans({
   variable: "--font-open-sans",
 });
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: LayoutProps) {
+  console.log("RootLayout Rendered");
   const sections = data.sections().sections;
   const meta = data.meta();
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <body className="mx-auto flex h-fit max-w-7xl flex-col gap-4 p-4 md:flex-row md:px-8 md:py-8">
+      <Head>
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </Head>
+      <body className="flex h-fit max-w-7xl flex-col gap-4 p-4 md:flex-row md:px-8 md:py-8">
         <ThemeProvider attribute={["data-theme", "class"]} defaultTheme="system" enableSystem>
           <div className="min-h-2xs max-h-2xs hidden max-w-2xs min-w-2xs md:block" />
           <aside className="sticky top-[-144px] -mb-4 flex w-full flex-col gap-4 md:fixed md:top-8 md:h-screen md:max-w-2xs md:min-w-2xs">

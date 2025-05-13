@@ -1,56 +1,17 @@
 "use client";
 import { type Section } from "@/data";
 import clsx from "clsx";
-import { throttle } from "es-toolkit";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Responsive from "./Responsive";
 
-const getActiveKeyFromUrl = (pathname: string, sections: Section[]): string => {
-  const isClient = typeof window !== "undefined";
-  const hash = isClient ? window.location.hash.substring(1) : "";
-
-  if (pathname === "/") {
-    const sectionFromHash = sections.find((s) => s.type === "main" && s.key === hash);
-    if (sectionFromHash) {
-      return sectionFromHash.key;
-    }
-    return sections.find((s) => s.type === "main")?.key || "";
-  } else {
-    return pathname.slice(1); // Remove leading '/'
-  }
-};
-
-export default function Navigation({ sections }: { sections: Section[] }) {
-  // const pathname = usePathname();
-  const router = useRouter();
-
-  const initialVisibleSections = Object.fromEntries(
-    sections.filter((s) => s.type === "main").map((s) => [s.key, false]),
+function useVisibleSections(sections: Section[]) {
+  const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>(
+    Object.fromEntries(sections.filter((s) => s.type === "main").map((s) => [s.key, false])),
   );
 
-  const [visibleSections, setVisibleSections] =
-    useState<Record<string, boolean>>(initialVisibleSections);
-  const [activated, setActivated] = useState<string>("");
-
-  const mainSectionElements = useRef<HTMLElement[]>([]);
-  const isProgrammaticScroll = useRef(false);
-  const isScrolling = useRef(false);
-  const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-
   useEffect(() => {
-    const pathname = window.location.pathname;
-
-    const initialKey = getActiveKeyFromUrl(pathname, sections);
-    setActivated(initialKey);
-
-    mainSectionElements.current = sections
-      .filter((s) => s.type === "main")
-      .map((s) => document.getElementById(s.key))
-      .filter((el): el is HTMLElement => !!el);
-    if (!mainSectionElements.current.length) return;
-
     const observer = new IntersectionObserver(
       (entries) => {
         setVisibleSections((prev) => {
@@ -72,12 +33,43 @@ export default function Navigation({ sections }: { sections: Section[] }) {
       { threshold: 0.1, root: null, rootMargin: "0px 0px -40% 0px" },
     );
 
-    mainSectionElements.current.forEach((el) => el && observer.observe(el));
+    sections.forEach((section) => {
+      const element = document.getElementById(section.key);
+      if (element) {
+        observer.observe(element);
+      }
+    });
     return () => {
-      mainSectionElements.current.forEach((el) => el && observer.unobserve(el));
+      sections.forEach((section) => {
+        const element = document.getElementById(section.key);
+        if (element) {
+          observer.unobserve(element);
+        }
+      });
       observer.disconnect();
     };
   }, [sections]);
+  return visibleSections;
+}
+
+export default function Navigation({ sections }: { sections: Section[] }) {
+  console.log("Navigation Rendered");
+  const router = useRouter();
+  const pathname = usePathname();
+  const [hash, setHash] = useState<string>("");
+  const visibleSections = useVisibleSections(sections);
+
+  const activated = useMemo(() => {
+    if (pathname === "/") {
+      return hash || "about";
+    } else {
+      return pathname.slice(1); // Remove leading '/'
+    }
+  }, [pathname, hash]);
+
+  const mainSectionElements = useRef<HTMLElement[]>([]);
+  const isProgrammaticScroll = useRef(false);
+  const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Scroll Change Effect
   useEffect(() => {
@@ -86,16 +78,15 @@ export default function Navigation({ sections }: { sections: Section[] }) {
       (el) => el && visibleSections[el.id],
     )?.id;
     if (firstVisibleKey && activated !== firstVisibleKey) {
-      setActivated(firstVisibleKey);
+      setHash(firstVisibleKey);
     }
   }, [visibleSections, sections, activated]);
 
   const handleMainSectionClick = (sectionKey: string) => {
-    const pathname = window.location.pathname;
-    setActivated(sectionKey);
     if (programmaticScrollTimeoutRef.current) clearTimeout(programmaticScrollTimeoutRef.current);
     isProgrammaticScroll.current = true;
 
+    setHash(sectionKey);
     if (pathname === "/") {
       if (sectionKey === "about") {
         window.scrollTo({
@@ -122,47 +113,6 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     }, 500);
   };
 
-  const handlePageSectionClick = (sectionKey: string) => {
-    setActivated(sectionKey);
-    const rAFCallback = () => {
-      if (isScrolling.current) {
-        requestAnimationFrame(rAFCallback);
-      } else {
-        router.push(`/${sectionKey}`);
-      }
-    };
-
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    setTimeout(() => {
-      requestAnimationFrame(rAFCallback);
-    }, 30);
-  };
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const handleWindowScroll = useCallback(
-    throttle(() => {
-      isScrolling.current = true;
-    }, 10),
-    [],
-  );
-
-  const handleScrollEnd = useCallback(() => {
-    handleWindowScroll.cancel();
-    isScrolling.current = false;
-  }, [handleWindowScroll]);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleWindowScroll);
-    window.addEventListener("scrollend", handleScrollEnd);
-    return () => {
-      window.removeEventListener("scroll", handleWindowScroll);
-      window.removeEventListener("scrollend", handleScrollEnd);
-    };
-  }, [handleScrollEnd, handleWindowScroll]);
-
   return (
     <div className="not-prose flex w-full md:flex-col">
       <ul className="menu flex w-full flex-row flex-nowrap justify-between gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col [&::-webkit-scrollbar]:hidden">
@@ -170,11 +120,16 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .filter((s) => s.type === "main")
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
-              <Responsive
-                component="a"
+              <Responsive<typeof Link>
+                component={Link}
                 base={section.shortTitle}
+                href={`/#${section.key}`}
                 md={section.title}
-                onClick={() => handleMainSectionClick(section.key)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleMainSectionClick(section.key);
+                }}
+                target="_self"
                 className={clsx(
                   "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
@@ -201,16 +156,20 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .filter((s) => s.type === "page")
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
-              <Responsive<typeof Link>
+              <Responsive<"a">
                 component={Link}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handlePageSectionClick(section.key);
-                }}
                 href={`/${section.key}`}
                 target="_self"
                 base={section.shortTitle}
                 md={section.title}
+                onClick={(e) => {
+                  e.preventDefault();
+                  window.scrollTo({
+                    top: window.matchMedia("(min-width: 768px)").matches ? 0 : 160,
+                    behavior: "instant",
+                  });
+                  router.push(`/${section.key}`);
+                }}
                 className={clsx(
                   "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
