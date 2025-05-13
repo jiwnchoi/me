@@ -1,4 +1,4 @@
-import { Date } from "@/components";
+import { Date, MDXContent } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
@@ -11,14 +11,16 @@ export default async function Talks() {
         return (
           <SimpleItem
             key={`talks-item-${item.id}`}
-            left={<Date from={item.date} />}
+            left={item.date && <Date from={item.date} />}
             right={
               <div className="flex flex-col gap-1">
                 <p className="not-prose text-base">
                   <span className="font-semibold">{item.title}</span>
                   <span>{`, ${item.name}`}</span>
                 </p>
-                <p className="not-prose text-sm">{item.description}</p>
+                <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
+                  {item.description && <MDXContent mdxSource={item.description} />}
+                </div>
               </div>
             }
           />
