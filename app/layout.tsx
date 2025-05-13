@@ -11,11 +11,11 @@ import { ThemeProvider } from "next-themes";
 import Image from "next/image";
 import "nextra-theme-blog/style.css";
 
-import type { LayoutProps } from "@/.next/types/app/layout";
 import { Navigation, Responsive } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
 import { data } from "@/data";
 import profilepic from "@/data/profilepic.png";
+
 import Head from "next/head";
 const openSans = Open_Sans({
   subsets: ["latin"],
@@ -24,7 +24,7 @@ const openSans = Open_Sans({
   variable: "--font-open-sans",
 });
 
-export default async function RootLayout({ children }: LayoutProps) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   console.log("RootLayout Rendered");
   const sections = data.sections().sections;
   const meta = data.meta();

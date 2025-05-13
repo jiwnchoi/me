@@ -10,8 +10,15 @@ function useVisibleSections(sections: Section[]) {
   const [visibleSections, setVisibleSections] = useState<Record<string, boolean>>(
     Object.fromEntries(sections.filter((s) => s.type === "main").map((s) => [s.key, false])),
   );
+  const sectionRefs = useRef<HTMLElement[]>([]);
 
   useEffect(() => {
+    sectionRefs.current = sections
+      .filter((s) => s.type === "main")
+      .map((s) => document.getElementById(s.key))
+      .filter((el): el is HTMLElement => !!el);
+    if (!sectionRefs.current.length) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         setVisibleSections((prev) => {
@@ -33,31 +40,20 @@ function useVisibleSections(sections: Section[]) {
       { threshold: 0.1, root: null, rootMargin: "0px 0px -40% 0px" },
     );
 
-    sections.forEach((section) => {
-      const element = document.getElementById(section.key);
-      if (element) {
-        observer.observe(element);
-      }
-    });
+    sectionRefs.current.forEach((el) => el && observer.observe(el));
     return () => {
-      sections.forEach((section) => {
-        const element = document.getElementById(section.key);
-        if (element) {
-          observer.unobserve(element);
-        }
-      });
+      sectionRefs.current.forEach((el) => el && observer.unobserve(el));
       observer.disconnect();
     };
   }, [sections]);
-  return visibleSections;
+  return { visibleSections, sectionRefs: sectionRefs };
 }
 
 export default function Navigation({ sections }: { sections: Section[] }) {
-  console.log("Navigation Rendered");
+  const { visibleSections, sectionRefs } = useVisibleSections(sections);
   const router = useRouter();
   const pathname = usePathname();
   const [hash, setHash] = useState<string>("");
-  const visibleSections = useVisibleSections(sections);
 
   const activated = useMemo(() => {
     if (pathname === "/") {
@@ -67,20 +63,17 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     }
   }, [pathname, hash]);
 
-  const mainSectionElements = useRef<HTMLElement[]>([]);
   const isProgrammaticScroll = useRef(false);
   const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   // Scroll Change Effect
   useEffect(() => {
     if (isProgrammaticScroll.current) return;
-    const firstVisibleKey = mainSectionElements.current.find(
-      (el) => el && visibleSections[el.id],
-    )?.id;
+    const firstVisibleKey = sectionRefs.current.find((el) => el && visibleSections[el.id])?.id;
     if (firstVisibleKey && activated !== firstVisibleKey) {
       setHash(firstVisibleKey);
     }
-  }, [visibleSections, sections, activated]);
+  }, [visibleSections, sections, activated, sectionRefs]);
 
   const handleMainSectionClick = (sectionKey: string) => {
     if (programmaticScrollTimeoutRef.current) clearTimeout(programmaticScrollTimeoutRef.current);
@@ -158,6 +151,17 @@ export default function Navigation({ sections }: { sections: Section[] }) {
             <li key={section.key} className="menu-item flex-shrink-0">
               <Responsive<typeof Link>
                 component={Link}
+                onClick={(e) => {
+                  e.preventDefault();
+                  router.push(`/${section.key}`, { scroll: false });
+                  setTimeout(() => {
+                    const isMd = window.matchMedia("(min-width: 768px)").matches;
+                    window.scrollTo({
+                      top: isMd ? 0 : 160,
+                      behavior: "smooth",
+                    });
+                  }, 200);
+                }}
                 href={`/${section.key}`}
                 target="_self"
                 base={section.shortTitle}
