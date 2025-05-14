@@ -162,7 +162,6 @@ html {
   scrollbar-width: none;
 
   scrollbar-color: var(--color-primary) var(--bg);
-  scroll-behavior: smooth !important;
 
   /* no overscroll */
   overscroll-behavior: none;
