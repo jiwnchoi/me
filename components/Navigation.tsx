@@ -59,7 +59,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     if (pathname === "/") {
       return hash || "about";
     } else {
-      return pathname.slice(1); // Remove leading '/'
+      return pathname.split("/")[1];
     }
   }, [pathname, hash]);
 

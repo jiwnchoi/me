@@ -1,14 +1,7 @@
 import { useMDXComponents as getMDXComponents } from "@/mdx-components";
+import { Metadata } from "next";
 import { generateStaticParamsFor, importPage } from "nextra/pages";
 import type { FC } from "react";
-
-export const generateStaticParams = generateStaticParamsFor("mdxPath");
-
-export async function generateMetadata(props: PageProps) {
-  const params = await props.params;
-  const { metadata } = await importPage(params.mdxPath, params.lang);
-  return metadata;
-}
 
 type PageProps = Readonly<{
   params: Promise<{
@@ -16,6 +9,52 @@ type PageProps = Readonly<{
     lang: string;
   }>;
 }>;
+type ReadingTime = {
+  text: string;
+  minutes: number;
+  time: number;
+  words: number;
+};
+
+type NetraMetadata = Omit<Metadata, "title"> & {
+  title: string;
+  filePath: string;
+  timestamp?: number;
+  readingTime?: ReadingTime;
+};
+
+export const generateStaticParams = generateStaticParamsFor("mdxPath");
+
+export async function generateMetadata(props: PageProps) {
+  const params = await props.params;
+  const { metadata } = await importPage(params.mdxPath, params.lang);
+  return getCustomMetadata(metadata);
+}
+
+function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
+  console.log(metadata);
+  return {
+    ...metadata,
+    icons: {
+      apple: "/apple-touch-icon.png",
+      icon: [
+        { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+        { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+      ],
+    },
+    manifest: "/site.webmanifest",
+    openGraph: {
+      images: [
+        {
+          url: `/api/og?title=${metadata.title}&description=${metadata.description}`,
+          width: 1200,
+          height: 630,
+          alt: `${metadata.title} - Jiwon Jason Choi`,
+        },
+      ],
+    },
+  };
+}
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-expect-error

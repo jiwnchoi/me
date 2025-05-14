@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "mdx-components.tsx",
-    "app/[[...mdxPath]]/page.tsx"
+    "app/[[...mdxPath]]/page.tsx",
+    "app/opengraph-image.tsx"
   ],
   "exclude": ["node_modules"]
 }
