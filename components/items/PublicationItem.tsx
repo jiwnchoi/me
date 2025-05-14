@@ -2,6 +2,7 @@ import MDXContent from "@/components/MDXContent";
 import { data, type Publication } from "@/data";
 import Link from "next/link";
 import { FaFilePdf, FaGithub, FaGlobe, FaVideo } from "react-icons/fa6";
+import { twMerge } from "tailwind-merge";
 
 async function AuthorNames({ authorList }: { authorList: string[] }) {
   const authors = data.authors().authors;
@@ -52,7 +53,10 @@ async function PublicationButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="not-prose me-hover m-0 flex items-center gap-1 text-xs">
+      className={twMerge(
+        "not-prose me-hover m-0 flex items-center gap-1 text-xs",
+        "!no-underline",
+      )}>
       <Icon />
       {children}
     </Link>

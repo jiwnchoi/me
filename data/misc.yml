@@ -136,7 +136,7 @@ scholarships:
 talks:
   - id: 2024-korea-visualization-workshop-talk
     name: 2024 2nd Korea Visualization Workshop
-    title: Presenter
+    title: Speaker
     location: Suwon, Korea
     date: "2024.10"
     description: >
@@ -144,7 +144,7 @@ talks:
 
   - id: 2022-skku-cse-seminar-talk
     name: 2022 SKKU CSE Research Story
-    title: Presenter
+    title: Speaker
     location: Suwon, Korea
     date: "2022.12"
     description: >
@@ -152,7 +152,7 @@ talks:
 
   - id: 2022-skku-ai-colloquium-talk
     name: 2022 SKKU AI Colloquium
-    title: Presenter
+    title: Speaker
     location: Suwon, Korea
     date: "2022.10"
     description: >

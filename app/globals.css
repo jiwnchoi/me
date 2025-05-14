@@ -131,10 +131,11 @@
 }
 
 .me-hover {
-  @apply hover:bg-primary-content hover:text-primary -ml-0.5 rounded-sm px-0.5 py-0 transition-all duration-100 ease-in-out;
+  @apply hover:bg-primary-content hover:text-primary -ml-0.5 rounded-sm px-0.5 py-0 underline decoration-dotted underline-offset-2 transition-all duration-100 ease-in-out hover:no-underline;
 }
+
 .me-prose {
-  @apply prose prose-base prose-img:rounded-lg dark:prose-invert prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2 prose-headings:mb-4 prose-h2:mt-12 prose-headings:text-primary prose-a:underline-offset-4 prose-a:font-normal prose-a:text-(--tw-prose-body) max-w-none;
+  @apply prose prose-base prose-img:rounded-lg dark:prose-invert prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2 prose-headings:mb-4 prose-h2:mt-12 prose-headings:text-primary prose-a:decoration-dotted prose-a:font-normal prose-a:text-(--tw-prose-body) max-w-none;
   padding-inline: 0;
   @apply px-4 pt-0 pb-16 md:pt-8 md:pr-16 md:pl-16;
   :where(ol > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
