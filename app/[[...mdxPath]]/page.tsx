@@ -32,7 +32,6 @@ export async function generateMetadata(props: PageProps) {
 }
 
 function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
-  console.log(metadata);
   return {
     ...metadata,
     icons: {

@@ -9,13 +9,13 @@ experiences:
     description: >
       **DataLab**: Progressive Exploratory Data Analysis System for VLM Data Filtering and Curation
 
-      - Conducted expert interviews to identify pain points in data filtering workflows
+  # - Conducted expert interviews to identify pain points in data filtering workflows
 
-      - Designed and implemented an interactive interface for efficiently exploring large-scale visual instruction datasets
+  # - Designed and implemented an interactive interface for efficiently exploring large-scale visual instruction datasets
 
-      - Developed visualization tools to evaluate filtering algorithm effectiveness and support iterative refinement
+  # - Developed visualization tools to evaluate filtering algorithm effectiveness and support iterative refinement
 
-      - Built full-stack system with React frontend and FastAPI backend to process large-scale vision-language datasets interactively
+  # - Built full-stack system with React frontend and FastAPI backend to process large-scale vision-language datasets interactively
 
   - id: skku
     name: >
@@ -25,9 +25,11 @@ experiences:
     to: 2025.01.31
     location: Suwon, Korea
     description: >
-      - Machine learning-based automated data analysis and visual analytics systems (Machine Learning for Visualization)
+      Published three papers on the top-tier venue of visualization (IEEE VIS, two first-authored, one co-authored), one second-tier venue (IEEE PacificVis, first-authored), and authored one under-review preprint.
 
-      - Visualization techniques for understanding complex data and models (Visualization for Machine Learning)
+  # - Machine learning-based automated data analysis and visual analytics systems (Machine Learning for Visualization)
+
+  # - Visualization techniques for understanding complex data and models (Visualization for Machine Learning)
 
   - id: naver
     name: >
@@ -39,12 +41,12 @@ experiences:
     description: >
       **BoBAI**: Color Design Recommendation and Assignment System Leveraging In-browser ML Inference
 
-      - Conducted formative research through expert interviews and thematic analysis to define user needs
+# - Conducted formative research through expert interviews and thematic analysis to define user needs
 
-      - Designed novel workflow combining expert knowledge with automation algorithms for color designing of landing page
+# - Designed novel workflow combining expert knowledge with automation algorithms for color designing of landing page
 
-      - Developed color recommendation and assignment algorithms optimized for landing page design
+# - Developed color recommendation and assignment algorithms optimized for landing page design
 
-      - Implemented browser-based machine learning pipeline with text encoder, vector database, and MCTS modules
+# - Implemented browser-based machine learning pipeline with text encoder, vector database, and MCTS modules
 
-      - Created React component library for the interactive color design interface
+# - Created React component library for the interactive color design interface
