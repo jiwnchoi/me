@@ -33,7 +33,6 @@ export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
     const imageURL = `/profilepic.png`;
     const absoluteImageURL = new URL(imageURL, request.url);
-    console.log(absoluteImageURL.href);
 
     // ?title=<title>
     const title = formatTitle(searchParams.get("title"), 24, "Jiwon Jason Choi");
