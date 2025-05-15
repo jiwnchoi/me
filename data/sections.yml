@@ -6,12 +6,12 @@ sections:
 
   - key: experiences
     title: Experiences
-    shortTitle: Exps
+    shortTitle: Career
     type: main
 
   - key: educations
     title: Educations
-    shortTitle: Edus
+    shortTitle: Edu
     type: main
 
   - key: publications
@@ -26,7 +26,7 @@ sections:
 
   - key: projects
     title: Project Gallery
-    shortTitle: Prjs
+    shortTitle: Project
     type: page
 
   - key: blog

@@ -1,7 +1,9 @@
+/* eslint-disable jsx-a11y/alt-text */
 // throws TypeError: Cannot read properties of null (reading 'useMemo')
 "use no memo";
 
 /* eslint sort-keys: error */
+import Image from "next/image";
 import {
   Callout,
   Code,
@@ -84,6 +86,7 @@ const DEFAULT_COMPONENTS = getNextraMDXComponents({
   h4: createHeading("h4"),
   h5: createHeading("h5"),
   h6: createHeading("h6"),
+  img: (props) => <Image {...props} />,
   pre: withIcons(Pre),
   summary: Summary,
   table: Table,
@@ -104,10 +107,10 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
     wrapper({ children, metadata }) {
       return (
         <>
-          {metadata.type === "post" ? (
+          {metadata.type !== "page" ? (
             <>
-              <h1>{metadata.title}</h1>
-              <p className="my-0 text-sm">{metadata.description}</p>
+              <h1>{metadata?.shortTitle ? metadata.shortTitle : metadata.title}</h1>
+              <p className="my-0 text-base">{metadata.description}</p>
               <div className="divider" />
             </>
           ) : null}

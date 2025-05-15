@@ -37,7 +37,7 @@ function useVisibleSections(sections: Section[]) {
           return changed ? newVisible : prev;
         });
       },
-      { threshold: 0.1, root: null, rootMargin: "0px 0px -40% 0px" },
+      { threshold: 0.1, root: null, rootMargin: "-160px 0px -50% 0px" },
     );
 
     sectionRefs.current.forEach((el) => el && observer.observe(el));
@@ -66,6 +66,18 @@ export default function Navigation({ sections }: { sections: Section[] }) {
   const isProgrammaticScroll = useRef(false);
   const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Go Top
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) return;
+
+    const isMd = window.matchMedia("(min-width: 768px)").matches;
+    window.scrollTo({
+      top: pathname === "/" ? 0 : isMd ? 0 : 160,
+      behavior: "instant",
+    });
+  }, [pathname]);
+
   // Scroll Change Effect
   useEffect(() => {
     if (isProgrammaticScroll.current) return;
@@ -80,27 +92,33 @@ export default function Navigation({ sections }: { sections: Section[] }) {
     isProgrammaticScroll.current = true;
 
     setHash(sectionKey);
-    if (pathname === "/") {
-      if (sectionKey === "about") {
+    if (pathname !== "/" && sectionKey === "about") {
+      router.push("/", { scroll: false });
+    }
+    if (pathname !== "/" && sectionKey !== "about") {
+      router.push(`/#${sectionKey}`, { scroll: true });
+    }
+
+    if (pathname === "/" && sectionKey === "about") {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+      router.replace("/", { scroll: false });
+      return;
+    } else {
+      console.log("sectionKey", sectionKey);
+      const element = document.getElementById(sectionKey);
+      if (element) {
+        const isMd = window.matchMedia("(min-width: 768px)").matches;
         window.scrollTo({
-          top: 0,
+          top: element.offsetTop - (isMd ? 20 : 120),
           behavior: "smooth",
         });
-        router.replace("/", { scroll: false });
-      } else {
-        const element = document.getElementById(sectionKey);
-        if (element) {
-          const isMd = window.matchMedia("(min-width: 768px)").matches;
-          window.scrollTo({
-            top: element.offsetTop - (isMd ? 20 : 120),
-            behavior: "smooth",
-          });
-          router.replace(`/#${sectionKey}`, { scroll: false });
-        }
+        router.replace(`/#${sectionKey}`, { scroll: false });
       }
-    } else {
-      router.push(`/#${sectionKey}`);
     }
+
     programmaticScrollTimeoutRef.current = setTimeout(() => {
       isProgrammaticScroll.current = false;
     }, 500);
@@ -116,7 +134,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
               <Responsive<typeof Link>
                 component={Link}
                 base={section.shortTitle}
-                href={`/#${section.key}`}
+                href={section.key === "about" ? "/" : `/#${section.key}`}
                 md={section.title}
                 onClick={(e) => {
                   e.preventDefault();
@@ -154,13 +172,6 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 onClick={(e) => {
                   e.preventDefault();
                   router.push(`/${section.key}`, { scroll: false });
-                  setTimeout(() => {
-                    const isMd = window.matchMedia("(min-width: 768px)").matches;
-                    window.scrollTo({
-                      top: isMd ? 0 : 160,
-                      behavior: "smooth",
-                    });
-                  }, 200);
                 }}
                 href={`/${section.key}`}
                 target="_self"

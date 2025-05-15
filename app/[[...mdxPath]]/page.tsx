@@ -32,8 +32,10 @@ export async function generateMetadata(props: PageProps) {
 }
 
 function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
+  const title = metadata.title === "Index" ? "Jiwon Jason Choi" : metadata.title;
   return {
     ...metadata,
+    title,
     icons: {
       apple: "/apple-touch-icon.png",
       icon: [
@@ -45,10 +47,10 @@ function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
     openGraph: {
       images: [
         {
-          url: `/api/og?title=${metadata.title}&description=${metadata.description}`,
+          url: `/api/og?title=${title}&description=${metadata.description}`,
           width: 1200,
           height: 630,
-          alt: `${metadata.title} - Jiwon Jason Choi`,
+          alt: title,
         },
       ],
     },
