@@ -30,6 +30,6 @@ sections:
     type: page
 
   - key: blog
-    title: 🚧 Blog
-    shortTitle: 🚧 Blog
+    title: Blog
+    shortTitle: Blog
     type: page
