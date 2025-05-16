@@ -58,18 +58,28 @@
 }
 
 .me-prose {
-  @apply prose prose-zinc prose-base prose-p:mt-0 prose-p:mb-2 prose-img:rounded-lg dark:prose-invert prose-a:decoration-dotted prose-img:md:px-8 prose-img:my-2 prose-a:text-zinc-900 prose-a:font-normal prose-a:dark:text-zinc-100 max-w-none;
+  @apply prose prose-zinc prose-base prose-p:mt-0 prose-p:mb-2 prose-img:rounded-lg dark:prose-invert prose-a:decoration-dotted prose-img:md:px-8 prose-img:my-2 prose-a:text-zinc-900 prose-a:font-normal prose-a:dark:text-white max-w-none;
   padding-inline: 0;
-  @apply prose-headings:mb-4 prose-h1:mt-4 prose-h1:text-3xl prose-h1:font-bold prose-h2:mt-12;
+  @apply prose-headings:mb-4;
   @apply prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2;
   @apply p-4 pb-16 md:p-16;
-  @apply text-zinc-900 dark:text-zinc-100;
+  @apply text-zinc-800 dark:text-zinc-200;
   :where(ol > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     padding-inline-start: 0;
   }
 
   h1 {
-    @apply prose-h1:text-zinc-900 dark:prose-h1:text-zinc-100 text-zinc-900 dark:text-zinc-100;
+    @apply prose-h1:text-zinc-900 dark:prose-h1:text-white text-zinc-900 dark:text-white;
+    @apply mt-4 text-3xl font-bold;
+  }
+
+  h2 {
+    @apply prose-h2:text-zinc-900 dark:prose-h2:text-white text-zinc-900 dark:text-white;
+    @apply mt-12;
+  }
+
+  h3 {
+    @apply prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200 text-zinc-800 dark:text-zinc-200;
   }
 }
 
@@ -88,7 +98,7 @@
 
 html {
   @apply bg-[var(--bg)];
-  @apply text-zinc-900 dark:text-zinc-100;
+  @apply text-zinc-800 dark:text-zinc-200;
   scrollbar-gutter: stable;
   scrollbar-width: none;
 
