@@ -35,6 +35,7 @@ export default async function Card({
               src={imagePath}
               alt={`${title} thumbnail`}
               sizes="500px"
+              quality={10}
               fill
               placeholder="empty"
               className="not-prose absoute z-1 scale-[110%] border-none object-cover"
