@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-  --bg: var(--color-gray-100);
+  --bg: var(--color-zinc-100);
   --card-bg: var(--color-white);
 }
 [data-theme="dark"] {
@@ -17,7 +17,7 @@
 }
 
 .me-nav-header {
-  @apply sticky top-0 z-10 -m-4 bg-gray-100 p-4 dark:bg-zinc-950;
+  @apply sticky top-0 z-10 -m-4 bg-zinc-100 p-4 dark:bg-zinc-950;
 }
 
 /* ::after will be hidden starting from the 'md' breakpoint */
@@ -67,6 +67,10 @@
   :where(ol > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     padding-inline-start: 0;
   }
+
+  h1 {
+    @apply prose-h1:text-zinc-900 dark:prose-h1:text-zinc-100 text-zinc-900 dark:text-zinc-100;
+  }
 }
 
 .me-list {
@@ -83,7 +87,8 @@
 }
 
 html {
-  @apply bg-gray-100 dark:bg-zinc-950;
+  @apply bg-zinc-100 dark:bg-zinc-950;
+  @apply text-zinc-900 dark:text-zinc-100;
   scrollbar-gutter: stable;
   scrollbar-width: none;
 

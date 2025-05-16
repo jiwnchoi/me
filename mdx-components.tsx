@@ -115,7 +115,9 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
         <>
           {metadata.type !== "page" ? (
             <>
-              <h1>{metadata?.shortTitle ? metadata.shortTitle : metadata.title}</h1>
+              <h1 className="dark:white text-zinc-900">
+                {metadata?.shortTitle ? metadata.shortTitle : metadata.title}
+              </h1>
               <p className="my-0 text-sm">{metadata.description}</p>
               <div className="divider my-2" />
             </>
