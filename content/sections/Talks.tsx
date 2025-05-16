@@ -18,9 +18,11 @@ export default async function Talks() {
                   <span className="font-semibold">{item.title}</span>
                   <span>{`, ${item.name}`}</span>
                 </p>
-                <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
-                  {item.description && <MDXContent mdxSource={item.description} />}
-                </div>
+                {item.description && (
+                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
+                    <MDXContent mdxSource={item.description} />
+                  </div>
+                )}
               </div>
             }
           />

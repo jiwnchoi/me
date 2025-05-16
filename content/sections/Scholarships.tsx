@@ -1,4 +1,4 @@
-import { Date } from "@/components";
+import { Date, MDXContent } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
@@ -18,7 +18,11 @@ export default async function Scholarships() {
                   <span className="font-semibold">{item.title}</span>
                   <span>{`, ${item.name}`}</span>
                 </p>
-                <p className="not-prose text-sm">{item.description}</p>
+                {item.description && (
+                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
+                    <MDXContent mdxSource={item.description} />
+                  </div>
+                )}
               </div>
             }
           />
