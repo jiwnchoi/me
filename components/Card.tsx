@@ -25,8 +25,8 @@ export default async function Card({
       <div
         className={twMerge([
           "group h-[230px] overflow-hidden rounded-xl border transition-all duration-300 ease-in-out hover:-translate-y-1",
-          "border-zinc-200 bg-white hover:border-zinc-300 hover:shadow-lg",
-          "dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700 dark:hover:shadow-[0_8px_30px_rgb(255,255,255,0.12)]",
+          "hover:shadow-primary/50 border-zinc-200 bg-white hover:border-zinc-300 hover:shadow-lg",
+          "dark:border-zinc-800 dark:bg-zinc-900 dark:hover:border-zinc-700",
           "relative mt-2",
         ])}>
         {imagePath && (
