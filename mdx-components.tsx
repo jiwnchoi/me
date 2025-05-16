@@ -86,7 +86,7 @@ const DEFAULT_COMPONENTS = getNextraMDXComponents({
   h4: createHeading("h4"),
   h5: createHeading("h5"),
   h6: createHeading("h6"),
-  img: (props) => <Image {...props} />,
+  img: (props) => <Image {...props} placeholder="empty" />,
   pre: withIcons(Pre),
   summary: Summary,
   table: Table,
@@ -110,8 +110,8 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
           {metadata.type !== "page" ? (
             <>
               <h1>{metadata?.shortTitle ? metadata.shortTitle : metadata.title}</h1>
-              <p className="my-0 text-base">{metadata.description}</p>
-              <div className="divider" />
+              <p className="my-0 text-sm">{metadata.description}</p>
+              <div className="divider my-2" />
             </>
           ) : null}
 

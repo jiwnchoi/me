@@ -102,10 +102,10 @@
   content: ""; /* Required for ::after to be rendered */
   position: absolute; /* Position relative to the .bite element */
   left: 0px;
-  bottom: -24px;
+  bottom: -20px;
   width: calc(100% - 32px);
   margin: 0 16px;
-  height: 24px; /* Size of the pseudo-element */
+  height: 20px; /* Size of the pseudo-element */
   background-color: var(--card-bg);
   z-index: 12;
   /* Apply rounded corners by default, hide from md upwards */
@@ -117,9 +117,9 @@
   content: ""; /* Required for ::before to be rendered */
   position: absolute; /* Position relative to the .bite element */
   left: 0px;
-  bottom: -24px;
+  bottom: -20px;
   width: 100%;
-  height: 24px; /* Size of the pseudo-element */
+  height: 20px; /* Size of the pseudo-element */
   z-index: 11;
   background-color: var(--bg);
   /* Apply rounded corners by default, hide from md upwards */
@@ -135,9 +135,11 @@
 }
 
 .me-prose {
-  @apply prose prose-base prose-img:rounded-lg dark:prose-invert prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2 prose-headings:mb-4 prose-h1:mt-12 prose-h1:text-base-content prose-h2:mt-12 prose-headings:text-primary prose-a:decoration-dotted prose-a:font-normal prose-a:text-(--tw-prose-body) prose-hr:mb-8 prose-hr:mt-4 prose-img:px-8 max-w-none;
+  @apply prose prose-base prose-p:mt-0 prose-p:mb-2 prose-img:rounded-lg dark:prose-invert prose-a:decoration-dotted prose-a:font-normal prose-img:md:px-8 prose-img:my-2 max-w-none;
   padding-inline: 0;
-  @apply px-4 pt-0 pb-16 md:pt-8 md:pr-16 md:pl-16;
+  @apply prose-headings:mb-4 prose-h1:mt-4 prose-h1:text-3xl prose-h1:font-bold prose-h2:mt-12;
+  @apply prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2;
+  @apply p-4 pb-16 md:p-16;
   :where(ol > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     padding-inline-start: 0;
   }
