@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-  --bg: var(--color-zinc-100);
+  --bg: var(--color-zinc-50);
   --card-bg: var(--color-white);
 }
 [data-theme="dark"] {
@@ -17,7 +17,7 @@
 }
 
 .me-nav-header {
-  @apply sticky top-0 z-10 -m-4 bg-zinc-100 p-4 dark:bg-zinc-950;
+  @apply sticky top-0 z-10 -m-4 bg-[var(--bg)] p-4;
 }
 
 /* ::after will be hidden starting from the 'md' breakpoint */
@@ -87,7 +87,7 @@
 }
 
 html {
-  @apply bg-zinc-100 dark:bg-zinc-950;
+  @apply bg-[var(--bg)];
   @apply text-zinc-900 dark:text-zinc-100;
   scrollbar-gutter: stable;
   scrollbar-width: none;
