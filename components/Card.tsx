@@ -46,7 +46,7 @@ export default async function Card({
         <div className="absolute bottom-0 z-1 flex flex-col gap-2 p-4">
           <h3 className="text-base font-bold no-underline">{title}</h3>
           {description && (
-            <p className="line-clamp-2 text-xs text-gray-500 dark:text-gray-400">{description}</p>
+            <p className="line-clamp-2 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
           )}
           <p className="mt-1 flex gap-2">
             {tags.map((t) => (
@@ -57,7 +57,7 @@ export default async function Card({
               </span>
             ))}
           </p>
-          <p className="text-[11px] text-gray-500 dark:text-gray-400">{date && formatDate(date)}</p>
+          <p className="text-[11px] text-zinc-500 dark:text-zinc-400">{date && formatDate(date)}</p>
         </div>
       </div>
     </Link>

@@ -85,7 +85,7 @@ export default async function PublicationItem(props: Publication) {
       <div className="flex flex-col">
         {typeof title === "string" ? <MDXContent mdxSource={`### ${title}`} /> : title}
         <AuthorNames authorList={authors} />
-        <p className="not-prose text-sm text-gray-500 dark:text-gray-400">{venue}</p>
+        <p className="not-prose text-sm text-zinc-500 dark:text-zinc-400">{venue}</p>
 
         <div className="mt-2 flex flex-wrap gap-2">
           {Object.entries(url).map(

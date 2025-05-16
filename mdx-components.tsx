@@ -50,8 +50,8 @@ const createHeading = (Tag: `h${2 | 3 | 4 | 5 | 6}`): FC<ComponentProps<typeof T
         // can be added by footnotes
         className={
           className === "sr-only"
-            ? "x:sr-only text-primary dark:text-primary"
-            : "text-primary dark:text-primary"
+            ? "x:sr-only prose-zinc dark:prose-invert"
+            : "prose-zinc dark:prose-invert"
         }
         {...props}>
         {children}

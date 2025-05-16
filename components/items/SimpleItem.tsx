@@ -15,12 +15,12 @@ export default async function SimpleItem(props: SimpleItemProps) {
       {left && (
         <div
           {...leftProps}
-          className="w-[64px] min-w-[64px] text-sm font-semibold text-gray-500 md:w-[76px] md:min-w-[76px] md:text-base dark:text-gray-400">
+          className="w-[64px] min-w-[64px] text-sm font-semibold text-zinc-500 md:w-[76px] md:min-w-[76px] md:text-base dark:text-zinc-400">
           {typeof left === "string" ? <MDXContent mdxSource={left} /> : left}
         </div>
       )}
       {right && (
-        <div {...rightProps} className="text-base text-gray-700 dark:text-gray-300">
+        <div {...rightProps} className="text-base">
           {typeof right === "string" ? <MDXContent mdxSource={right} /> : right}
         </div>
       )}

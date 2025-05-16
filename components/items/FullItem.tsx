@@ -25,7 +25,7 @@ export default async function FullItem(props: FullItemProps) {
         </div>
         <div className="flex w-full flex-row items-end gap-2 text-xs md:w-fit md:min-w-[150px] md:flex-col md:gap-0 md:text-sm">
           {location && (
-            <p className="not-prose text-gray-500 italic dark:text-gray-400">{location}</p>
+            <p className="not-prose text-zinc-500 italic dark:text-zinc-400">{location}</p>
           )}
           <Date from={dateFrom} to={dateTo} />
         </div>

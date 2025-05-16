@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
+import "./test.css";
 
 import { Footer } from "@/components/layout";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -41,10 +42,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               />
               <div className="flex w-full flex-col overflow-hidden overflow-x-hidden md:items-center">
                 <p className="mb-2 truncate text-lg font-semibold">{meta.name}</p>
-                <p className="mb-1 truncate text-xs text-gray-500 dark:text-gray-400">
+                <p className="mb-1 truncate text-xs text-zinc-500 dark:text-zinc-400">
                   {meta.position}
                 </p>
-                <p className="truncate text-xs text-gray-500 dark:text-gray-400">
+                <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
                   {meta.affiliation}
                 </p>
                 <ContactButtons className={"mt-4 flex w-full gap-2 md:justify-center"} />
@@ -78,7 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <Responsive
             base={
-              <Footer className="w-full p-2 pt-0 text-gray-500 dark:text-gray-400">
+              <Footer className="w-full p-2 pt-0 text-zinc-500 dark:text-zinc-400">
                 Copyright © 2025 Jiwon Jason Choi
               </Footer>
             }
