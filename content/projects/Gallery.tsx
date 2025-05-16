@@ -14,14 +14,6 @@ const extensions = [".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg"];
 
 // Define interfaces for Nextra page map items
 
-interface PageMapItem {
-  name: string;
-  route: string;
-  frontMatter?: FrontMatter;
-  title?: string;
-  children?: PageMapItem[];
-}
-
 // Card component to display each item in the gallery
 interface CardProps {
   title: string;
@@ -30,7 +22,7 @@ interface CardProps {
   type?: string;
   imagePath?: string | null;
   tags: string[];
-  date?: string;
+  date?: TDate;
 }
 
 async function Card({ title, description, route, imagePath, tags, date }: CardProps) {

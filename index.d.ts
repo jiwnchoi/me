@@ -5,14 +5,22 @@ declare interface IDateRange {
 
 declare type TDate = DateRange | string;
 
-interface FrontMatter {
+declare interface FrontMatter {
   title: string;
   shortTitle?: string;
   description?: string;
   type?: string;
   filePath?: string;
   timestamp?: number;
-  date?: Date;
+  date?: TDate;
   tags?: string | string[];
   [key: string]: string | number | boolean | string[] | Record<string, unknown> | undefined;
+}
+
+declare interface PageMapItem {
+  name: string;
+  route: string;
+  frontMatter?: FrontMatter;
+  title?: string;
+  children?: PageMapItem[];
 }
