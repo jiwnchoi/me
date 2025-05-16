@@ -3,6 +3,8 @@
 "use no memo";
 
 /* eslint sort-keys: error */
+import { PublicationItem } from "@/components/items";
+import { data } from "@/data";
 import Image from "next/image";
 import {
   Callout,
@@ -19,6 +21,8 @@ import { useMDXComponents as getNextraMDXComponents } from "nextra/mdx-component
 import type { ComponentProps, FC } from "react";
 import { twMerge } from "tailwind-merge";
 import { Giscus } from "./components";
+
+export const publications = data.publications().publications;
 
 export type UseMDXComponents<
   /**
@@ -101,10 +105,12 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
   comp?: T,
 ) => {
   const components = comp ?? {};
+
   return {
     ...DEFAULT_COMPONENTS,
     // @ts-expect-error -- fixme
     wrapper({ children, metadata }) {
+      const pub = publications.find((p) => p.title === metadata.title);
       return (
         <>
           {metadata.type !== "page" ? (
@@ -116,6 +122,12 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
           ) : null}
 
           {children}
+          {metadata.type === "paper" && pub && (
+            <>
+              <div className="divider mt-8 mb-4" />
+              <PublicationItem {...pub} />
+            </>
+          )}
 
           {metadata.type === "post" && (
             <div>
