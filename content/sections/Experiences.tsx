@@ -10,8 +10,7 @@ export default async function Experiences() {
         return (
           <FullItem
             key={`career-item-${item.id}`}
-            dateFrom={item.from}
-            dateTo={item.to}
+            date={{ from: item.from, to: item.to }}
             location={item.location}
             heading={item.name}
             subheading={item.title}

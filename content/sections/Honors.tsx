@@ -11,10 +11,10 @@ export default async function Honors() {
         return (
           <SimpleItem
             key={`honors-item-${item.id}`}
-            left={item.date && <Date from={item.date} />}
+            left={item.date && <Date date={item.date} />}
             right={
               <div className="flex flex-col gap-1">
-                <p className="not-prose text-base">
+                <p className="not-prose">
                   <span className="font-semibold">{item.title}</span>
                   <span>{`, ${item.name}`}</span>
                 </p>

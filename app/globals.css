@@ -64,22 +64,18 @@
   @apply prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2;
   @apply p-4 pb-16 md:p-16;
   @apply text-zinc-800 dark:text-zinc-200;
+
+  /* h1 */
+  @apply prose-h1:text-zinc-900 dark:prose-h1:text-white;
+  @apply prose-h1:mt-2 prose-h1:md:mt-4 prose-h1:font-bold prose-h1:text-3xl;
+
+  /* h2 */
+  @apply prose-h2:text-zinc-800 dark:prose-h2:text-zinc-200;
+
+  /* h3 */
+  @apply prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200 prose-h3:mb-2;
   :where(ol > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     padding-inline-start: 0;
-  }
-
-  h1 {
-    @apply prose-h1:text-zinc-900 dark:prose-h1:text-white text-zinc-900 dark:text-white;
-    @apply mt-2 text-3xl font-bold md:mt-4;
-  }
-
-  h2 {
-    @apply prose-h2:text-zinc-900 dark:prose-h2:text-white text-zinc-900 dark:text-white;
-    @apply mt-2 md:mt-4;
-  }
-
-  h3 {
-    @apply prose-h3:text-zinc-800 dark:prose-h3:text-zinc-200 text-zinc-800 dark:text-zinc-200;
   }
 }
 

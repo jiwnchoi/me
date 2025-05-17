@@ -1,20 +1,34 @@
 interface DateProps extends React.HTMLAttributes<HTMLParagraphElement> {
-  from?: string;
-  to?: string;
+  date: TDate;
   className?: string;
 }
 import { formatDate } from "@/utils";
+import { twMerge } from "tailwind-merge";
 
-export default function Date({ from, to, className, ...rest }: DateProps) {
+export default function Date({ date, className, ...rest }: DateProps) {
+  let from: string | null = null;
+  let to: string | null = null;
+
+  if (typeof date === "string") {
+    from = date;
+  } else if (typeof date === "object" && "from" in date && "to" in date) {
+    from = date.from;
+    to = date.to;
+  }
+
   return (
-    <p className={`not-prose text-zinc-500 italic dark:text-zinc-400 ${className}`} {...rest}>
-      {from && <span>{formatDate(from)}</span>}
-      {to && <span> ─ </span>}
+    <div
+      className={twMerge([
+        "not-prose flex flex-row gap-1 text-zinc-500 italic md:flex-col md:gap-0 dark:text-zinc-400",
+        className,
+      ])}
+      {...rest}>
+      {from && to ? <span>{`${formatDate(from)}  —`}</span> : <span>{`${formatDate(from)}`}</span>}
       {to === "Present" ? (
-        <span className="me-highlight px-1.5 py-0.5">Present</span>
+        <span className="me-highlight px-1.5 py-0.5">─ Present</span>
       ) : (
-        to && <span>{formatDate(to)}</span>
+        to && <span>{`${formatDate(to)}`}</span>
       )}
-    </p>
+    </div>
   );
 }

@@ -4,14 +4,13 @@ import MDXContent from "../MDXContent";
 interface FullItemProps extends React.HTMLAttributes<HTMLLIElement> {
   heading: string | React.ReactNode;
   subheading?: string | React.ReactNode;
-  dateFrom?: string;
-  dateTo?: string;
+  date?: TDate;
   location?: string;
   description?: string;
 }
 
 export default async function FullItem(props: FullItemProps) {
-  const { heading, subheading, dateFrom, dateTo, location, description, ...rest } = props;
+  const { heading, subheading, date, location, description, ...rest } = props;
   return (
     <li className="m-0 my-0 mt-0 mb-0 flex flex-col gap-1 p-0" {...rest}>
       <div className="flex flex-col justify-between gap-1 md:flex-row">
@@ -27,7 +26,7 @@ export default async function FullItem(props: FullItemProps) {
           {location && (
             <p className="not-prose text-zinc-500 italic dark:text-zinc-400">{location}</p>
           )}
-          <Date from={dateFrom} to={dateTo} />
+          {date && <Date date={date} />}
         </div>
       </div>
       {description && (

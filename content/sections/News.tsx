@@ -11,7 +11,7 @@ export default async function News() {
         return (
           <SimpleItem
             key={`news-item-${i}`}
-            left={<Date from={item.date} />}
+            left={<Date date={item.date} />}
             right={item.description}
           />
         );

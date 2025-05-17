@@ -11,7 +11,7 @@ export default async function Scholarships() {
         return (
           <SimpleItem
             key={`scholarships-item-${item.id}`}
-            left={<Date from={item.date} />}
+            left={<Date date={item.date} />}
             right={
               <div className="flex flex-col gap-1">
                 <p className="not-prose text-base">

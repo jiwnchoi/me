@@ -11,7 +11,7 @@ export default async function Services() {
         return (
           <SimpleItem
             key={`services-item-${item.id}`}
-            left={item.date && <Date from={item.date} />}
+            left={item.date && <Date date={item.date} />}
             right={
               <div className="flex flex-col gap-1">
                 <p className="not-prose text-base">

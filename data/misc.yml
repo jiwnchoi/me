@@ -92,6 +92,9 @@ services:
     name: Sungkyunkwan University
     title: Teaching Assistant
     location: Suwon, Korea
+    date:
+      from: 2022-09
+      to: 2024-08
     description: >
       SKKU Computer Science and Engineering:
 
@@ -107,6 +110,9 @@ services:
     name: Sungkyunkwan University
     title: Lecturer
     location: Seoul, Korea
+    date:
+      from: 2022-08
+      to: 2023-08
     description: >
       Paid lecturer for the following courses:
 
