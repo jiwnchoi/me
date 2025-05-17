@@ -75,7 +75,7 @@
 
   h2 {
     @apply prose-h2:text-zinc-900 dark:prose-h2:text-white text-zinc-900 dark:text-white;
-    @apply mt-2 md:mt-12;
+    @apply mt-2 md:mt-4;
   }
 
   h3 {
