@@ -70,12 +70,12 @@
 
   h1 {
     @apply prose-h1:text-zinc-900 dark:prose-h1:text-white text-zinc-900 dark:text-white;
-    @apply mt-4 text-3xl font-bold;
+    @apply mt-2 text-3xl font-bold md:mt-4;
   }
 
   h2 {
     @apply prose-h2:text-zinc-900 dark:prose-h2:text-white text-zinc-900 dark:text-white;
-    @apply mt-12;
+    @apply mt-2 md:mt-12;
   }
 
   h3 {
