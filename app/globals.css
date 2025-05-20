@@ -64,6 +64,7 @@
   @apply prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2;
   @apply p-4 pb-16 md:p-16;
   @apply text-zinc-800 dark:text-zinc-200;
+  @apply prose-strong:*:text-zinc-900 dark:prose-strong:text-white;
 
   /* h1 */
   @apply prose-h1:text-zinc-900 dark:prose-h1:text-white;
