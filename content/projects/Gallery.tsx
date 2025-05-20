@@ -10,16 +10,6 @@ const __dirname = path.dirname(__filename);
 const dirname = path.resolve(__dirname, "../../");
 const extensions = [".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg"];
 
-function getAssetPath(filename: string | null) {
-  if (!filename) return null;
-  return path.join(dirname, "public/assets", filename);
-}
-
-function getPublicPath(filename: string | null) {
-  if (!filename) return null;
-  return `/assets/${filename}`;
-}
-
 export default async function Gallery({
   title,
   contentPath,
@@ -38,18 +28,15 @@ export default async function Gallery({
         item.frontMatter?.type !== "private",
     )
     .map((item) => {
-      const foundFilename = extensions
-        .map((ext) => `${item.name}${ext}`)
-        .find((filename) => existsSync(getAssetPath(filename)!));
-
-      const imagePath = foundFilename ? getPublicPath(foundFilename) : null;
-
+      const extensionPaths = extensions.map((ext) => path.join(item.route, `${item.name}${ext}`));
+      const foundPath = extensionPaths.find((extPath) => existsSync(path.join(dirname, extPath)));
+      const imagePath = foundPath ? path.join("/api/asset", foundPath) : null;
       return {
         key: item.name,
         ...item.frontMatter,
         title: item.frontMatter?.shortTitle || item.frontMatter?.title || item.title || "",
         route: item.route,
-        imagePath: imagePath,
+        imagePath,
         tags:
           typeof item.frontMatter?.tags === "string"
             ? [item.frontMatter?.tags]

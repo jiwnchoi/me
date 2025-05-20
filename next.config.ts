@@ -7,6 +7,9 @@ const withNextra = nextra({
 });
 
 const nextConfig: NextConfig = {
+  outputFileTracingIncludes: {
+    "/api/asset/**/*": ["./content/**/*"],
+  },
   turbopack: {
     resolveAlias: {
       "next-mdx-import-source-file": "/mdx-components.tsx",
