@@ -49,6 +49,7 @@ export async function GET(request: Request, context: { params: Promise<{ assetPa
       headers: {
         "Content-Type": contentType,
         "Content-Length": fileBuffer.length.toString(),
+        "Cache-Control": "public, max-age=31536000, immutable",
       },
     });
   } catch (error) {
