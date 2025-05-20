@@ -37,7 +37,8 @@ export default async function Card({
               sizes="500px"
               quality={10}
               fill
-              placeholder="empty"
+              placeholder="blur"
+              blurDataURL={imagePath}
               className="not-prose absoute z-1 scale-[110%] border-none object-cover"
               priority={true}
             />

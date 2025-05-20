@@ -7,6 +7,9 @@ const withNextra = nextra({
 });
 
 const nextConfig: NextConfig = {
+  images: {
+    minimumCacheTTL: 60 * 60 * 24 * 30,
+  },
   outputFileTracingIncludes: {
     "/api/asset/**/*": ["./content/**/*"],
   },
