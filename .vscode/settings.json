@@ -2,5 +2,7 @@
   "files.associations": {
     "*.css": "tailwindcss",
     "*.scss": "tailwindcss"
-  }
+  },
+  "pasteImage.path": "${currentFileDir}",
+  "pasteImage.insertPattern": "![image](./${imageFileName})"
 }
