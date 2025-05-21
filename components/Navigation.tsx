@@ -66,17 +66,17 @@ export default function Navigation({ sections }: { sections: Section[] }) {
   const isProgrammaticScroll = useRef(false);
   const programmaticScrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Go Top
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) return;
+  // // Go Top
+  // useEffect(() => {
+  //   const hash = window.location.hash;
+  //   if (hash) return;
 
-    const isMd = window.matchMedia("(min-width: 768px)").matches;
-    window.scrollTo({
-      top: pathname === "/" ? 0 : isMd ? 0 : 160,
-      behavior: "instant",
-    });
-  }, [pathname]);
+  //   const isMd = window.matchMedia("(min-width: 768px)").matches;
+  //   window.scrollTo({
+  //     top: pathname === "/" ? 0 : isMd ? 0 : 160,
+  //     behavior: "instant",
+  //   });
+  // }, [pathname]);
 
   // Scroll Change Effect
   useEffect(() => {
@@ -112,7 +112,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
       if (element) {
         const isMd = window.matchMedia("(min-width: 768px)").matches;
         window.scrollTo({
-          top: element.offsetTop - (isMd ? 20 : 120),
+          top: element.offsetTop - (isMd ? 20 : 100),
           behavior: "smooth",
         });
         router.replace(`/#${sectionKey}`, { scroll: false });
@@ -171,7 +171,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 component={Link}
                 onClick={(e) => {
                   e.preventDefault();
-                  router.push(`/${section.key}`, { scroll: false });
+                  router.push(`/${section.key}`, { scroll: true });
                 }}
                 href={`/${section.key}`}
                 target="_self"
