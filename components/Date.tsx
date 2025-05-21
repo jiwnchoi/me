@@ -1,11 +1,12 @@
 interface DateProps extends React.HTMLAttributes<HTMLParagraphElement> {
   date: TDate;
+  day?: boolean;
   className?: string;
 }
 import { formatDate } from "@/utils";
 import { twMerge } from "tailwind-merge";
 
-export default function Date({ date, className, ...rest }: DateProps) {
+export default function Date({ date, day, className, ...rest }: DateProps) {
   let from: string | null = null;
   let to: string | null = null;
 
@@ -23,11 +24,15 @@ export default function Date({ date, className, ...rest }: DateProps) {
         className,
       ])}
       {...rest}>
-      {from && to ? <span>{`${formatDate(from)}  —`}</span> : <span>{`${formatDate(from)}`}</span>}
+      {from && to ? (
+        <span>{`${formatDate(from, day)}  —`}</span>
+      ) : (
+        <span>{`${formatDate(from, day)}`}</span>
+      )}
       {to === "Present" ? (
         <span className="me-highlight px-1.5 py-0.5">─ Present</span>
       ) : (
-        to && <span>{`${formatDate(to)}`}</span>
+        to && <span>{`${formatDate(to, day)}`}</span>
       )}
     </div>
   );

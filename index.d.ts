@@ -14,6 +14,7 @@ declare interface FrontMatter {
   timestamp?: number;
   date?: TDate;
   tags?: string | string[];
+  timestamp: number;
   [key: string]: string | number | boolean | string[] | Record<string, unknown> | undefined;
 }
 

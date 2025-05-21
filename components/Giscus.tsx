@@ -19,7 +19,7 @@ export default function Giscus() {
       inputPosition="top"
       theme={resolvedTheme === "dark" ? "noborder_gray" : "noborder_light"}
       lang="en"
-      // loading="lazy"
+      loading="eager"
     />
   );
 }

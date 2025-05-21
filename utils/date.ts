@@ -16,7 +16,7 @@ function parseDate(dateString: string): Date | null {
   return parsedDate;
 }
 
-function _formatDate(dateString: string): string {
+function _formatDate(dateString: string, day?: boolean): string {
   const parsedDate = parseDate(dateString);
 
   if (!parsedDate || !isValid(parsedDate)) {
@@ -25,23 +25,23 @@ function _formatDate(dateString: string): string {
 
   const month = format(parsedDate, "MMM");
   const year = format(parsedDate, "yyyy");
+  const dayOfMonth = format(parsedDate, "dd");
 
-  const formattedDate = month === "May" ? `May ${year}` : `${month}. ${year}`;
-
-  return formattedDate;
+  if (day) return `${month} ${dayOfMonth}, ${year}`;
+  else return `${month} ${year}`;
 }
 
-export function formatDate(date: TDate | null): string | null {
+export function formatDate(date: TDate | null, day?: boolean): string | null {
   if (date === null) {
     return null;
   }
   if (typeof date === "string") {
-    return _formatDate(date);
+    return _formatDate(date, day);
   }
 
   if (typeof date === "object" && "from" in date && "to" in date) {
-    const fromDate = _formatDate(date.from);
-    const toDate = _formatDate(date.to);
+    const fromDate = _formatDate(date.from, day);
+    const toDate = _formatDate(date.to, day);
 
     return `${fromDate} ─ ${toDate}`;
   }
