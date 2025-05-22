@@ -18,7 +18,7 @@ type Breakpoints = "base" | "sm" | "md" | "lg" | "xl" | "2xl";
 
 const random = Math.random().toString(36).slice(0, 4);
 
-const responsiveClassNames = [
+const displayClassNames = [
   "inline", // display: inline;
   "block", // display: block;
   "inline-block", // display: inline-block;
@@ -62,7 +62,7 @@ const Responsive = <T extends React.ElementType = "div">({
     { content: xl2, prefix: "2xl:" as const, key: "2xl" as const },
   ].filter((bp) => bp.content !== undefined);
 
-  const displayClass = responsiveClassNames.find((cls) => className?.includes(cls)) ?? "block";
+  const displayClass = displayClassNames.find((cls) => className?.includes(cls)) ?? "block";
 
   function getResponsiveClassName(target: Breakpoints): string {
     const index = breakpoints.findIndex((bp) => bp.key === target);
