@@ -2,6 +2,7 @@ import { formatDate } from "@/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { twMerge } from "tailwind-merge";
+import TagBadge from "./TagBadge";
 
 interface CardProps {
   title: string;
@@ -52,11 +53,7 @@ export default async function Card({
           )}
           <p className="mt-1 flex gap-2">
             {tags.map((t) => (
-              <span
-                key={`tag-${title}-${t}`}
-                className="bg-primary text-primary-content -ml-0.5 rounded-md px-1 text-[11px] font-semibold">
-                {t}
-              </span>
+              <TagBadge key={`tag-${title}-${t}`} content={t} />
             ))}
           </p>
           <p className="text-[11px] text-zinc-500 dark:text-zinc-400">{date && formatDate(date)}</p>

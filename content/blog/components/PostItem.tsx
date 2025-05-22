@@ -1,4 +1,4 @@
-import { Date } from "@/components";
+import { Date, TagBadge } from "@/components";
 import { existsSync } from "fs";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,6 +13,10 @@ function getTeaserImagePath(route: string) {
 
 export default function PostItem({ post }: { post: PageMapItem }) {
   const teaserPath = getTeaserImagePath(post.route);
+  const tags: string[] =
+    typeof post.frontMatter?.tags === "string"
+      ? [post.frontMatter?.tags]
+      : (post.frontMatter?.tags ?? []);
 
   return (
     <Link href={post.route.replace("/content", "")} target="_self">
@@ -21,6 +25,13 @@ export default function PostItem({ post }: { post: PageMapItem }) {
           <Date date={post.frontMatter?.date} day={true} className="ml-0.5 text-xs" />
           <h3 className="text-lg font-semibold">{post.title}</h3>
           <p className="text-sm">{post.frontMatter?.description ?? ""}</p>
+          <ul className="mt-1 flex gap-2">
+            {tags.map((tag) => (
+              <li key={`tag-${post.title}-${tag}`}>
+                <TagBadge content={tag} />
+              </li>
+            ))}
+          </ul>
         </div>
         {teaserPath && (
           <div className="relative h-24 w-36 flex-shrink-0 overflow-hidden rounded-lg">

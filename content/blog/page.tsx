@@ -8,7 +8,7 @@ export default async function Page() {
   );
 
   return (
-    <ul className="not-prose flex flex-col gap-6">
+    <ul className="not-prose flex flex-col gap-12">
       {posts.map((post) => (
         <PostItem key={`post-item-${post.route}`} post={post} />
       ))}
