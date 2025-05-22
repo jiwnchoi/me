@@ -4,7 +4,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "katex/dist/katex.min.css";
 import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import "./test.css";
 
 import { Footer } from "@/components/layout";
 import { GoogleAnalytics } from "@next/third-parties/google";
