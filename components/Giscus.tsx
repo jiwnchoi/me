@@ -17,7 +17,7 @@ export default function Giscus() {
       reactionsEnabled="0"
       emitMetadata="0"
       inputPosition="top"
-      theme={resolvedTheme === "dark" ? "https://jiwnchoi.me/giscus_light.css" : "noborder_light"}
+      theme={resolvedTheme === "dark" ? "noborder_gray" : "https://jiwnchoi.me/giscus_light.css"}
       lang="en"
       loading="eager"
     />
