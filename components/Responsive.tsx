@@ -39,7 +39,7 @@ const responsiveClassNames = [
   "table-row-group", // display: table-row-group;
   "table-row", // display: table-row;
   "list-item", // display: list-item;
-];
+] as const;
 
 const Responsive = <T extends React.ElementType = "div">({
   component,
