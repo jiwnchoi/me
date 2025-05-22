@@ -131,7 +131,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .filter((s) => s.type === "main")
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
-              <Responsive<typeof Link>
+              <Responsive
                 component={Link}
                 base={section.shortTitle}
                 href={section.key === "about" ? "/" : `/#${section.key}`}
@@ -167,7 +167,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           .filter((s) => s.type === "page")
           .map((section) => (
             <li key={section.key} className="menu-item flex-shrink-0">
-              <Responsive<typeof Link>
+              <Responsive
                 component={Link}
                 onClick={(e) => {
                   e.preventDefault();

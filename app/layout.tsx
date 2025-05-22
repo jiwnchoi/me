@@ -70,7 +70,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </aside>
           <main className="w-full grow md:-mr-4">
             <article
-              className="me-prose me-card drawer-content min-h-[100vh] w-full flex-col p-16"
+              className="me-prose me-card drawer-content w-full flex-col p-16"
               dir="ltr"
               data-pagefind-body>
               {children}

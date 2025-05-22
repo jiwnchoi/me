@@ -81,7 +81,7 @@ type BlogMDXComponents = MDXComponents & {
 };
 
 const DEFAULT_COMPONENTS = getNextraMDXComponents({
-  a: (props) => <a {...props} className={twMerge(props.className, "me-hover")} />,
+  a: (props) => <a target="_blank" {...props} className={twMerge(props.className, "me-hover")} />,
   blockquote: Blockquote,
   code: Code,
   details: Details,

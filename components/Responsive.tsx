@@ -1,77 +1,60 @@
-import React, { type ComponentProps, type ElementType, type ReactNode } from "react";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
-// Define the specific breakpoints supported
-type Breakpoint = "base" | "sm" | "md" | "lg" | "xl" | "2xl";
+interface ResponsiveProps<T extends React.ElementType = "div"> {
+  component?: T;
+  base: React.ReactNode;
+  sm?: React.ReactNode;
+  md?: React.ReactNode;
+  lg?: React.ReactNode;
+  xl?: React.ReactNode;
+  "2xl"?: React.ReactNode;
+}
 
-type ResponsiveSpecificProps = Partial<Record<Breakpoint, ReactNode>> & {
-  component?: ElementType; // Use ElementType for flexibility
-  className?: string;
-};
+type ResponsivePropsWithComponent<T extends React.ElementType> = ResponsiveProps<T> &
+  Omit<React.ComponentPropsWithoutRef<T>, keyof ResponsiveProps>;
 
-type ResponsiveProps<T extends ElementType> = ResponsiveSpecificProps &
-  Omit<ComponentProps<T>, keyof ResponsiveSpecificProps | "children">;
-
-// Map breakpoints to their Tailwind prefixes
-const prefixes: Record<Breakpoint, string> = {
-  base: "",
-  sm: "sm:",
-  md: "md:",
-  lg: "lg:",
-  xl: "xl:",
-  "2xl": "2xl:",
-};
-
-const getDisplayClass = (bp: Breakpoint, isActive: boolean): string => {
-  const prefix = prefixes[bp];
-  return isActive ? `${prefix}block` : `${prefix}hidden`;
-};
-
-export default function Responsive<T extends ElementType = "div">({
-  component: Component = "div",
-  className,
+const Responsive = <T extends React.ElementType = "div">({
+  component,
   base,
   sm,
   md,
   lg,
   xl,
-  "2xl": xxl, // Use a valid variable name for '2xl' key
-  // Capture the rest of the props to pass down
-  ...restProps
-}: ResponsiveProps<T>): React.ReactElement | null {
-  const breakpointContent: Partial<Record<Breakpoint, ReactNode>> = {
-    base,
-    sm,
-    md,
-    lg,
-    xl,
-    "2xl": xxl,
-  };
+  "2xl": xl2,
+  className,
+  ...props
+}: ResponsivePropsWithComponent<T>) => {
+  const Component = (component || "div") as React.ElementType;
 
-  const definedEntries = (Object.entries(breakpointContent) as [Breakpoint, ReactNode][]).filter(
-    ([, node]) => node !== undefined,
-  );
-
-  if (definedEntries.length === 0) {
-    return null;
-  }
+  const breakpoints = [
+    { content: base, prefix: "" },
+    { content: sm, prefix: "sm:" },
+    { content: md, prefix: "md:" },
+    { content: lg, prefix: "lg:" },
+    { content: xl, prefix: "xl:" },
+    { content: xl2, prefix: "2xl:" },
+  ].filter((bp) => !!bp.content);
 
   return (
     <>
-      {definedEntries.map(([currentBp, node]) => {
-        const visibilityClasses = definedEntries
-          .map(([bp]) => getDisplayClass(bp, bp === currentBp))
-          .join(" ");
+      {breakpoints.map(({ content, prefix }, i) => {
+        const nextPrefix = breakpoints[i + 1]?.prefix || "";
+        const breakPointClassNames =
+          i === 0 ? `block ${nextPrefix}hidden` : `hidden ${prefix}block ${nextPrefix}hidden`;
 
         return (
           <Component
-            key={currentBp}
-            className={twMerge(visibilityClasses, className)}
-            {...restProps}>
-            {node}
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            {...(props as any)}
+            key={i}
+            className={twMerge(className, breakPointClassNames.trim())}>
+            {content}
           </Component>
         );
       })}
     </>
   );
-}
+};
+
+export default Responsive;
