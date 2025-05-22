@@ -12,7 +12,7 @@ import { ThemeProvider } from "next-themes";
 import Image from "next/image";
 import "nextra-theme-blog/style.css";
 
-import { Navigation, Responsive } from "@/components";
+import { Navigation, Responsive, ScrollToTopButton } from "@/components";
 import ContactButtons from "@/components/ContactButtons";
 import { data } from "@/data";
 
@@ -86,6 +86,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             md={null}
           />
         </ThemeProvider>
+        <ScrollToTopButton />
       </body>
       <GoogleAnalytics gaId="G-XVX4B96FPG" />
       <Analytics />

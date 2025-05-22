@@ -1,0 +1,42 @@
+"use client";
+
+import { ArrowUp01Icon } from "@hugeicons/core-free-icons";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { useEffect, useState } from "react";
+
+export default function ScrollToTopButton() {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.scrollY > 300) {
+        setIsVisible(true);
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => window.removeEventListener("scroll", toggleVisibility);
+  }, []);
+
+  // Function to scroll to top
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
+  return (
+    <button
+      onClick={scrollToTop}
+      className={`${
+        isVisible ? "opacity-50" : "opacity-0"
+      } bg-primary fixed right-8 bottom-8 z-50 h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-300 hover:bg-orange-500 dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-600`}
+      aria-label="Scroll to top">
+      <HugeiconsIcon icon={ArrowUp01Icon} size={24} className="m-auto" />
+    </button>
+  );
+}
