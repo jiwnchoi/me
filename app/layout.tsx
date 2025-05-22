@@ -62,7 +62,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Responsive
               base={null}
               md={
-                <Footer className="flex w-full flex-col-reverse items-center justify-start gap-2">
+                <Footer className="flex w-full flex-col-reverse items-center justify-start gap-2 text-zinc-500 dark:text-zinc-400">
                   Copyright © 2025 Jiwon Jason Choi
                 </Footer>
               }
@@ -79,7 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <Responsive
             base={
-              <Footer className="w-full p-2 pt-0 text-zinc-500 dark:text-zinc-400">
+              <Footer className="fixed bottom-0 w-full p-4 text-zinc-500 dark:text-zinc-400">
                 Copyright © 2025 Jiwon Jason Choi
               </Footer>
             }
