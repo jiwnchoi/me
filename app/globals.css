@@ -57,7 +57,7 @@ div.nextra-code {
 }
 
 .me-hover {
-  @apply hover:bg-primary-content hover:text-primary -ml-0.5 rounded-sm px-0.5 py-0 underline decoration-dotted underline-offset-2 transition-all duration-100 ease-in-out hover:no-underline;
+  @apply hover:text-primary -ml-0.5 rounded-sm px-0.5 py-0 underline decoration-dotted underline-offset-2 transition-all duration-100 ease-in-out hover:no-underline;
 }
 
 .me-prose {

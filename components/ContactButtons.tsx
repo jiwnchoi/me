@@ -23,7 +23,7 @@ async function ContactButton({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="btn btn-square btn-ghost btn-xs font-color me-hover"
+      className="btn btn-square btn-ghost btn-xs font-color me-hover border-0 hover:bg-transparent"
       aria-label={label}>
       <HugeiconsIcon icon={Icon} size={18} />
     </a>
