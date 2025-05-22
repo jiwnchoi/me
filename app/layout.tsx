@@ -79,7 +79,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
           <Responsive
             base={
-              <Footer className="fixed bottom-0 w-full p-4 text-zinc-500 dark:text-zinc-400">
+              <Footer className="w-full p-4 text-zinc-500 dark:text-zinc-400">
                 Copyright © 2025 Jiwon Jason Choi
               </Footer>
             }
