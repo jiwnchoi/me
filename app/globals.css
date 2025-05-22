@@ -20,6 +20,9 @@
   @apply sticky top-0 z-10 -my-2 bg-[var(--bg)] py-2;
 }
 
+div.nextra-code {
+  @apply my-6;
+}
 /* ::after will be hidden starting from the 'md' breakpoint */
 .me-nav-header::after {
   content: ""; /* Required for ::after to be rendered */

@@ -1,0 +1,121 @@
+---
+title: TailwindCSS에서 Breakpoint에 따라 조건부 렌더링하기
+date: 2025-05-23
+description: TailwindCSS에서 Breakpoint에 따라서 조건부로 렌더링하는 방법을 알아보자.
+tags: [React, Web, TypeScript]
+type: post
+---
+
+React로 웹 개발을 하다보면 보면 특정 Breakpoint에 따라서 조건부로 렌더링을 하고 싶을 때가 있다.
+예를 들어, 모바일에서는 A 컴포넌트를 보여주고, 데스크탑에서는 B 컴포넌트를 보여주고 싶을 때가 있다.
+
+TailwindCSS를 쓰기 전에는 [Chakra UI](https://chakra-ui.com/)와 같은 UI 라이브러리를 사용했던지라 내장된 `useBreakpointValue` 훅을 사용했지만, Tailwind는 `css-in-js`에 비해 이러한 기능이 빈약했다.
+
+유사한 기능을 제공하는 hook 라이브러리들이 많이 있지만, 대부분 Client-component에서만 사용하는 Hook이라 (`window` 객체를 참조하는) RSC 환경에서는 사용이 어려웠다.
+
+가장 간단하게는 TailwindCSS의 `hidden`과 `block` 클래스를 조합해서 사용할 수 있다.
+
+```tsx
+return (
+  <div className="hidden sm:block">
+    <DesktopComponent />
+  </div>
+  <div className="block sm:hidden">
+    <MobileComponent />
+  </div>
+);
+```
+
+이 코드를 딱 바라보면 왜인지 아래와 같이 짜고 싶다.
+
+```tsx
+<Responsive
+  base={null}
+  md={
+    <Footer className="flex w-full flex-col-reverse items-center justify-start gap-2">
+      Copyright © 2025 Jiwon Jason Choi
+    </Footer>
+  }
+/>
+```
+
+그리하여 아래와 같은 snippet을 만들었다.
+
+```tsx filename="Responsive.tsx" {1}
+import React, { type ComponentProps, type ElementType, type ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
+
+type Breakpoint = "base" | "sm" | "md" | "lg" | "xl" | "2xl";
+
+type ResponsiveSpecificProps = Partial<Record<Breakpoint, ReactNode>> & {
+  component?: ElementType; // Use ElementType for flexibility
+  className?: string;
+};
+
+type ResponsiveProps<T extends ElementType> = ResponsiveSpecificProps &
+  Omit<ComponentProps<T>, keyof ResponsiveSpecificProps | "children">;
+
+const prefixes: Record<Breakpoint, string> = {
+  base: "",
+  sm: "sm:",
+  md: "md:",
+  lg: "lg:",
+  xl: "xl:",
+  "2xl": "2xl:",
+};
+
+const getDisplayClass = (bp: Breakpoint, isActive: boolean): string => {
+  const prefix = prefixes[bp];
+  return isActive ? `${prefix}block` : `${prefix}hidden`;
+};
+
+export default function Responsive<T extends ElementType = "div">({
+  component: Component = "div",
+  className,
+  base,
+  sm,
+  md,
+  lg,
+  xl,
+  "2xl": xxl,
+  ...restProps
+}: ResponsiveProps<T>): React.ReactElement | null {
+  const breakpointContent: Partial<Record<Breakpoint, ReactNode>> = {
+    base,
+    sm,
+    md,
+    lg,
+    xl,
+    "2xl": xxl,
+  };
+
+  const definedEntries = (Object.entries(breakpointContent) as [Breakpoint, ReactNode][]).filter(
+    ([, node]) => node !== undefined,
+  );
+
+  if (definedEntries.length === 0) {
+    return null;
+  }
+
+  return (
+    <>
+      {definedEntries.map(([currentBp, node]) => {
+        const visibilityClasses = definedEntries
+          .map(([bp]) => getDisplayClass(bp, bp === currentBp))
+          .join(" ");
+
+        return (
+          <Component
+            key={currentBp}
+            className={twMerge(visibilityClasses, className)}
+            {...restProps}>
+            {node}
+          </Component>
+        );
+      })}
+    </>
+  );
+}
+```
+
+사실 이것은 블로그를 테스트하기 위한 똥글이다.
