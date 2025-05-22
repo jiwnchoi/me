@@ -33,8 +33,8 @@ export default function ScrollToTopButton() {
     <button
       onClick={scrollToTop}
       className={`${
-        isVisible ? "opacity-50" : "opacity-0"
-      } bg-primary fixed right-8 bottom-8 z-50 h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-300 hover:bg-orange-500 dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-600`}
+        isVisible ? "opacity-70" : "opacity-0"
+      } bg-primary fixed right-2 bottom-4 z-50 h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-300 hover:bg-orange-500 md:right-8 md:bottom-8 dark:bg-zinc-800 dark:text-white dark:hover:bg-zinc-600`}
       aria-label="Scroll to top">
       <HugeiconsIcon icon={ArrowUp01Icon} size={24} className="m-auto" />
     </button>
