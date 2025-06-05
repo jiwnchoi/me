@@ -10,6 +10,7 @@ const nextConfig: NextConfig = {
   images: {
     minimumCacheTTL: 60 * 60 * 24 * 30,
   },
+  i18n: { locales: ["en", "ko"], defaultLocale: "en" },
   outputFileTracingIncludes: {
     "/api/asset/**/*": ["./content/**/*"],
   },
