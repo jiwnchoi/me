@@ -125,7 +125,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
   };
 
   return (
-    <div className="not-prose flex w-full md:flex-col">
+    <nav aria-label="Main navigation" className="not-prose flex w-full md:flex-col">
       <ul className="menu flex w-full flex-row flex-nowrap justify-between gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col [&::-webkit-scrollbar]:hidden">
         {sections
           .filter((s) => s.type === "main")
@@ -141,6 +141,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                   handleMainSectionClick(section.key);
                 }}
                 target="_self"
+                aria-current={activated === section.key ? "page" : undefined}
                 className={clsx(
                   "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
@@ -178,6 +179,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 base={section.shortTitle}
                 md={section.title}
                 prefetch={true}
+                aria-current={activated === section.key ? "page" : undefined}
                 className={clsx(
                   "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
@@ -186,6 +188,6 @@ export default function Navigation({ sections }: { sections: Section[] }) {
             </li>
           ))}
       </ul>
-    </div>
+    </nav>
   );
 }

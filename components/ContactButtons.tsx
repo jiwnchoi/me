@@ -39,6 +39,15 @@ const ICON_MAP: Record<string, IconSvgElement> = {
   instagram: InstagramIcon,
 };
 
+const LABEL_MAP: Record<string, string> = {
+  github: "GitHub profile",
+  twitter: "Twitter profile",
+  linkedin: "LinkedIn profile",
+  email: "Send an email",
+  scholar: "Google Scholar profile",
+  instagram: "Instagram profile",
+};
+
 const HREF_MAP: Record<string, (valye: string) => string> = {
   github: (username: string) => `https://github.com/${username}`,
   twitter: (username: string) => `https://x.com/${username}`,
@@ -56,7 +65,14 @@ export default async function ContactButtons(props: React.HTMLProps<HTMLDivEleme
       {Object.entries(contacts).map(([key, value]) => {
         const Icon = ICON_MAP[key];
         if (Icon) {
-          return <ContactButton key={key} href={HREF_MAP[key](value)} Icon={Icon} label={key} />;
+          return (
+            <ContactButton
+              key={key}
+              href={HREF_MAP[key](value)}
+              Icon={Icon}
+              label={LABEL_MAP[key] || key}
+            />
+          );
         }
         return null;
       })}
