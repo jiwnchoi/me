@@ -30,7 +30,7 @@ export default function Date({ date, day, className, ...rest }: DateProps) {
         <span>{`${formatDate(from, day)}`}</span>
       )}
       {to === "Present" ? (
-        <span className="me-highlight px-1.5 py-0.5">─ Present</span>
+        <span className="me-highlight mx-0.5 px-1 py-0">Present</span>
       ) : (
         to && <span>{`${formatDate(to, day)}`}</span>
       )}
