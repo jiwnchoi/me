@@ -7,365 +7,295 @@ const path = require("path");
 const yaml = require("js-yaml");
 const chokidar = require("chokidar");
 const { quicktype, InputData, jsonInputForTargetLanguage } = require("quicktype-core");
-const yargs = require("yargs/yargs");
-const { hideBin } = require("yargs/helpers");
+async function main() {
+  const { default: yargs } = await import("yargs/yargs");
+  const { hideBin } = await import("yargs/helpers");
 
-// --- Argument Parsing ---
-const argv = yargs(hideBin(process.argv))
-  .option("input", {
-    alias: "i",
-    type: "string",
-    description: "Path to the directory containing YAML files",
-    default: path.resolve(process.cwd(), "data"),
-    coerce: (p) => path.resolve(p),
-  })
-  .option("outputDir", {
-    alias: "o",
-    type: "string",
-    description: "Path to the output directory for generated files",
-    default: path.resolve(process.cwd(), "generated"),
-    coerce: (p) => path.resolve(p),
-  })
-  .option("typeFile", {
-    alias: "t",
-    type: "string",
-    description: "Filename for the generated TypeScript types (will be placed in outputDir)",
-    default: "data-contracts.ts",
-  })
-  .option("accessorFile", {
-    alias: "a",
-    type: "string",
-    description:
-      "Optional filename for the data accessor class (will be placed in outputDir). If not provided, accessor is not generated.",
-    // No default, making it optional
-  })
-  .option("generateIndex", {
-    alias: "x",
-    type: "boolean",
-    description: "Generate an index.ts file in the outputDir",
-    default: false,
-  })
-  .option("watch", {
-    alias: "w",
-    type: "boolean",
-    description: "Watch for changes in the input directory",
-    default: false,
-  })
-  .usage("Usage: $0 -i [inputDir] -o [outputDir] -t [typeFile] [-a accessorFile] [-x] [-w]")
-  .help()
-  .alias("help", "h")
-  .version(false)
-  .strict().argv;
+  // --- Argument Parsing ---
+  const argv = yargs(hideBin(process.argv))
+    .option("input", {
+      alias: "i",
+      type: "string",
+      description: "Path to the directory containing YAML files",
+      default: path.resolve(process.cwd(), "data"),
+      coerce: (p) => path.resolve(p),
+    })
+    .option("outputDir", {
+      alias: "o",
+      type: "string",
+      description: "Path to the output directory for generated files",
+      default: path.resolve(process.cwd(), "generated"),
+      coerce: (p) => path.resolve(p),
+    })
+    .option("typeFile", {
+      alias: "t",
+      type: "string",
+      description: "Filename for the generated TypeScript types (will be placed in outputDir)",
+      default: "data-contracts.ts",
+    })
+    .option("accessorFile", {
+      alias: "a",
+      type: "string",
+      description:
+        "Optional filename for the data accessor class (will be placed in outputDir). If not provided, accessor is not generated.",
+      // No default, making it optional
+    })
+    .option("generateIndex", {
+      alias: "x",
+      type: "boolean",
+      description: "Generate an index.ts file in the outputDir",
+      default: false,
+    })
+    .option("watch", {
+      alias: "w",
+      type: "boolean",
+      description: "Watch for changes in the input directory",
+      default: false,
+    })
+    .usage("Usage: $0 -i [inputDir] -o [outputDir] -t [typeFile] [-a accessorFile] [-x] [-w]")
+    .help()
+    .alias("help", "h")
+    .version(false)
+    .strict().argv;
 
-// --- Constants from Arguments ---
-const DATA_DIR = argv.input;
-const OUTPUT_DIR = argv.outputDir;
-const TYPE_FILENAME = argv.typeFile;
-const ACCESSOR_FILENAME = argv.accessorFile; // This will be undefined if not provided
-const GENERATE_INDEX = argv.generateIndex;
-const WATCH_MODE = argv.watch;
+  // --- Constants from Arguments ---
+  const DATA_DIR = argv.input;
+  const OUTPUT_DIR = argv.outputDir;
+  const TYPE_FILENAME = argv.typeFile;
+  const ACCESSOR_FILENAME = argv.accessorFile; // This will be undefined if not provided
+  const GENERATE_INDEX = argv.generateIndex;
+  const WATCH_MODE = argv.watch;
 
-// --- Calculated Paths ---
-const TYPE_OUTPUT_PATH = path.join(OUTPUT_DIR, TYPE_FILENAME);
-const ACCESSOR_OUTPUT_PATH = ACCESSOR_FILENAME ? path.join(OUTPUT_DIR, ACCESSOR_FILENAME) : null;
-const INDEX_OUTPUT_PATH = GENERATE_INDEX ? path.join(OUTPUT_DIR, "index.ts") : null;
+  // --- Calculated Paths ---
+  const TYPE_OUTPUT_PATH = path.join(OUTPUT_DIR, TYPE_FILENAME);
+  const ACCESSOR_OUTPUT_PATH = ACCESSOR_FILENAME ? path.join(OUTPUT_DIR, ACCESSOR_FILENAME) : null;
+  const INDEX_OUTPUT_PATH = GENERATE_INDEX ? path.join(OUTPUT_DIR, "index.ts") : null;
 
-console.log(`Input YAML Directory: ${DATA_DIR}`);
-console.log(`Output Directory:     ${OUTPUT_DIR}`);
-console.log(`Type Definition File: ${TYPE_OUTPUT_PATH}`);
-if (ACCESSOR_OUTPUT_PATH) {
-  console.log(`Data Accessor File:   ${ACCESSOR_OUTPUT_PATH}`);
-} else {
-  console.log("Data Accessor File:   Not generating accessor.");
-}
-if (INDEX_OUTPUT_PATH) {
-  console.log(`Index File:           ${INDEX_OUTPUT_PATH}`);
-} else {
-  console.log("Index File:           Not generating index.ts.");
-}
-
-if (WATCH_MODE) {
-  console.log("Watch Mode:           Enabled");
-}
-
-// 파일명을 PascalCase로 변환하는 함수
-function toPascalCase(str) {
-  return str
-    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-    .map((x) => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase())
-    .join("");
-}
-
-// 파일명을 camelCase로 변환하는 함수
-function toCamelCase(str) {
-  const pascal = toPascalCase(str);
-  return pascal.charAt(0).toLowerCase() + pascal.slice(1);
-}
-
-let isGeneratingTypes = false;
-
-async function generateTypes() {
-  if (isGeneratingTypes) {
-    console.log("🔄 Type generation already in progress, skipping...");
-    return;
+  console.log(`Input YAML Directory: ${DATA_DIR}`);
+  console.log(`Output Directory:     ${OUTPUT_DIR}`);
+  console.log(`Type Definition File: ${TYPE_OUTPUT_PATH}`);
+  if (ACCESSOR_OUTPUT_PATH) {
+    console.log(`Data Accessor File:   ${ACCESSOR_OUTPUT_PATH}`);
+  } else {
+    console.log("Data Accessor File:   Not generating accessor.");
   }
-  isGeneratingTypes = true;
-  console.log("🔄 Generating types from YAML files using quicktype...");
+  if (INDEX_OUTPUT_PATH) {
+    console.log(`Index File:           ${INDEX_OUTPUT_PATH}`);
+  } else {
+    console.log("Index File:           Not generating index.ts.");
+  }
 
-  try {
-    // 출력 디렉토리가 존재하지 않으면 생성
-    try {
-      await fs.access(OUTPUT_DIR);
-    } catch {
-      console.log(`Creating output directory: ${OUTPUT_DIR}`);
-      await fs.mkdir(OUTPUT_DIR, { recursive: true });
-    }
+  if (WATCH_MODE) {
+    console.log("Watch Mode:           Enabled");
+  }
 
-    let files;
-    try {
-      files = await fs.readdir(DATA_DIR);
-    } catch (err) {
-      if (err.code === "ENOENT") {
-        console.error(`❌ Error: Input directory not found: ${DATA_DIR}`);
-        if (!WATCH_MODE) process.exit(1);
-        isGeneratingTypes = false;
-        return;
-      } else {
-        console.error(`❌ Error reading input directory ${DATA_DIR}:`, err);
-        if (!WATCH_MODE) process.exit(1);
-        isGeneratingTypes = false;
-        return;
-      }
-    }
+  // 파일명을 PascalCase로 변환하는 함수
+  function toPascalCase(str) {
+    return str
+      .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
+      .map((x) => x.charAt(0).toUpperCase() + x.slice(1).toLowerCase())
+      .join("");
+  }
 
-    const yamlFiles = files.filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"));
+  // 파일명을 camelCase로 변환하는 함수
+  function toCamelCase(str) {
+    const pascal = toPascalCase(str);
+    return pascal.charAt(0).toLowerCase() + pascal.slice(1);
+  }
 
-    if (yamlFiles.length === 0) {
-      console.log(`🤷 No YAML files found in ${DATA_DIR}. Skipping generation.`);
-      isGeneratingTypes = false;
+  let isGeneratingTypes = false;
+
+  async function generateTypes() {
+    if (isGeneratingTypes) {
+      console.log("🔄 Type generation already in progress, skipping...");
       return;
     }
+    isGeneratingTypes = true;
+    console.log("🔄 Generating types from YAML files using quicktype...");
 
-    const inputData = new InputData();
-    let processedFileCount = 0;
-    const fileMetadata = [];
-
-    for (const file of yamlFiles) {
-      const filePath = path.join(DATA_DIR, file);
-      const baseName = path.parse(file).name;
-      const typeName = toPascalCase(baseName);
-      const methodName = toCamelCase(baseName);
-
+    try {
+      // 출력 디렉토리가 존재하지 않으면 생성
       try {
-        const fileContent = await fs.readFile(filePath, "utf8");
-        const yamlData = yaml.load(fileContent);
-
-        if (yamlData === null || typeof yamlData !== "object" || Array.isArray(yamlData)) {
-          console.warn(`⚠️ Skipping ${file}: Content is not a valid YAML object.`);
-          continue;
-        }
-        if (Object.keys(yamlData).length === 0) {
-          console.warn(`⚠️ Skipping ${file}: Content is an empty object.`);
-          continue;
-        }
-
-        const jsonString = JSON.stringify(yamlData);
-        const source = { name: typeName, samples: [jsonString] };
-
-        await inputData.addSource("json", source, () => jsonInputForTargetLanguage("typescript"));
-        processedFileCount++;
-        fileMetadata.push({
-          typeName,
-          methodName,
-          filePath: path.relative(process.cwd(), filePath),
-          baseName,
-          extension: path.extname(file),
-        });
-      } catch (err) {
-        console.error(`❌ Error processing file ${file}:`, err.message || err);
+        await fs.access(OUTPUT_DIR);
+      } catch {
+        console.log(`Creating output directory: ${OUTPUT_DIR}`);
+        await fs.mkdir(OUTPUT_DIR, { recursive: true });
       }
-    }
 
-    if (processedFileCount === 0) {
-      console.log("🤷 No valid YAML object data found to generate types from.");
+      let files;
+      try {
+        files = await fs.readdir(DATA_DIR);
+      } catch (err) {
+        if (err.code === "ENOENT") {
+          console.error(`❌ Error: Input directory not found: ${DATA_DIR}`);
+          if (!WATCH_MODE) process.exit(1);
+          isGeneratingTypes = false;
+          return;
+        } else {
+          console.error(`❌ Error reading input directory ${DATA_DIR}:`, err);
+          if (!WATCH_MODE) process.exit(1);
+          isGeneratingTypes = false;
+          return;
+        }
+      }
+
+      const yamlFiles = files.filter((file) => file.endsWith(".yaml") || file.endsWith(".yml"));
+
+      if (yamlFiles.length === 0) {
+        console.log(`🤷 No YAML files found in ${DATA_DIR}. Skipping generation.`);
+        isGeneratingTypes = false;
+        return;
+      }
+
+      const inputData = new InputData();
+      let processedFileCount = 0;
+      const fileMetadata = [];
+
+      for (const file of yamlFiles) {
+        const filePath = path.join(DATA_DIR, file);
+        const baseName = path.parse(file).name;
+        const typeName = toPascalCase(baseName);
+        const methodName = toCamelCase(baseName);
+
+        try {
+          const fileContent = await fs.readFile(filePath, "utf8");
+          const yamlData = yaml.load(fileContent);
+
+          if (yamlData === null || typeof yamlData !== "object" || Array.isArray(yamlData)) {
+            console.warn(`⚠️ Skipping ${file}: Content is not a valid YAML object.`);
+            continue;
+          }
+          if (Object.keys(yamlData).length === 0) {
+            console.warn(`⚠️ Skipping ${file}: Content is an empty object.`);
+            continue;
+          }
+
+          const jsonString = JSON.stringify(yamlData);
+          const source = { name: typeName, samples: [jsonString] };
+
+          await inputData.addSource("json", source, () => jsonInputForTargetLanguage("typescript"));
+          processedFileCount++;
+          fileMetadata.push({
+            typeName,
+            methodName,
+            filePath: path.relative(process.cwd(), filePath),
+            baseName,
+            extension: path.extname(file),
+          });
+        } catch (err) {
+          console.error(`❌ Error processing file ${file}:`, err.message || err);
+        }
+      }
+
+      if (processedFileCount === 0) {
+        console.log("🤷 No valid YAML object data found to generate types from.");
+        isGeneratingTypes = false;
+        return;
+      }
+
+      const quicktypeOptions = {
+        inputData,
+        lang: "typescript",
+        rendererOptions: {
+          "just-types": "true",
+          "nice-property-names": "true",
+          "acronym-style": "original",
+          "prefer-interfaces": "true",
+        },
+      };
+
+      const result = await quicktype(quicktypeOptions);
+      let outputContent = `// This file is auto-generated by yaml-typegen.js using quicktype\n`;
+      outputContent += `// Input directory: ${path.relative(process.cwd(), DATA_DIR)}\n`;
+      outputContent += `// Do not edit this file directly.\n\n`;
+      outputContent += result.lines.join("\n");
+
+      await fs.writeFile(TYPE_OUTPUT_PATH, outputContent, "utf8");
+      console.log(`✅ Types generated successfully at ${TYPE_OUTPUT_PATH}`);
+
+      if (ACCESSOR_OUTPUT_PATH) {
+        // Generate accessor only if filename is provided
+        await generateDataAccessor(fileMetadata);
+      } else if (GENERATE_INDEX) {
+        // If no accessor but index is requested, generate index with only types
+        await generateIndexFile(true, false); // hasTypes = true, hasAccessor = false
+      }
+    } catch (error) {
+      console.error("❌ Error during quicktype generation process:", error);
+      if (!WATCH_MODE) process.exit(1);
+    } finally {
       isGeneratingTypes = false;
-      return;
     }
-
-    const quicktypeOptions = {
-      inputData,
-      lang: "typescript",
-      rendererOptions: {
-        "just-types": "true",
-        "nice-property-names": "true",
-        "acronym-style": "original",
-        "prefer-interfaces": "true",
-      },
-    };
-
-    const result = await quicktype(quicktypeOptions);
-    let outputContent = `// This file is auto-generated by yaml-typegen.js using quicktype\n`;
-    outputContent += `// Input directory: ${path.relative(process.cwd(), DATA_DIR)}\n`;
-    outputContent += `// Do not edit this file directly.\n\n`;
-    outputContent += result.lines.join("\n");
-
-    await fs.writeFile(TYPE_OUTPUT_PATH, outputContent, "utf8");
-    console.log(`✅ Types generated successfully at ${TYPE_OUTPUT_PATH}`);
-
-    if (ACCESSOR_OUTPUT_PATH) {
-      // Generate accessor only if filename is provided
-      await generateDataAccessor(fileMetadata);
-    } else if (GENERATE_INDEX) {
-      // If no accessor but index is requested, generate index with only types
-      await generateIndexFile(true, false); // hasTypes = true, hasAccessor = false
-    }
-  } catch (error) {
-    console.error("❌ Error during quicktype generation process:", error);
-    if (!WATCH_MODE) process.exit(1);
-  } finally {
-    isGeneratingTypes = false;
-  }
-}
-
-async function generateDataAccessor(fileMetadata) {
-  if (!ACCESSOR_OUTPUT_PATH) return; // Should not happen if called correctly
-
-  try {
-    console.log("🔄 Generating data accessor class...");
-
-    const typeImportFilenameNoExt = TYPE_FILENAME.replace(/\.(ts|js)$/, "");
-
-    const accessorContent = `/* eslint-disable @typescript-eslint/no-explicit-any */
-// This file is auto-generated by yaml-typegen.js
-// Input directory: ${path.relative(process.cwd(), DATA_DIR)}
-// Do not edit this file directly.
-
-import fs from 'fs';
-import path from 'path';
-import yaml from 'js-yaml';
-import { ${fileMetadata.map((m) => m.typeName).join(", ")} } from './${typeImportFilenameNoExt}';
-
-// Path to the YAML data directory, relative to process.cwd() for runtime
-const YAML_DATA_DIR = path.resolve(process.cwd(), '${path.relative(process.cwd(), DATA_DIR)}');
-
-/**
- * DataAccessor provides type-safe access to YAML data files
- */
-export class DataAccessor {
-  private cache: Record<string, any> = {};
-
-  /**
-   * Clears the data cache, forcing fresh reads from disk
-   */
-  public clearCache(): void {
-    this.cache = {};
   }
 
-${fileMetadata
-  .map((meta) => {
-    const { typeName, methodName, baseName, extension } = meta;
-    return `  /**
-   * Loads data from ${baseName}${extension}
-   * @param useCache Use cached data if available (default: true)
-   * @returns ${typeName} object
-   */
-  public ${methodName}(useCache: boolean = true): ${typeName} {
-    const cacheKey = '${methodName}';
-    if (useCache && this.cache[cacheKey]) {
-      return this.cache[cacheKey] as ${typeName};
-    }
+  async function generateDataAccessor(fileMetadata) {
+    if (!ACCESSOR_OUTPUT_PATH) return; // Should not happen if called correctly
 
     try {
-      const filePath = path.join(YAML_DATA_DIR, '${baseName}${extension}');
-      const fileContent = fs.readFileSync(filePath, 'utf8');
-      const data = yaml.load(fileContent) as ${typeName};
-      this.cache[cacheKey] = data;
-      return data;
+      console.log("🔄 Generating data accessor class...");
+
+      const typeImportFilenameNoExt = TYPE_FILENAME.replace(/\.(ts|js)$/, "");
+
+      const accessorContent = `/* eslint-disable @typescript-eslint/no-explicit-any */\n// This file is auto-generated by yaml-typegen.js\n// Input directory: ${path.relative(process.cwd(), DATA_DIR)}\n// Do not edit this file directly.\n\nimport fs from 'fs';\nimport path from 'path';\nimport yaml from 'js-yaml';\nimport { ${fileMetadata.map((m) => m.typeName).join(", ")} } from './${typeImportFilenameNoExt}';\n\n// Path to the YAML data directory, relative to process.cwd() for runtime\nconst YAML_DATA_DIR = path.resolve(process.cwd(), '${path.relative(process.cwd(), DATA_DIR)}');\n\n/**\n * DataAccessor provides type-safe access to YAML data files\n */\nexport class DataAccessor {\n  private cache: Record<string, any> = {};\n\n  /**\n   * Clears the data cache, forcing fresh reads from disk\n   */\n  public clearCache(): void {\n    this.cache = {};\n  }\n\n${fileMetadata
+        .map((meta) => {
+          const { typeName, methodName, baseName, extension } = meta;
+          return `  /**\n   * Loads data from ${baseName}${extension}\n   * @param useCache Use cached data if available (default: true)\n   * @returns ${typeName} object\n   */\n  public ${methodName}(useCache: boolean = true): ${typeName} {\n    const cacheKey = '${methodName}';\n    if (useCache && this.cache[cacheKey]) {\n      return this.cache[cacheKey] as ${typeName};\n    }\n\n    try {\n      const filePath = path.join(YAML_DATA_DIR, '${baseName}${extension}');\n      const fileContent = fs.readFileSync(filePath, 'utf8');\n      const data = yaml.load(fileContent) as ${typeName};\n      this.cache[cacheKey] = data;\n      return data;\n    } catch (error) {\n      console.error(\`Error loading ${baseName}${extension}: \${error}\`);\n      throw error;\n    }\n  }\n`;
+        })
+        .join(
+          "\n",
+        )}\n  /**\n   * Singleton instance\n   */\n  private static _instance: DataAccessor;\n\n  /**\n   * Get singleton instance\n   */\n  public static get instance(): DataAccessor {\n    if (!DataAccessor._instance) {\n      DataAccessor._instance = new DataAccessor();\n    }\n    return DataAccessor._instance;\n  }\n}\n\n/**\n * Singleton data accessor instance for convenient access\n * Use this for easy data access: data.${fileMetadata.length > 0 ? fileMetadata[0].methodName : "exampleMethod"}()\n */\nconst data = DataAccessor.instance;\n\nexport default data;`;
+
+      await fs.writeFile(ACCESSOR_OUTPUT_PATH, accessorContent, "utf8");
+      console.log(`✅ Data accessor class generated successfully at ${ACCESSOR_OUTPUT_PATH}`);
+
+      if (GENERATE_INDEX) {
+        // If index generation is also requested
+        await generateIndexFile(true, true); // hasTypes = true, hasAccessor = true
+      }
     } catch (error) {
-      console.error(\`Error loading ${baseName}${extension}: \${error}\`);
-      throw error;
+      console.error("❌ Error generating data accessor class:", error);
+      if (!WATCH_MODE) process.exit(1);
     }
   }
-`;
-  })
-  .join("\n")}
-  /**
-   * Singleton instance
-   */
-  private static _instance: DataAccessor;
 
-  /**
-   * Get singleton instance
-   */
-  public static get instance(): DataAccessor {
-    if (!DataAccessor._instance) {
-      DataAccessor._instance = new DataAccessor();
+  async function generateIndexFile(hasTypes, hasAccessor) {
+    if (!INDEX_OUTPUT_PATH) return; // Should not happen if called correctly
+
+    try {
+      console.log(`🔄 Generating index.ts in ${OUTPUT_DIR}...`);
+
+      let indexContent = `// This file is auto-generated by yaml-typegen.js\n// Do not edit this file directly.\n\n`;
+
+      if (hasTypes) {
+        const typeFilenameNoExt = TYPE_FILENAME.replace(/\.(ts|js)$/, "");
+        indexContent += `export * from "./${typeFilenameNoExt}";\n`;
+      }
+
+      if (hasAccessor && ACCESSOR_FILENAME) {
+        // Ensure accessorFile was indeed specified
+        const accessorFilenameNoExt = ACCESSOR_FILENAME.replace(/\.(ts|js)$/, "");
+        indexContent += `export { default as data } from "./${accessorFilenameNoExt}";\n`;
+      }
+
+      await fs.writeFile(INDEX_OUTPUT_PATH, indexContent, "utf8");
+      console.log(`✅ index.ts generated successfully at ${INDEX_OUTPUT_PATH}`);
+    } catch (error) {
+      console.error("❌ Error generating index.ts:", error);
+      if (!WATCH_MODE) process.exit(1);
     }
-    return DataAccessor._instance;
   }
-}
 
-/**
- * Singleton data accessor instance for convenient access
- * Use this for easy data access: data.${fileMetadata.length > 0 ? fileMetadata[0].methodName : "exampleMethod"}()
- */
-const data = DataAccessor.instance;
-
-export default data;`;
-
-    await fs.writeFile(ACCESSOR_OUTPUT_PATH, accessorContent, "utf8");
-    console.log(`✅ Data accessor class generated successfully at ${ACCESSOR_OUTPUT_PATH}`);
-
-    if (GENERATE_INDEX) {
-      // If index generation is also requested
-      await generateIndexFile(true, true); // hasTypes = true, hasAccessor = true
-    }
-  } catch (error) {
-    console.error("❌ Error generating data accessor class:", error);
-    if (!WATCH_MODE) process.exit(1);
+  function debounce(func, wait) {
+    let timeout;
+    return function (...args) {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func.apply(this, args), wait);
+    };
   }
-}
 
-async function generateIndexFile(hasTypes, hasAccessor) {
-  if (!INDEX_OUTPUT_PATH) return; // Should not happen if called correctly
+  const debouncedGenerateTypes = debounce(generateTypes, 300);
 
-  try {
-    console.log(`🔄 Generating index.ts in ${OUTPUT_DIR}...`);
-
-    let indexContent = `// This file is auto-generated by yaml-typegen.js
-// Do not edit this file directly.\n\n`;
-
-    if (hasTypes) {
-      const typeFilenameNoExt = TYPE_FILENAME.replace(/\.(ts|js)$/, "");
-      indexContent += `export * from "./${typeFilenameNoExt}";\n`;
-    }
-
-    if (hasAccessor && ACCESSOR_FILENAME) {
-      // Ensure accessorFile was indeed specified
-      const accessorFilenameNoExt = ACCESSOR_FILENAME.replace(/\.(ts|js)$/, "");
-      indexContent += `export { default as data } from "./${accessorFilenameNoExt}";\n`;
-    }
-
-    await fs.writeFile(INDEX_OUTPUT_PATH, indexContent, "utf8");
-    console.log(`✅ index.ts generated successfully at ${INDEX_OUTPUT_PATH}`);
-  } catch (error) {
-    console.error("❌ Error generating index.ts:", error);
-    if (!WATCH_MODE) process.exit(1);
-  }
-}
-
-function debounce(func, wait) {
-  let timeout;
-  return function (...args) {
-    clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(this, args), wait);
-  };
-}
-
-const debouncedGenerateTypes = debounce(generateTypes, 300);
-
-// --- 실행 로직 ---
-(async () => {
+  // --- 실행 로직 ---
   await generateTypes(); // Initial generation
 
   if (WATCH_MODE) {
@@ -429,4 +359,6 @@ const debouncedGenerateTypes = debounce(generateTypes, 300);
       );
     }
   }
-})();
+}
+
+main().catch(console.error);
