@@ -1,4 +1,14 @@
 experiences:
+  - id: matchgroup
+    name: >
+      [Match Group](https://mtch.com)
+    title: Software Engineer @ [Match Group AI, HYPERCONNECT](https://hyperconnect.com/en/tech/aiml)
+    from: 2025.08.12
+    to: Present
+    location: Seoul, Korea
+    description: >
+      Machine Learning Software Engineer
+
   - id: navercloud
     name: >
       [NAVER Cloud](https://navercloudcorp.com/en)
