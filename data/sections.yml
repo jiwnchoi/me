@@ -4,8 +4,8 @@ sections:
     shortTitle: About
     type: main
 
-  - key: experiences
-    title: Experiences
+  - key: career
+    title: Career
     shortTitle: Career
     type: main
 
