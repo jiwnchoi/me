@@ -5,7 +5,10 @@ import path from "path";
 const BASE_ASSET_DIRECTORY = process.cwd();
 const ALLOWED_TOP_LEVEL_DIRS = ["content"];
 
-export async function GET(request: Request, context: { params: Promise<{ assetPath: string[] }> }) {
+export async function GET(
+  request: Request,
+  context: { params: Promise<{ assetPath?: string[] }> },
+) {
   // Await the params object to ensure it's ready
   const params = await context.params;
 
@@ -44,7 +47,7 @@ export async function GET(request: Request, context: { params: Promise<{ assetPa
     const fileBuffer = await fs.readFile(absoluteAssetPath);
     const contentType = mime.lookup(absoluteAssetPath) || "application/octet-stream";
 
-    return new Response(fileBuffer, {
+    return new Response(fileBuffer as unknown as BodyInit, {
       status: 200,
       headers: {
         "Content-Type": contentType,
