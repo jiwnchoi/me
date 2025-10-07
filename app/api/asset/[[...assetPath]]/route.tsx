@@ -47,7 +47,7 @@ export async function GET(
     const fileBuffer = await fs.readFile(absoluteAssetPath);
     const contentType = mime.lookup(absoluteAssetPath) || "application/octet-stream";
 
-    return new Response(fileBuffer, {
+    return new Response(fileBuffer as unknown as BodyInit, {
       status: 200,
       headers: {
         "Content-Type": contentType,
