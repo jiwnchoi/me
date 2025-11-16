@@ -54,7 +54,7 @@
     "eslint": "^9.37.0",
     "eslint-config-next": "15.5.4",
     "husky": "^9.1.7",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "lint-staged": "^16.2.3",
     "pagefind": "^1.4.0",
     "prettier": "^3.6.2",
