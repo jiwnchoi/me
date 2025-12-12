@@ -21,6 +21,7 @@ export default async function Card({
   tags,
   date,
 }: CardProps) {
+  const unoptimized = imagePath?.startsWith("/api/asset/") ?? false;
   return (
     <Link href={route.replace("/content", "")} prefetch={true} className="not-prose">
       <div
@@ -36,10 +37,8 @@ export default async function Card({
               src={imagePath}
               alt={`${title} thumbnail`}
               sizes="500px"
-              quality={10}
               fill
-              placeholder="blur"
-              blurDataURL={imagePath}
+              unoptimized={unoptimized}
               className="not-prose absoute z-1 scale-[110%] border-none object-cover"
               priority={true}
             />

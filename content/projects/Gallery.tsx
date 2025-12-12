@@ -3,12 +3,9 @@ import { getTimeStamp } from "@/utils";
 import { existsSync } from "fs";
 import { getPageMap } from "nextra/page-map";
 import path from "path";
-import { fileURLToPath } from "url";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const dirname = path.resolve(__dirname, "../../");
 const extensions = [".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg"];
+const stripLeadingSlashes = (value: string) => value.replace(/^\/+/, "");
 
 export default async function Gallery({
   title,
@@ -28,9 +25,13 @@ export default async function Gallery({
         item.frontMatter?.type !== "private",
     )
     .map((item) => {
-      const extensionPaths = extensions.map((ext) => path.join(item.route, `${item.name}${ext}`));
-      const foundPath = extensionPaths.find((extPath) => existsSync(path.join(dirname, extPath)));
-      const imagePath = foundPath ? path.join("/api/asset", foundPath) : null;
+      const extensionPaths = extensions.map((ext) =>
+        path.posix.join(item.route, `${item.name}${ext}`),
+      );
+      const foundPath = extensionPaths.find((routePath) =>
+        existsSync(path.join(process.cwd(), stripLeadingSlashes(routePath))),
+      );
+      const imagePath = foundPath ? `/api/asset${foundPath}` : null;
       return {
         key: item.name,
         ...item.frontMatter,

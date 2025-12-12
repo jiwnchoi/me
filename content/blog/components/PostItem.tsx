@@ -6,8 +6,10 @@ import path from "path";
 
 function getTeaserImagePath(route: string) {
   const imageExtensions = [".jpg", ".jpeg", ".png", ".webp"];
-  const imagePaths = imageExtensions.map((ext) => `${route}/teaser${ext}`);
-  const foundPath = imagePaths.find((imagePath) => existsSync(path.join(process.cwd(), imagePath)));
+  const imagePaths = imageExtensions.map((ext) => path.posix.join(route, `teaser${ext}`));
+  const foundPath = imagePaths.find((imagePath) =>
+    existsSync(path.join(process.cwd(), imagePath.replace(/^\/+/, ""))),
+  );
   return foundPath ? `/api/asset${foundPath}` : null;
 }
 
@@ -40,6 +42,7 @@ export default function PostItem({ post }: { post: PageMapItem }) {
               alt={`thumbnail-${post.title}`}
               fill
               className="rounded-lg object-cover"
+              unoptimized={teaserPath.startsWith("/api/asset/")}
             />
           </div>
         )}
