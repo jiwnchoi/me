@@ -43,38 +43,36 @@ export async function GET(request: Request) {
     );
 
     return new ImageResponse(
-      (
-        <div tw="text-white px-20 py-[80px] bg-[#030303] flex justify-between flex-col w-full h-full">
+      <div tw="text-white px-20 py-[80px] bg-[#030303] flex justify-between flex-col w-full h-full">
+        <div tw="flex flex-col">
+          <h1
+            tw="text-transparent text-8xl m-0 mt-12 mb-2 tracking-tighter leading-[1.2] "
+            style={{
+              fontWeight: "900",
+              textShadow: "0 2px 30px #000",
+              backgroundImage: "linear-gradient(90deg, #fff 40%, #aaa)",
+              backgroundClip: "text",
+              // To preserve new line
+              whiteSpace: "pre",
+            }}>
+            {title}
+          </h1>
+          <p tw="mb-4 text-3xl tracking-tight text-gray-400">{description}</p>
+        </div>
+        <div tw="flex items-center">
+          <img
+            src={absoluteImageURL.href}
+            alt="profile"
+            width={80}
+            height={80}
+            tw="rounded-lg mr-4"
+          />
           <div tw="flex flex-col">
-            <h1
-              tw="text-transparent text-8xl m-0 mt-12 mb-2 tracking-tighter leading-[1.2] "
-              style={{
-                fontWeight: "900",
-                textShadow: "0 2px 30px #000",
-                backgroundImage: "linear-gradient(90deg, #fff 40%, #aaa)",
-                backgroundClip: "text",
-                // To preserve new line
-                whiteSpace: "pre",
-              }}>
-              {title}
-            </h1>
-            <p tw="mb-4 text-3xl tracking-tight text-gray-400">{description}</p>
-          </div>
-          <div tw="flex items-center">
-            <img
-              src={absoluteImageURL.href}
-              alt="profile"
-              width={80}
-              height={80}
-              tw="rounded-lg mr-4"
-            />
-            <div tw="flex flex-col">
-              <h3 tw="font-bold text-2xl m-0 mb-2">Jiwon Jason Choi</h3>
-              <p tw="text-gray-400 text-lg m-0">Research Scientist & Software Engineer</p>
-            </div>
+            <h3 tw="font-bold text-2xl m-0 mb-2">Jiwon Jason Choi</h3>
+            <p tw="text-gray-400 text-lg m-0">Research Scientist & Software Engineer</p>
           </div>
         </div>
-      ),
+      </div>,
       {
         width: 1200,
         height: 630,

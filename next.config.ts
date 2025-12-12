@@ -15,7 +15,7 @@ const nextConfig: NextConfig = {
   },
   turbopack: {
     resolveAlias: {
-      "next-mdx-import-source-file": "/mdx-components.tsx",
+      "next-mdx-import-source-file": "./mdx-components.tsx",
     },
   },
 };

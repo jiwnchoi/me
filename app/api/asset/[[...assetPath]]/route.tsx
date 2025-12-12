@@ -1,12 +1,13 @@
 import fs from "fs/promises";
 import mime from "mime-types";
+import { NextRequest } from "next/server";
 import path from "path";
 
 const BASE_ASSET_DIRECTORY = process.cwd();
 const ALLOWED_TOP_LEVEL_DIRS = ["content"];
 
 export async function GET(
-  request: Request,
+  _request: NextRequest,
   context: { params: Promise<{ assetPath?: string[] }> },
 ) {
   // Await the params object to ensure it's ready

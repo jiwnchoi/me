@@ -80,15 +80,57 @@ type BlogMDXComponents = MDXComponents & {
   DateFormatter?: FC<{ date: Date }>;
 };
 
+function hrefToString(href: unknown): string | undefined {
+  if (typeof href === "string") return href;
+  if (!href || typeof href !== "object") return undefined;
+
+  const { pathname, query, hash } = href as {
+    pathname?: unknown;
+    query?: unknown;
+    hash?: unknown;
+  };
+
+  let result = "";
+
+  if (typeof pathname === "string") result += pathname;
+
+  if (query && typeof query === "object") {
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(query as Record<string, unknown>)) {
+      if (value == null) continue;
+      if (Array.isArray(value)) {
+        for (const v of value) params.append(key, String(v));
+      } else {
+        params.set(key, String(value));
+      }
+    }
+    const qs = params.toString();
+    if (qs) result += `?${qs}`;
+  }
+
+  if (typeof hash === "string" && hash.length > 0) {
+    result += hash.startsWith("#") ? hash : `#${hash}`;
+  }
+
+  return result.length > 0 ? result : undefined;
+}
+
 const DEFAULT_COMPONENTS = getNextraMDXComponents({
-  a: (props) => (
-    <a
-      target="_blank"
-      {...props}
-      href={props.href as string}
-      className={twMerge(props.className, "me-hover")}
-    />
-  ),
+  a: (props) => {
+    const { href, className, children, ...rest } = props as any;
+    const hrefString = hrefToString(href);
+
+    return (
+      <a
+        {...rest}
+        href={hrefString}
+        target="_blank"
+        rel="noreferrer noopener"
+        className={twMerge(className, "me-hover")}>
+        {children}
+      </a>
+    );
+  },
   blockquote: Blockquote,
   code: Code,
   details: Details,

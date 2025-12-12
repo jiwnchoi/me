@@ -11,7 +11,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -30,7 +30,8 @@
     "mdx-components.tsx",
     "app/[[...mdxPath]]/page.tsx",
     "app/opengraph-image.tsx",
-    "index.d.ts"
+    "index.d.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
