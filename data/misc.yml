@@ -1,4 +1,10 @@
 honors:
+  - id: 2025-tinder-hackathon
+    name: 2025 Tinder Global Hackathon
+    title: "People's Award"
+    location: West Hollywood, USA
+    date: "2025.02"
+    
   - id: 2025-skku-research-matters-plus
     name: SKKU Research Matters Plus
     title: 3rd Place Winner
@@ -76,6 +82,12 @@ honors:
     date: "2012.10"
 
 services:
+  - id: 2025-realthon
+    name: 2025 RE:ALThon Hackathon
+    title: Mentor
+    location: Seoul, Korea
+    date: "2025.11"
+    
   - id: 2024-korea-visualization-workshop-organizer
     name: 2024 2nd Korea Visualization Workshop
     title: Organizer
