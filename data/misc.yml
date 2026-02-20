@@ -82,6 +82,11 @@ honors:
     date: "2012.10"
 
 services:
+  - id: reviewer
+    title: Reviewer
+    description: >
+      CHI Poster (2026)
+  
   - id: 2025-realthon
     name: 2025 RE:ALThon Hackathon
     title: Mentor
