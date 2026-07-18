@@ -19,7 +19,7 @@ export default async function Honors() {
                   <span>{`, ${item.name}`}</span>
                 </p>
                 {item.description && (
-                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
+                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-xs">
                     <MDXContent mdxSource={item.description} />
                   </div>
                 )}

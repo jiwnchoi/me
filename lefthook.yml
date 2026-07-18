@@ -1,0 +1,15 @@
+pre-commit:
+  parallel: false
+  jobs:
+    - name: format staged files
+      glob: "*.{js,jsx,ts,tsx,json,jsonc,css,md,mdx,yaml,yml}"
+      run: pnpm exec oxfmt --write {staged_files}
+      stage_fixed: true
+
+    - name: lint staged files
+      glob: "*.{js,jsx,ts,tsx}"
+      run: pnpm exec oxlint --fix {staged_files}
+      stage_fixed: true
+
+    - name: typecheck
+      run: pnpm typecheck

@@ -46,7 +46,7 @@ export default async function Card({
           </div>
         )}
         <div className="absolute bottom-0 z-1 flex flex-col gap-2 p-4">
-          <h3 className="text-base font-bold no-underline">{title}</h3>
+          <h3 className="text-sm font-bold no-underline">{title}</h3>
           {description && (
             <p className="line-clamp-2 text-xs text-zinc-500 dark:text-zinc-400">{description}</p>
           )}

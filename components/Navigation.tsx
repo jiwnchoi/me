@@ -126,7 +126,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
 
   return (
     <nav aria-label="Main navigation" className="not-prose flex w-full md:flex-col">
-      <ul className="menu flex w-full flex-row flex-nowrap justify-between gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] md:flex-col [&::-webkit-scrollbar]:hidden">
+      <ul className="menu flex w-full [scrollbar-width:none] flex-row flex-nowrap justify-between gap-1 overflow-x-auto [-ms-overflow-style:none] md:flex-col [&::-webkit-scrollbar]:hidden">
         {sections
           .filter((s) => s.type === "main")
           .map((section) => (
@@ -143,7 +143,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 target="_self"
                 aria-current={activated === section.key ? "page" : undefined}
                 className={clsx(
-                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
+                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-sm",
                   activated === section.key ? "me-highlight font-bold" : "",
                 )}
               />
@@ -181,7 +181,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 prefetch={true}
                 aria-current={activated === section.key ? "page" : undefined}
                 className={clsx(
-                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-base",
+                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-sm",
                   activated === section.key ? "me-highlight font-bold" : "",
                 )}
               />

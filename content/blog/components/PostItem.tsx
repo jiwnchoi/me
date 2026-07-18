@@ -25,8 +25,8 @@ export default function PostItem({ post }: { post: PageMapItem }) {
       <li className="-m-4 flex justify-between gap-8 rounded-lg p-4 transition-colors duration-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50">
         <div className="flex flex-col gap-2">
           <Date date={post.frontMatter?.date} day={true} className="ml-0.5 text-xs" />
-          <h3 className="text-lg font-semibold">{post.title}</h3>
-          <p className="text-sm">{post.frontMatter?.description ?? ""}</p>
+          <h3 className="text-base font-semibold">{post.title}</h3>
+          <p className="text-xs">{post.frontMatter?.description ?? ""}</p>
           <ul className="mt-1 flex gap-2">
             {tags.map((tag) => (
               <li key={`tag-${post.title}-${tag}`}>
