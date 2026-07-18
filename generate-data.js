@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // ^ Shebang 추가: CLI에서 직접 실행 가능하도록
 
-/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require("fs").promises;
 const path = require("path");
 const yaml = require("js-yaml");
@@ -245,7 +244,11 @@ async function main() {
           "\n",
         )}\n  /**\n   * Singleton instance\n   */\n  private static _instance: DataAccessor;\n\n  /**\n   * Get singleton instance\n   */\n  public static get instance(): DataAccessor {\n    if (!DataAccessor._instance) {\n      DataAccessor._instance = new DataAccessor();\n    }\n    return DataAccessor._instance;\n  }\n}\n\n/**\n * Singleton data accessor instance for convenient access\n * Use this for easy data access: data.${fileMetadata.length > 0 ? fileMetadata[0].methodName : "exampleMethod"}()\n */\nconst data = DataAccessor.instance;\n\nexport default data;`;
 
-      await fs.writeFile(ACCESSOR_OUTPUT_PATH, accessorContent, "utf8");
+      const compatibleAccessorContent = accessorContent.replace(
+        "import yaml from 'js-yaml';",
+        "import * as yaml from 'js-yaml';",
+      );
+      await fs.writeFile(ACCESSOR_OUTPUT_PATH, compatibleAccessorContent, "utf8");
       console.log(`✅ Data accessor class generated successfully at ${ACCESSOR_OUTPUT_PATH}`);
 
       if (GENERATE_INDEX) {
