@@ -8,7 +8,7 @@ export default function Giscus() {
   return (
     <GiscusImpl
       id="comments"
-      repo="jiwnchoi/jiwnchoi"
+      repo="jiwnchoi/me"
       repoId="R_kgDOOj1s5Q"
       category="giscus"
       categoryId="DIC_kwDOOj1s5c4Cp7UN"
