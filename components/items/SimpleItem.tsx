@@ -21,7 +21,7 @@ export default async function SimpleItem(props: SimpleItemProps) {
       {left && (
         <div
           {...leftProps}
-          className="w-fit text-end text-xs font-semibold text-zinc-500 md:w-[80px] md:min-w-[80px] md:text-xs dark:text-zinc-400">
+          className="w-fit text-end text-sm font-semibold text-zinc-500 md:w-[80px] md:min-w-[80px] md:text-sm dark:text-zinc-400">
           {typeof left === "string" ? <MDXContent mdxSource={left} /> : left}
         </div>
       )}

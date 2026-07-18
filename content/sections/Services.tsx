@@ -37,7 +37,7 @@ export default async function Services() {
                   <span>{`, ${item.name}`}</span>
                 </p>
                 {item.description && (
-                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-xs">
+                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
                     <MDXContent mdxSource={item.description} />
                   </div>
                 )}

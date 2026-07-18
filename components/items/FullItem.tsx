@@ -30,7 +30,7 @@ export default async function FullItem(props: FullItemProps) {
         </div>
       </div>
       {description && (
-        <div className="border-primary border-opacity-50 mt-1 ml-0.5 border-l-2 pl-4 text-xs md:mt-0">
+        <div className="border-primary border-opacity-50 mt-1 ml-0.5 border-l-2 pl-4 text-sm md:mt-0">
           <MDXContent mdxSource={description} />
         </div>
       )}
