@@ -27,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const meta = data.meta();
   return (
     <html lang="en" suppressHydrationWarning className={openSans.className}>
-      <body className="flex h-fit max-w-7xl flex-col gap-4 p-0 md:flex-row md:px-8 md:py-8">
+      <body className="flex h-fit max-w-7xl min-w-0 flex-col gap-4 overflow-x-hidden p-0 md:flex-row md:px-8 md:py-8">
         <ThemeProvider
           attribute={["data-theme", "class"]}
           defaultTheme="system"
@@ -71,9 +71,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               }
             />
           </aside>
-          <main className="w-full grow md:-mr-4">
+          <main className="w-full min-w-0 grow md:-mr-4">
             <article
-              className="me-prose me-card drawer-content w-full flex-col p-16"
+              className="me-prose me-card drawer-content w-full min-w-0 flex-col p-4 md:p-16"
               dir="ltr"
               data-pagefind-body>
               {children}

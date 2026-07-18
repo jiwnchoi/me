@@ -36,7 +36,7 @@
 }
 
 div.nextra-code {
-  @apply my-6;
+  @apply my-6 max-w-full overflow-x-auto;
 }
 /* ::after will be hidden starting from the 'md' breakpoint */
 .me-nav-header::after {
@@ -103,6 +103,25 @@ div.nextra-code {
 /* Override the typography preset's base size for the MDX article container. */
 .me-prose.prose-base {
   font-size: 0.875rem;
+}
+
+/* Keep wide MDX content from expanding the article card on narrow screens. */
+.me-prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.me-prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.me-prose img,
+.me-prose svg,
+.me-prose video,
+.me-prose iframe {
+  max-width: 100%;
 }
 
 .me-list {
