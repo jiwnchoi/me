@@ -1,9 +1,9 @@
 import { FullItem } from "@/components/items";
 import { data } from "@/data";
 
-const experiences = data.career().career;
-
 export default async function Career() {
+  const experiences = data.career().career;
+
   return (
     <ol className="me-list gap-4">
       {experiences.map((item) => {

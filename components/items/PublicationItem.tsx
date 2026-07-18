@@ -9,7 +9,7 @@ async function AuthorNames({ authorList }: { authorList: string[] }) {
   const authorMap = Object.fromEntries(authors.map((author) => [author.name, author]));
 
   return (
-    <p className="not-prose text-sm">
+    <p className="not-prose text-md">
       {authorList.map((authorName, index) => (
         <span key={`author${index}`} className="italic">
           {authorMap?.[authorName]?.url ? (
@@ -54,7 +54,7 @@ async function PublicationButton({
       target="_blank"
       rel="noopener noreferrer"
       className={twMerge(
-        "not-prose me-hover m-0 flex items-center gap-1 text-xs",
+        "not-prose me-hover m-0 flex items-center gap-1 text-sm",
         "!no-underline",
       )}>
       <Icon />
@@ -85,7 +85,7 @@ export default async function PublicationItem(props: Publication) {
       <div className="flex flex-col">
         {typeof title === "string" ? <MDXContent mdxSource={`### ${title}`} /> : title}
         <AuthorNames authorList={authors} />
-        <p className="not-prose text-xs text-zinc-500 dark:text-zinc-400">{venue}</p>
+        <p className="not-prose text-sm text-zinc-500 dark:text-zinc-400">{venue}</p>
 
         <div className="mt-2 flex flex-wrap gap-2">
           {Object.entries(url).map(

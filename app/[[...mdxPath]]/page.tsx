@@ -32,7 +32,7 @@ export async function generateMetadata(props: PageProps) {
 }
 
 function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
-  const title = metadata.title === "Index" ? "Jiwon Jason Choi" : metadata.title;
+  const title = metadata.title === "Index" ? "Jiwon Choi" : metadata.title;
   return {
     ...metadata,
     title,

@@ -2,9 +2,9 @@ import { Date, MDXContent } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
-const honors = data.misc().honors;
-
 export default async function Honors() {
+  const honors = data.misc().honors;
+
   return (
     <ol className="me-list">
       {honors.map((item) => {
@@ -19,7 +19,7 @@ export default async function Honors() {
                   <span>{`, ${item.name}`}</span>
                 </p>
                 {item.description && (
-                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-xs">
+                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
                     <MDXContent mdxSource={item.description} />
                   </div>
                 )}

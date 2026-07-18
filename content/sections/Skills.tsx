@@ -1,9 +1,9 @@
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
-const skills = data.skills().skills;
-
 export default async function Skills() {
+  const skills = data.skills().skills;
+
   return (
     <ol className="me-list gap-1">
       {skills.map((item, i) => {

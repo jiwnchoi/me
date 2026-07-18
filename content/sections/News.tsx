@@ -2,9 +2,9 @@ import { Date } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
-const news = data.news().news;
-
 export default async function News() {
+  const news = data.news().news;
+
   return (
     <ol className="me-list gap-0.5">
       {news.map((item, i) => {

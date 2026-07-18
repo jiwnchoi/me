@@ -5,6 +5,21 @@
 @theme {
   --font-display: var(--font-open-sans), sans-serif;
   --font-sans: var(--font-open-sans), sans-serif;
+
+  /* Keep utility class names stable while making the type scale one step smaller. */
+  --text-xs: 0.625rem;
+  --text-sm: 0.75rem;
+  --text-base: 0.875rem;
+  --text-lg: 1rem;
+  --text-xl: 1.125rem;
+  --text-2xl: 1.25rem;
+  --text-3xl: 1.5rem;
+  --text-4xl: 1.875rem;
+  --text-5xl: 2.25rem;
+  --text-6xl: 3rem;
+  --text-7xl: 3.75rem;
+  --text-8xl: 6rem;
+  --text-9xl: 8rem;
 }
 
 [data-theme="light"] {
@@ -61,7 +76,9 @@ div.nextra-code {
 }
 
 .me-prose {
-  @apply prose prose-zinc prose-sm prose-p:mt-0 prose-p:mb-2 prose-img:rounded-lg dark:prose-invert prose-a:decoration-dotted prose-img:md:px-8 prose-img:my-2 prose-a:text-zinc-900 prose-a:font-normal prose-a:dark:text-white max-w-none;
+  @apply prose prose-zinc prose-base prose-p:mt-0 prose-p:mb-2 prose-img:rounded-lg dark:prose-invert prose-a:decoration-dotted prose-img:md:px-8 prose-img:my-2 prose-a:text-zinc-900 prose-a:font-normal prose-a:dark:text-white max-w-none;
+  /* MDX prose utilities have their own scale and do not use --text-base. */
+  font-size: 0.875rem;
   padding-inline: 0;
   @apply prose-headings:mb-4;
   @apply prose-ul:m-0 prose-li:m-0 prose-li:mb-1 prose-ul:mt-2;
@@ -71,7 +88,7 @@ div.nextra-code {
 
   /* h1 */
   @apply prose-h1:text-zinc-900 dark:prose-h1:text-white;
-  @apply prose-h1:mt-2 prose-h1:md:mt-4 prose-h1:font-bold prose-h1:text-2xl;
+  @apply prose-h1:mt-2 prose-h1:md:mt-4 prose-h1:font-bold prose-h1:text-3xl;
 
   /* h2 */
   @apply prose-h2:text-zinc-800 dark:prose-h2:text-zinc-200;
@@ -81,6 +98,11 @@ div.nextra-code {
   :where(ol > li):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
     padding-inline-start: 0;
   }
+}
+
+/* Override the typography preset's base size for the MDX article container. */
+.me-prose.prose-base {
+  font-size: 0.875rem;
 }
 
 .me-list {
@@ -133,7 +155,7 @@ body {
   --color-base-200: oklch(98% 0 0);
   --color-base-300: oklch(95% 0 0);
   --color-base-content: oklch(21% 0.006 285.885);
-  --color-primary: oklch(75% 0.183 55.934);
+  --color-primary: #1f77b4;
   --color-primary-content: oklch(98% 0.016 73.684);
   --color-secondary: oklch(55% 0.195 38.402);
   --color-secondary-content: oklch(98% 0.016 73.684);
@@ -168,7 +190,7 @@ body {
   --color-base-200: oklch(23.26% 0.014 253.1);
   --color-base-300: oklch(21.15% 0.012 254.09);
   --color-base-content: oklch(97.807% 0.029 256.847);
-  --color-primary: oklch(75% 0.183 55.934);
+  --color-primary: #ff7f0e;
   --color-primary-content: oklch(98% 0.016 73.684);
   --color-secondary: oklch(55% 0.195 38.402);
   --color-secondary-content: oklch(98% 0.016 73.684);

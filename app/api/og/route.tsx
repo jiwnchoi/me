@@ -35,7 +35,7 @@ export async function GET(request: Request) {
     const absoluteImageURL = new URL(imageURL, request.url);
 
     // ?title=<title>
-    const title = formatTitle(searchParams.get("title"), 24, "Jiwon Jason Choi");
+    const title = formatTitle(searchParams.get("title"), 24, "Jiwon Choi");
     const description = formatTitle(
       searchParams.get("description"),
       50,
@@ -68,7 +68,7 @@ export async function GET(request: Request) {
             tw="rounded-lg mr-4"
           />
           <div tw="flex flex-col">
-            <h3 tw="font-bold text-2xl m-0 mb-2">Jiwon Jason Choi</h3>
+            <h3 tw="font-bold text-2xl m-0 mb-2">Jiwon Choi</h3>
             <p tw="text-gray-400 text-lg m-0">Research Scientist & Software Engineer</p>
           </div>
         </div>
