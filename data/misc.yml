@@ -85,7 +85,13 @@ services:
   - id: reviewer
     title: Reviewer
     description: >
-      CHI Poster (2026)
+      CHI 2026
+
+  - id: uist-2026
+    name: UIST 2026
+    title: Reviewer
+    location: Detroit, USA
+    date: "2026.11"
   
   - id: 2025-realthon
     name: 2025 RE:ALThon Hackathon
