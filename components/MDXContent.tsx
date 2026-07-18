@@ -18,7 +18,7 @@ export default async function MDXContent({ mdxSource, className, ...props }: MDX
         span: (props) => <span className={`not-prose ${className ?? ""}`} {...props} />,
         h3: (props) => (
           // oxlint-disable-next-line jsx-a11y/heading-has-content -- children arrive through MDX props.
-          <h3 className={`not-prose text-base font-bold ${className ?? ""}`} {...props} />
+          <h3 className={`not-prose text-lg font-bold ${className ?? ""}`} {...props} />
         ),
         p: (props) => <p className={`not-prose ${className ?? ""}`} {...props} />,
       }}

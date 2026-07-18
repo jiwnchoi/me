@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm datagen && concurrently \"next dev \" \"pnpm datagen --watch\"",
+    "dev": "pnpm datagen && concurrently --kill-others-on-fail \"next dev --webpack\" \"pnpm datagen --watch\"",
     "build": "pnpm datagen && next build ",
     "typecheck": "node ./node_modules/typescript-next/bin/tsc --noEmit",
     "start": "next start",

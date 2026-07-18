@@ -2,9 +2,9 @@ import { Date, MDXContent } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
-const talks = data.misc().talks;
-
 export default async function Talks() {
+  const talks = data.misc().talks;
+
   return (
     <ol className="me-list">
       {talks.map((item) => {

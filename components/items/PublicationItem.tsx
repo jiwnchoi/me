@@ -54,7 +54,7 @@ async function PublicationButton({
       target="_blank"
       rel="noopener noreferrer"
       className={twMerge(
-        "not-prose me-hover m-0 flex items-center gap-1 text-xs",
+        "not-prose me-hover m-0 flex items-center gap-1 text-sm",
         "!no-underline",
       )}>
       <Icon />

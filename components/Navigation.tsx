@@ -143,7 +143,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 target="_self"
                 aria-current={activated === section.key ? "page" : undefined}
                 className={clsx(
-                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-sm",
+                  "w-[64px] rounded-lg text-center text-sm md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
                 )}
               />
@@ -151,13 +151,13 @@ export default function Navigation({ sections }: { sections: Section[] }) {
           ))}
         {/* <li className="menu-item flex-shrink-0">
           <button
-            className="me-highlight block w-[64px] rounded-lg text-center text-xs font-bold md:hidden md:w-full md:text-start md:text-base"
+            className="me-highlight block w-[64px] rounded-lg text-center text-sm font-bold md:hidden md:w-full md:text-start md:text-base"
             base="About"
             md="About">
             About
           </button>
           <button
-            className="me-highlight hidden w-[64px] rounded-lg text-center text-xs font-bold md:block md:w-full md:text-start md:text-base"
+            className="me-highlight hidden w-[64px] rounded-lg text-center text-sm font-bold md:block md:w-full md:text-start md:text-base"
             base="About"
             md="About">
             About
@@ -181,7 +181,7 @@ export default function Navigation({ sections }: { sections: Section[] }) {
                 prefetch={true}
                 aria-current={activated === section.key ? "page" : undefined}
                 className={clsx(
-                  "w-[64px] rounded-lg text-center text-xs md:w-full md:text-start md:text-sm",
+                  "w-[64px] rounded-lg text-center text-sm md:w-full md:text-start md:text-base",
                   activated === section.key ? "me-highlight font-bold" : "",
                 )}
               />

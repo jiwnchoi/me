@@ -13,7 +13,10 @@ export default async function SimpleItem(props: SimpleItemProps) {
   const { left, right, leftProps, rightProps, className, ...rest } = props;
   return (
     <li
-      className={twMerge(["flex flex-col gap-1 pl-0 md:mt-0 md:flex-row md:gap-4", className])}
+      className={twMerge([
+        "flex flex-col gap-1 pl-0 md:mt-0 md:flex-row md:items-baseline md:gap-4",
+        className,
+      ])}
       {...rest}>
       {left && (
         <div

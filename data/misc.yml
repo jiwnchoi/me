@@ -83,9 +83,8 @@ honors:
 
 services:
   - id: reviewer
+    name: CHI 2026
     title: Reviewer
-    description: >
-      CHI 2026
 
   - id: uist-2026
     name: UIST 2026
@@ -163,6 +162,14 @@ scholarships:
     date: "2023.09"
 
 talks:
+  - id: 2026-ewha-ai-native-software-engineering-talk
+    name: Google Developer Groups on Campus, Ewha Womans University
+    title: Speaker
+    location: Seoul, Korea
+    date: "2026.03.25"
+    description: >
+      AI Native Software Engineering
+
   - id: 2024-korea-visualization-workshop-talk
     name: 2024 2nd Korea Visualization Workshop
     title: Speaker

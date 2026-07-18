@@ -22,7 +22,7 @@ export default async function FullItem(props: FullItemProps) {
             subheading
           )}
         </div>
-        <div className="flex w-full flex-row items-end gap-2 text-xs md:w-fit md:min-w-[150px] md:flex-col md:gap-0 md:text-xs">
+        <div className="flex w-full flex-row items-end gap-2 text-sm md:w-fit md:min-w-[150px] md:flex-col md:gap-0 md:text-sm">
           {location && (
             <p className="not-prose text-zinc-500 italic dark:text-zinc-400">{location}</p>
           )}

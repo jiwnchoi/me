@@ -44,11 +44,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 height={150}
               />
               <div className="flex w-full flex-col overflow-hidden overflow-x-hidden md:items-center">
-                <p className="mb-2 truncate text-base font-semibold">{meta.name}</p>
-                <p className="mb-1 truncate text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="mb-2 truncate text-lg font-semibold">{meta.name}</p>
+                <p className="mb-1 truncate text-sm text-zinc-500 dark:text-zinc-400">
                   {meta.position}
                 </p>
-                <p className="truncate text-xs text-zinc-500 dark:text-zinc-400">
+                <p className="truncate text-sm text-zinc-500 dark:text-zinc-400">
                   {meta.affiliation}
                 </p>
                 <ContactButtons className={"mt-4 flex w-full gap-2 md:justify-center"} />
@@ -66,7 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               base={null}
               md={
                 <Footer className="flex w-full flex-col-reverse items-center justify-start gap-2 text-zinc-500 dark:text-zinc-400">
-                  Copyright © 2025 Jiwon Jason Choi
+                  Copyright © 2025 Jiwon Choi
                 </Footer>
               }
             />
@@ -83,7 +83,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Responsive
             base={
               <Footer className="w-full p-4 text-zinc-500 dark:text-zinc-400">
-                Copyright © 2025 Jiwon Jason Choi
+                Copyright © 2025 Jiwon Choi
               </Footer>
             }
             md={null}

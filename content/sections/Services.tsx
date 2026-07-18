@@ -2,12 +2,30 @@ import { Date, MDXContent } from "@/components";
 import { SimpleItem } from "@/components/items";
 import { data } from "@/data";
 
-const services = data.misc().services;
-
 export default async function Services() {
+  const services = data.misc().services;
+  const reviewerItems = services.filter((item) => item.title === "Reviewer");
+
   return (
     <ol className="me-list">
       {services.map((item) => {
+        if (item.title === "Reviewer") {
+          if (item.id !== reviewerItems[0]?.id) return null;
+
+          return (
+            <SimpleItem
+              key="services-item-reviewer"
+              left={item.title}
+              right={reviewerItems.map((reviewer, index) => (
+                <span key={reviewer.id}>
+                  {index > 0 && ", "}
+                  {reviewer.name}
+                </span>
+              ))}
+            />
+          );
+        }
+
         return (
           <SimpleItem
             key={`services-item-${item.id}`}

@@ -1,4 +1,17 @@
 publications:
+  - id: swipytics
+    title: "Swipytics: Leveraging Short-form Video Stream Metaphor in Exploratory Data Analysis"
+    authors:
+      - Jiwon Choi
+      - Sehi L'Yi
+      - Seojin Kim
+      - Jaemin Jo
+    type: conference
+    venue: "Proceedings of Conference on 2026 IEEE Visualization and Visual Analytics (IEEE VIS), Boston, USA, 2026."
+    url:
+      git: https://github.com/jiwnchoi/Swipytics
+      web: https://jiwnchoi.github.io/Swipytics
+
   - id: waltzboard
     title: "Waltzboard: Multi-Criteria Automated Dashboard Design for Exploratory Analysis"
     authors:
