@@ -14,12 +14,12 @@ export default async function Services() {
             left={item.date && <Date date={item.date} />}
             right={
               <div className="flex flex-col gap-1">
-                <p className="not-prose text-base">
+                <p className="not-prose text-sm">
                   <span className="font-semibold">{item.title}</span>
                   <span>{`, ${item.name}`}</span>
                 </p>
                 {item.description && (
-                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-sm">
+                  <div className="border-primary border-opacity-50 mt-1 mb-2 ml-0.5 border-l-2 pl-4 text-xs">
                     <MDXContent mdxSource={item.description} />
                   </div>
                 )}

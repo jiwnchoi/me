@@ -1,5 +1,5 @@
 {
-  "$schema": "https://json.schemastore.org/prettierrc",
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
   "semi": true,
   "singleQuote": false,
   "trailingComma": "all",
@@ -10,5 +10,5 @@
   "bracketSameLine": true,
   "bracketSpacing": true,
   "arrowParens": "always",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "sortTailwindcss": true
 }

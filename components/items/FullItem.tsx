@@ -22,7 +22,7 @@ export default async function FullItem(props: FullItemProps) {
             subheading
           )}
         </div>
-        <div className="flex w-full flex-row items-end gap-2 text-xs md:w-fit md:min-w-[150px] md:flex-col md:gap-0 md:text-sm">
+        <div className="flex w-full flex-row items-end gap-2 text-xs md:w-fit md:min-w-[150px] md:flex-col md:gap-0 md:text-xs">
           {location && (
             <p className="not-prose text-zinc-500 italic dark:text-zinc-400">{location}</p>
           )}
@@ -30,7 +30,7 @@ export default async function FullItem(props: FullItemProps) {
         </div>
       </div>
       {description && (
-        <div className="border-primary border-opacity-50 mt-1 ml-0.5 border-l-2 pl-4 text-sm md:mt-0">
+        <div className="border-primary border-opacity-50 mt-1 ml-0.5 border-l-2 pl-4 text-xs md:mt-0">
           <MDXContent mdxSource={description} />
         </div>
       )}

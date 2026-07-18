@@ -44,7 +44,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 height={150}
               />
               <div className="flex w-full flex-col overflow-hidden overflow-x-hidden md:items-center">
-                <p className="mb-2 truncate text-lg font-semibold">{meta.name}</p>
+                <p className="mb-2 truncate text-base font-semibold">{meta.name}</p>
                 <p className="mb-1 truncate text-xs text-zinc-500 dark:text-zinc-400">
                   {meta.position}
                 </p>
