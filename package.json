@@ -26,7 +26,7 @@
     "@vercel/speed-insights": "^2.0.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
-    "katex": "^0.17.0",
+    "katex": "^0.18.1",
     "mime-types": "^3.0.2",
     "next": "^16.2.10",
     "next-themes": "^0.4.6",
@@ -43,7 +43,7 @@
     "yargs": "^18.0.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.3.2",
+    "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
     "@types/js-yaml": "^4.0.9",
     "@types/mime-types": "^3.0.1",
@@ -58,9 +58,9 @@
     "oxfmt": "^0.59.0",
     "oxlint": "^1.74.0",
     "pagefind": "^1.5.2",
-    "quicktype-core": "^24.0.2",
-    "tailwindcss": "^4.3.2",
-    "typescript": "^6.0.3",
+    "quicktype-core": "^25.1.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
     "typescript-next": "npm:typescript@^7.0.2"
   }
 }
