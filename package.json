@@ -53,7 +53,7 @@
     "chokidar": "^5.0.0",
     "concurrently": "^10.0.3",
     "daisyui": "^5.6.18",
-    "js-yaml": "^5.2.1",
+    "js-yaml": "^5.2.2",
     "lefthook": "^2.1.10",
     "oxfmt": "^0.59.0",
     "oxlint": "^1.74.0",
