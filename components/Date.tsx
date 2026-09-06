@@ -1,5 +1,5 @@
-interface DateProps extends React.HTMLAttributes<HTMLParagraphElement> {
-  date: TDate;
+interface DateProps extends React.HTMLAttributes<HTMLDivElement> {
+  date?: TDate;
   day?: boolean;
   className?: string;
 }
@@ -12,10 +12,12 @@ export default function Date({ date, day, className, ...rest }: DateProps) {
 
   if (typeof date === "string") {
     from = date;
-  } else if (typeof date === "object" && "from" in date && "to" in date) {
+  } else if (date && typeof date === "object" && "from" in date && "to" in date) {
     from = date.from;
     to = date.to;
   }
+
+  if (!from) return null;
 
   return (
     <div

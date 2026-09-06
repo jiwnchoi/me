@@ -45,3 +45,10 @@ _pagefind
 
 
 data/*.ts
+.pnpm-store/
+data/*.tmp
+/test-results/
+/playwright-report/
+
+/public/generated/
+/data/images.json

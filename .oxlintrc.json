@@ -4,12 +4,5 @@
   "categories": {
     "correctness": "error"
   },
-  "overrides": [
-    {
-      "files": ["generate-data.js"],
-      "rules": {
-        "typescript/no-require-imports": "off"
-      }
-    }
-  ]
+  "ignorePatterns": ["data/index.ts", ".pnpm-store/**"]
 }

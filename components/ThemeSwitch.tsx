@@ -14,8 +14,10 @@ export default function ThemeSwitch({ className }: { className?: string }) {
 
   return (
     <button
+      type="button"
       className={className}
-      aria-label="Toggle Dark Mode"
+      aria-label={mounted && isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-pressed={mounted && isDark}
       onClick={() => setTheme(isDark ? "light" : "dark")}>
       <HugeiconsIcon icon={IconToUse} size={12} />
       <span className="dark:hidden">Light</span>

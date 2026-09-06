@@ -3,7 +3,7 @@ declare interface IDateRange {
   to: string;
 }
 
-declare type TDate = DateRange | string;
+declare type TDate = IDateRange | string;
 
 declare interface FrontMatter {
   title: string;
@@ -14,8 +14,6 @@ declare interface FrontMatter {
   timestamp?: number;
   date?: TDate;
   tags?: string | string[];
-  timestamp: number;
-  [key: string]: string | number | boolean | string[] | Record<string, unknown> | undefined;
 }
 
 declare interface PageMapItem {

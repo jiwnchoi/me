@@ -1,33 +1,24 @@
 import { Date, TagBadge } from "@/components";
-import { existsSync } from "fs";
+import { contentImage } from "@/lib/content-images";
 import Image from "next/image";
 import Link from "next/link";
-import path from "path";
-
-function getTeaserImagePath(route: string) {
-  const imageExtensions = [".jpg", ".jpeg", ".png", ".webp"];
-  const imagePaths = imageExtensions.map((ext) => path.posix.join(route, `teaser${ext}`));
-  const foundPath = imagePaths.find((imagePath) =>
-    existsSync(path.join(process.cwd(), imagePath.replace(/^\/+/, ""))),
-  );
-  return foundPath ? `/api/asset${foundPath}` : null;
-}
-
 export default function PostItem({ post }: { post: PageMapItem }) {
-  const teaserPath = getTeaserImagePath(post.route);
+  const teaserPath = contentImage(post.route, "teaser");
   const tags: string[] =
     typeof post.frontMatter?.tags === "string"
       ? [post.frontMatter?.tags]
       : (post.frontMatter?.tags ?? []);
 
   return (
-    <Link href={post.route.replace("/content", "")} target="_self">
-      <li className="-m-4 flex justify-between gap-8 rounded-lg p-4 transition-colors duration-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/50">
+    <li>
+      <Link
+        href={post.route.replace(/^\/content(?=\/|$)/, "")}
+        className="-m-4 flex flex-col justify-between gap-4 rounded-lg p-4 transition-colors duration-300 hover:bg-zinc-100 sm:flex-row dark:hover:bg-zinc-800/50">
         <div className="flex flex-col gap-2">
           <Date date={post.frontMatter?.date} day={true} className="ml-0.5 text-sm" />
           <h3 className="text-lg font-semibold">{post.title}</h3>
           <p className="text-sm">{post.frontMatter?.description ?? ""}</p>
-          <ul className="mt-1 flex gap-2">
+          <ul className="mt-1 flex flex-wrap gap-2">
             {tags.map((tag) => (
               <li key={`tag-${post.title}-${tag}`}>
                 <TagBadge content={tag} />
@@ -46,7 +37,7 @@ export default function PostItem({ post }: { post: PageMapItem }) {
             />
           </div>
         )}
-      </li>
-    </Link>
+      </Link>
+    </li>
   );
 }

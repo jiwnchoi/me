@@ -1,3 +1,4 @@
+import { twMerge } from "tailwind-merge";
 import Date from "../Date";
 import MDXContent from "../MDXContent";
 
@@ -10,9 +11,9 @@ interface FullItemProps extends React.HTMLAttributes<HTMLLIElement> {
 }
 
 export default async function FullItem(props: FullItemProps) {
-  const { heading, subheading, date, location, description, ...rest } = props;
+  const { heading, subheading, date, location, description, className, ...rest } = props;
   return (
-    <li className="m-0 my-0 mt-0 mb-0 flex flex-col gap-1 p-0" {...rest}>
+    <li className={twMerge("m-0 flex flex-col gap-1 p-0", className)} {...rest}>
       <div className="flex flex-col justify-between gap-1 md:flex-row">
         <div className="flex w-full grow flex-col">
           {typeof heading === "string" ? <MDXContent mdxSource={`### ${heading}`} /> : heading}

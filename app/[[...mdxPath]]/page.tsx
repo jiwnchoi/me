@@ -5,8 +5,8 @@ import type { FC } from "react";
 
 type PageProps = Readonly<{
   params: Promise<{
-    mdxPath: string[];
-    lang: string;
+    mdxPath?: string[];
+    lang?: string;
   }>;
 }>;
 type ReadingTime = {
@@ -16,7 +16,7 @@ type ReadingTime = {
   words: number;
 };
 
-type NetraMetadata = Omit<Metadata, "title"> & {
+type NextraMetadata = Omit<Metadata, "title"> & {
   title: string;
   filePath: string;
   timestamp?: number;
@@ -31,8 +31,9 @@ export async function generateMetadata(props: PageProps) {
   return getCustomMetadata(metadata);
 }
 
-function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
+function getCustomMetadata(metadata: NextraMetadata): NextraMetadata {
   const title = metadata.title === "Index" ? "Jiwon Choi" : metadata.title;
+  const query = new URLSearchParams({ title, description: metadata.description ?? "" });
   return {
     ...metadata,
     title,
@@ -47,7 +48,7 @@ function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
     openGraph: {
       images: [
         {
-          url: `/api/og?title=${title}&description=${metadata.description}`,
+          url: `/api/og?${query}`,
           width: 1200,
           height: 630,
           alt: title,
@@ -57,8 +58,6 @@ function getCustomMetadata(metadata: NetraMetadata): NetraMetadata {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-expect-error
 const Wrapper = getMDXComponents().wrapper;
 
 const Page: FC<PageProps> = async (props) => {

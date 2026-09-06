@@ -26,13 +26,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const sections = data.sections().sections;
   const meta = data.meta();
   return (
-    <html lang="en" suppressHydrationWarning className={openSans.className}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${openSans.className} ${openSans.variable}`}>
       <body className="flex h-fit max-w-7xl min-w-0 flex-col gap-4 overflow-x-hidden p-0 md:flex-row md:px-8 md:py-8">
         <ThemeProvider
           attribute={["data-theme", "class"]}
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange>
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
           <div className="min-h-2xs max-h-2xs hidden max-w-2xs min-w-2xs md:block" />
           <aside className="sticky top-[-160px] z-3 -mb-4 flex w-full flex-col gap-2 md:fixed md:top-8 md:h-screen md:max-w-2xs md:min-w-2xs md:gap-4">
             <section className="me-card after-bottom-0 after-right-0 after-h-20 relative top-0 z-10 w-full flex-row items-center gap-8 p-4 md:flex-col md:gap-4 md:p-8">
@@ -66,12 +72,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               base={null}
               md={
                 <Footer className="flex w-full flex-col-reverse items-center justify-start gap-2 text-zinc-500 dark:text-zinc-400">
-                  Copyright © 2025 Jiwon Choi
+                  Copyright © {new Date().getFullYear()} {meta.name}
                 </Footer>
               }
             />
           </aside>
-          <main className="w-full min-w-0 grow md:-mr-4">
+          <main id="main-content" tabIndex={-1} className="w-full min-w-0 grow md:-mr-4">
             <article
               className="me-prose me-card drawer-content w-full min-w-0 flex-col p-4 md:p-16"
               dir="ltr"
@@ -83,17 +89,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Responsive
             base={
               <Footer className="w-full p-4 text-zinc-500 dark:text-zinc-400">
-                Copyright © 2025 Jiwon Choi
+                Copyright © {new Date().getFullYear()} {meta.name}
               </Footer>
             }
             md={null}
           />
         </ThemeProvider>
         <ScrollToTopButton />
+        <GoogleAnalytics gaId="G-XVX4B96FPG" />
+        <Analytics />
+        <SpeedInsights />
       </body>
-      <GoogleAnalytics gaId="G-XVX4B96FPG" />
-      <Analytics />
-      <SpeedInsights />
     </html>
   );
 }

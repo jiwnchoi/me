@@ -1,1 +1,1 @@
-export { formatDate, getTimeStamp } from "./date";
+export * from "./date";

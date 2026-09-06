@@ -18,7 +18,7 @@ import {
 } from "nextra/components";
 import type { MDXComponents } from "nextra/mdx-components";
 import { useMDXComponents as getNextraMDXComponents } from "nextra/mdx-components";
-import type { ComponentProps, FC } from "react";
+import type { ComponentProps, FC, ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { Giscus } from "./components";
 
@@ -48,11 +48,7 @@ const createHeading = (Tag: `h${2 | 3 | 4 | 5 | 6}`): FC<ComponentProps<typeof T
       <Tag
         id={id}
         // can be added by footnotes
-        className={
-          className === "sr-only"
-            ? "x:sr-only prose-zinc dark:prose-invert"
-            : "prose-zinc dark:prose-invert"
-        }
+        className={twMerge("prose-zinc dark:prose-invert", className)}
         {...props}>
         {children}
         {id && (
@@ -117,15 +113,16 @@ function hrefToString(href: unknown): string | undefined {
 
 const DEFAULT_COMPONENTS = getNextraMDXComponents({
   a: (props) => {
-    const { href, className, children, ...rest } = props as any;
+    const { href, className, children, target, rel, ...rest } = props;
     const hrefString = hrefToString(href);
 
+    const external = /^https?:\/\//.test(hrefString ?? "");
     return (
       <a
         {...rest}
         href={hrefString}
-        target="_blank"
-        rel="noreferrer noopener"
+        target={target ?? (external ? "_blank" : undefined)}
+        rel={rel ?? (external ? "noreferrer noopener" : undefined)}
         className={twMerge(className, "me-hover")}>
         {children}
       </a>
@@ -148,23 +145,25 @@ const DEFAULT_COMPONENTS = getNextraMDXComponents({
   tr: Table.Tr,
 });
 
-export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
-  T extends BlogMDXComponents,
->(
-  comp?: T,
-) => {
+export const useMDXComponents = <T extends BlogMDXComponents>(comp?: T) => {
   const components = comp ?? {};
 
   return {
     ...DEFAULT_COMPONENTS,
-    // @ts-expect-error -- fixme
-    wrapper({ children, metadata }) {
+    wrapper({
+      children,
+      metadata,
+    }: {
+      children: ReactNode;
+      metadata: { title: string; shortTitle?: string; description?: string | null; type?: string };
+      toc?: unknown;
+    }) {
       const pub = publications.find((p) => p.title === metadata.title);
       return (
         <>
           {metadata.type !== "page" ? (
             <>
-              <h1 className="dark:white text-zinc-900">
+              <h1 className="text-zinc-900 dark:text-white">
                 {metadata?.shortTitle ? metadata.shortTitle : metadata.title}
               </h1>
               <p className="my-0 text-sm">{metadata.description}</p>
@@ -176,7 +175,9 @@ export const useMDXComponents: UseMDXComponents<typeof DEFAULT_COMPONENTS> = <
           {metadata.type === "paper" && pub && (
             <>
               <div className="divider mt-8 mb-4" />
-              <PublicationItem {...pub} />
+              <ul className="me-list">
+                <PublicationItem {...pub} />
+              </ul>
             </>
           )}
 
