@@ -1,11 +1,7 @@
 import { Card } from "@/components";
 import { getTimeStamp } from "@/utils";
-import { existsSync } from "fs";
+import { contentImage } from "@/lib/content-images";
 import { getPageMap } from "nextra/page-map";
-import path from "path";
-
-const extensions = [".jpg", ".jpeg", ".png", ".webp", ".avif", ".svg"];
-const stripLeadingSlashes = (value: string) => value.replace(/^\/+/, "");
 
 export default async function Gallery({
   title,
@@ -14,7 +10,7 @@ export default async function Gallery({
 }: {
   title: string;
   contentPath: string;
-  contentTypes: string[];
+  contentTypes?: string[];
 }) {
   const contentMap = (await getPageMap(contentPath)) as PageMapItem[]; // PageMapItem 타입 정의 필요
   const items = contentMap
@@ -25,13 +21,7 @@ export default async function Gallery({
         item.frontMatter?.type !== "private",
     )
     .map((item) => {
-      const extensionPaths = extensions.map((ext) =>
-        path.posix.join(item.route, `${item.name}${ext}`),
-      );
-      const foundPath = extensionPaths.find((routePath) =>
-        existsSync(path.join(process.cwd(), stripLeadingSlashes(routePath))),
-      );
-      const imagePath = foundPath ? `/api/asset${foundPath}` : null;
+      const imagePath = contentImage(item.route, item.name);
       return {
         key: item.name,
         ...item.frontMatter,
@@ -53,7 +43,7 @@ export default async function Gallery({
       <div
         className="mb-16 grid auto-rows-auto grid-cols-1 gap-6"
         style={{
-          gridTemplateColumns: "repeat(auto-fill, minmax(240px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 240px), 1fr))",
         }}>
         {items.map((item) => (
           <Card

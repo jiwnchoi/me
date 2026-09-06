@@ -17,9 +17,9 @@ export default function Giscus() {
       reactionsEnabled="0"
       emitMetadata="0"
       inputPosition="top"
-      theme={`https://www.jiwnchoi.me/giscus_${resolvedTheme}.css`}
+      theme={`https://www.jiwnchoi.me/giscus_${resolvedTheme === "dark" ? "dark" : "light"}.css`}
       lang="en"
-      loading="eager"
+      loading="lazy"
     />
   );
 }

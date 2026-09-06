@@ -141,7 +141,7 @@ html {
   @apply bg-[var(--bg)];
   @apply text-zinc-800 dark:text-zinc-200;
   scrollbar-gutter: stable;
-  scrollbar-width: none;
+  scrollbar-width: thin;
 
   scrollbar-color: var(--color-primary) var(--bg);
 
@@ -193,9 +193,9 @@ body {
   --radius-selector: 0.5rem;
   --radius-field: 0.25rem;
   --radius-box: 0.5rem;
-  --size-selector: 0.1875rem;
+  --size-selector: 0.25rem;
   --size-field: 0.25rem;
-  --border: 0.5px;
+  --border: 1px;
   --depth: 0;
   --noise: 0;
 }
@@ -231,7 +231,7 @@ body {
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
   --border: 1px;
-  --depth: 1;
+  --depth: 0;
   --noise: 0;
 }
 
@@ -242,4 +242,39 @@ body {
 
 :root[data-theme="dark"] {
   --color-primary: #ff7f0e;
+  --color-primary-content: #18181b;
+}
+
+/* Shared keyboard and motion behavior across links, cards, and controls. */
+:where(a, button, input, select, textarea):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 4px;
+}
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 10000;
+  transform: translateY(-200%);
+  padding: 0.75rem 1rem;
+  background: var(--color-primary);
+  color: var(--color-primary-content);
+  border-radius: 0.5rem;
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

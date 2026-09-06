@@ -10,5 +10,6 @@
   "bracketSameLine": true,
   "bracketSpacing": true,
   "arrowParens": "always",
-  "sortTailwindcss": true
+  "sortTailwindcss": true,
+  "ignorePatterns": ["data/index.ts", ".pnpm-store/**"]
 }
